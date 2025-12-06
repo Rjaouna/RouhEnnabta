@@ -1,0 +1,55 @@
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Nouveau produit</strong>
+	</div>
+
+	<div class="card-body">
+		<form id="product-form">
+			<input type="hidden" id="product-id">
+
+			<div class="mb-2">
+				<input class="form-control" id="product-name" placeholder="Nom">
+			</div>
+
+			<div class="mb-2">
+				<input class="form-control" id="product-slug" placeholder="Slug">
+			</div>
+
+			<div class="mb-2">
+				<textarea class="form-control" id="product-description" placeholder="Description"></textarea>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<input class="form-control" type="number" id="product-purchase" placeholder="Prix achat">
+				</div>
+				<div class="col">
+					<input class="form-control" type="number" id="product-margin" placeholder="Marge %">
+				</div>
+				<div class="col">
+					<input class="form-control" type="number" id="product-sale" placeholder="Prix vente" disabled>
+				</div>
+			</div>
+
+			<div class="row mt-2">
+				<div class="col">
+					<input class="form-control" type="number" id="product-stock" placeholder="Stock">
+				</div>
+				<div class="col">
+					<select class="form-select" id="product-category"></select>
+				</div>
+				<div class="col">
+					<select class="form-select" id="product-gamme"></select>
+				</div>
+			</div>
+
+			<div class="form-check mt-2">
+				<input class="form-check-input" type="checkbox" id="product-active" checked>
+				<label class="form-check-label">Active</label>
+			</div>
+
+			<button class="btn btn-primary mt-3">Enregistrer</button>
+		</form>
+	</div>
+</div>
+

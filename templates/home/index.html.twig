@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+{% include 'components/category/_form.html.twig' %}
+{% include 'components/category/_list.html.twig' %}
+{% include 'components/category/_script.html.twig' %}
+
+
+
+<hr>
+{% include 'components/gammes/_form.html.twig' %}
+{% include 'components/gammes/_list.html.twig' %}
+{% include 'components/gammes/_script.html.twig' %}
+
+
+<hr>
+{% include 'components/product/_form.html.twig' %}
+{% include 'components/product/_list.html.twig' %}
+{% include 'components/product/_script.html.twig' %}
+
+{% endblock %}

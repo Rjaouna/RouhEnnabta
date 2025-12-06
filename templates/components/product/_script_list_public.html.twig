@@ -1,0 +1,25 @@
+ <script>
+fetch('/api/products')
+  .then(r => r.json())
+  .then(data => {
+    const list = document.getElementById('product-public-list');
+
+    data
+      .filter(p => p.isActive)
+      .forEach(p => {
+        list.innerHTML += `
+          <div class="col-md-3 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">${p.name}</h5>
+                <p class="card-text small">${p.description ?? ''}</p>
+              </div>
+              <div class="card-footer text-center">
+                <strong>${p.salePrice ?? '-'} €</strong>
+              </div>
+            </div>
+          </div>`;
+      });
+  });
+</script>
+

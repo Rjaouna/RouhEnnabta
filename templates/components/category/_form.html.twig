@@ -1,0 +1,36 @@
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Nouvelle catégorie</strong>
+	</div>
+
+	<div class="card-body">
+		<form id="category-form">
+			<input type="hidden" id="category-id">
+
+			<div class="mb-3">
+				<label class="form-label">Nom</label>
+				<input type="text" class="form-control" id="category-name" required>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Slug</label>
+				<input type="text" class="form-control" id="category-slug">
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Description</label>
+				<textarea class="form-control" id="category-description"></textarea>
+			</div>
+
+			<div class="form-check mb-3">
+				<input class="form-check-input" type="checkbox" id="category-active" checked>
+				<label class="form-check-label">Active</label>
+			</div>
+
+			<button class="btn btn-primary" type="submit">
+				Enregistrer
+			</button>
+		</form>
+	</div>
+</div>
+

@@ -1,0 +1,67 @@
+ <script>
+const gammeForm = document.getElementById('gamme-form');
+const gammeList = document.getElementById('gamme-list');
+
+function loadGammes() {
+  fetch('/api/gammes')
+    .then(r => r.json())
+    .then(data => {
+      gammeList.innerHTML = '';
+      data.forEach(g => {
+        gammeList.innerHTML += `
+          <tr>
+            <td>${g.name}</td>
+            <td>${g.isActive ? '✅' : '❌'}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick="editGamme(${g.id})">✏️</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteGamme(${g.id})">🗑</button>
+            </td>
+          </tr>`;
+      });
+    });
+}
+
+function editGamme(id) {
+  fetch('/api/gammes')
+    .then(r => r.json())
+    .then(data => {
+      const g = data.find(g => g.id === id);
+      document.getElementById('gamme-id').value = g.id;
+      document.getElementById('gamme-name').value = g.name;
+      document.getElementById('gamme-description').value = g.description ?? '';
+      document.getElementById('gamme-active').checked = g.isActive;
+    });
+}
+
+function deleteGamme(id) {
+  if (!confirm('Supprimer cette gamme ?')) return;
+
+  fetch(`/api/gammes/${id}`, { method: 'DELETE' })
+    .then(() => loadGammes());
+}
+
+gammeForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const id = document.getElementById('gamme-id').value;
+  const method = id ? 'PUT' : 'POST';
+  const url = id ? `/api/gammes/${id}` : '/api/gammes';
+
+  fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: document.getElementById('gamme-name').value,
+      description: document.getElementById('gamme-description').value,
+      isActive: document.getElementById('gamme-active').checked,
+    })
+  }).then(() => {
+    gammeForm.reset();
+    document.getElementById('gamme-id').value = '';
+    loadGammes();
+  });
+});
+
+loadGammes();
+</script>
+

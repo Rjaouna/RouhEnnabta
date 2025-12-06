@@ -1,0 +1,70 @@
+ <script>
+const categoryForm = document.getElementById('category-form');
+const categoryList = document.getElementById('category-list');
+
+function loadCategories() {
+  fetch('/api/categories')
+    .then(r => r.json())
+    .then(data => {
+      categoryList.innerHTML = '';
+      data.forEach(c => {
+        categoryList.innerHTML += `
+          <tr>
+            <td>${c.name}</td>
+            <td>${c.slug}</td>
+            <td>${c.isActive ? '✅' : '❌'}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick="editCategory(${c.id})">✏️</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})">🗑</button>
+            </td>
+          </tr>`;
+      });
+    });
+}
+
+function editCategory(id) {
+  fetch('/api/categories')
+    .then(r => r.json())
+    .then(data => {
+      const cat = data.find(c => c.id === id);
+      document.getElementById('category-id').value = cat.id;
+      document.getElementById('category-name').value = cat.name;
+      document.getElementById('category-slug').value = cat.slug;
+      document.getElementById('category-description').value = cat.description ?? '';
+      document.getElementById('category-active').checked = cat.isActive;
+    });
+}
+
+function deleteCategory(id) {
+  if (!confirm('Supprimer cette catégorie ?')) return;
+
+  fetch(`/api/categories/${id}`, { method: 'DELETE' })
+    .then(() => loadCategories());
+}
+
+categoryForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const id = document.getElementById('category-id').value;
+  const method = id ? 'PUT' : 'POST';
+  const url = id ? `/api/categories/${id}` : '/api/categories';
+
+  fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: document.getElementById('category-name').value,
+      slug: document.getElementById('category-slug').value,
+      description: document.getElementById('category-description').value,
+      isActive: document.getElementById('category-active').checked,
+    })
+  }).then(() => {
+    categoryForm.reset();
+    document.getElementById('category-id').value = '';
+    loadCategories();
+  });
+});
+
+loadCategories();
+</script>
+

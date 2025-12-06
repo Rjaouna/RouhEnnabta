@@ -1,0 +1,31 @@
+<div class="card mb-3">
+	<div class="card-header">
+		<strong>Nouvelle gamme</strong>
+	</div>
+
+	<div class="card-body">
+		<form id="gamme-form">
+			<input type="hidden" id="gamme-id">
+
+			<div class="mb-3">
+				<label class="form-label">Nom</label>
+				<input type="text" class="form-control" id="gamme-name" required>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Description</label>
+				<textarea class="form-control" id="gamme-description"></textarea>
+			</div>
+
+			<div class="form-check mb-3">
+				<input class="form-check-input" type="checkbox" id="gamme-active" checked>
+				<label class="form-check-label">Active</label>
+			</div>
+
+			<button class="btn btn-primary" type="submit">
+				Enregistrer
+			</button>
+		</form>
+	</div>
+</div>
+

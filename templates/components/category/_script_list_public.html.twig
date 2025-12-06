@@ -1,0 +1,22 @@
+ <script>
+fetch('/api/categories')
+  .then(r => r.json())
+  .then(data => {
+    const list = document.getElementById('category-public-list');
+
+    data
+      .filter(c => c.isActive)
+      .forEach(c => {
+        list.innerHTML += `
+          <div class="col-md-3 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">${c.name}</h5>
+                <p class="card-text">${c.description ?? ''}</p>
+              </div>
+            </div>
+          </div>`;
+      });
+  });
+</script>
+

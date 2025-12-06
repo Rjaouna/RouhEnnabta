@@ -1,0 +1,130 @@
+ <script>
+const productId = document.getElementById('product-id');
+const productName = document.getElementById('product-name');
+const productSlug = document.getElementById('product-slug');
+const productDescription = document.getElementById('product-description');
+
+const productPurchase = document.getElementById('product-purchase');
+const productMargin = document.getElementById('product-margin');
+const productSale = document.getElementById('product-sale');
+
+const productStock = document.getElementById('product-stock');
+const productCategory = document.getElementById('product-category');
+const productGamme = document.getElementById('product-gamme');
+const productActive = document.getElementById('product-active');
+
+const productForm = document.getElementById('product-form');
+const productList = document.getElementById('product-list');
+
+/* ------------------ SELECTS ------------------ */
+function loadSelects() {
+  fetch('/api/categories')
+    .then(r => r.json())
+    .then(data => {
+      productCategory.innerHTML =
+        '<option value="">Catégorie</option>' +
+        data.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    });
+
+  fetch('/api/gammes')
+    .then(r => r.json())
+    .then(data => {
+      productGamme.innerHTML =
+        '<option value="">Gamme</option>' +
+        data.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+    });
+}
+
+/* ------------------ CALCUL PRIX ------------------ */
+function calcPrice() {
+  const p = parseFloat(productPurchase.value) || 0;
+  const m = parseFloat(productMargin.value) || 0;
+  productSale.value = p && m ? (p + p * m / 100).toFixed(2) : '';
+}
+
+productPurchase.addEventListener('input', calcPrice);
+productMargin.addEventListener('input', calcPrice);
+
+/* ------------------ LISTE ------------------ */
+function loadProducts() {
+  fetch('/api/products')
+    .then(r => r.json())
+    .then(data => {
+      productList.innerHTML = '';
+      data.forEach(p => {
+        productList.innerHTML += `
+          <tr>
+            <td>${p.name}</td>
+            <td>${p.salePrice ?? '-'}</td>
+            <td>${p.stock ?? 0}</td>
+            <td>${p.category ?? '-'}</td>
+            <td>${p.gamme ?? '-'}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick="editProduct(${p.id})">✏️</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">🗑</button>
+            </td>
+          </tr>`;
+      });
+    });
+}
+
+/* ------------------ EDIT ------------------ */
+function editProduct(id) {
+  fetch('/api/products')
+    .then(r => r.json())
+    .then(data => {
+      const p = data.find(p => p.id === id);
+      productId.value = p.id;
+      productName.value = p.name;
+      productSlug.value = p.slug ?? '';
+      productDescription.value = p.description ?? '';
+      productPurchase.value = p.purchasePrice ?? '';
+      productMargin.value = p.margin ?? '';
+      productStock.value = p.stock ?? '';
+      productActive.checked = p.isActive;
+      productCategory.value = p.category;
+      productGamme.value = p.gamme;
+      calcPrice();
+    });
+}
+
+/* ------------------ DELETE ------------------ */
+function deleteProduct(id) {
+  if (!confirm('Supprimer ce produit ?')) return;
+  fetch(`/api/products/${id}`, { method: 'DELETE' })
+    .then(loadProducts);
+}
+
+/* ------------------ SUBMIT ------------------ */
+productForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const id = productId.value;
+  const url = id ? `/api/products/${id}` : '/api/products';
+  const method = id ? 'PUT' : 'POST';
+
+  fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: productName.value,
+      slug: productSlug.value,
+      description: productDescription.value,
+      purchasePrice: productPurchase.value,
+      margin: productMargin.value,
+      stock: productStock.value,
+      category: productCategory.value,
+      gamme: productGamme.value,
+      isActive: productActive.checked
+    })
+  }).then(() => {
+    productForm.reset();
+    productId.value = '';
+    loadProducts();
+  });
+});
+
+loadSelects();
+loadProducts();
+</script>
+
