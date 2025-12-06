@@ -1,4 +1,10 @@
  <script>
+// =====================
+// ELEMENTS
+// =====================
+const productForm = document.getElementById('product-form');
+const productList = document.getElementById('product-list');
+
 const productId = document.getElementById('product-id');
 const productName = document.getElementById('product-name');
 const productSlug = document.getElementById('product-slug');
@@ -13,10 +19,9 @@ const productCategory = document.getElementById('product-category');
 const productGamme = document.getElementById('product-gamme');
 const productActive = document.getElementById('product-active');
 
-const productForm = document.getElementById('product-form');
-const productList = document.getElementById('product-list');
-
-/* ------------------ SELECTS ------------------ */
+// =====================
+// SELECTS
+// =====================
 function loadSelects() {
   fetch('/api/categories')
     .then(r => r.json())
@@ -35,7 +40,9 @@ function loadSelects() {
     });
 }
 
-/* ------------------ CALCUL PRIX ------------------ */
+// =====================
+// CALCUL PRIX
+// =====================
 function calcPrice() {
   const p = parseFloat(productPurchase.value) || 0;
   const m = parseFloat(productMargin.value) || 0;
@@ -45,7 +52,9 @@ function calcPrice() {
 productPurchase.addEventListener('input', calcPrice);
 productMargin.addEventListener('input', calcPrice);
 
-/* ------------------ LISTE ------------------ */
+// =====================
+// LISTE
+// =====================
 function loadProducts() {
   fetch('/api/products')
     .then(r => r.json())
@@ -60,20 +69,34 @@ function loadProducts() {
             <td>${p.category ?? '-'}</td>
             <td>${p.gamme ?? '-'}</td>
             <td>
-              <button class="btn btn-sm btn-warning" onclick="editProduct(${p.id})">✏️</button>
-              <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">🗑</button>
+              <button class="btn btn-sm btn-warning"
+                onclick="editProduct(${p.id}); openProductModal();">✏️</button>
+              <button class="btn btn-sm btn-danger"
+                onclick="deleteProduct(${p.id})">🗑</button>
             </td>
           </tr>`;
       });
     });
 }
 
-/* ------------------ EDIT ------------------ */
+// =====================
+// MODAL
+// =====================
+function openProductModal() {
+  new bootstrap.Modal(
+    document.getElementById('productModal')
+  ).show();
+}
+
+// =====================
+// EDIT
+// =====================
 function editProduct(id) {
   fetch('/api/products')
     .then(r => r.json())
     .then(data => {
       const p = data.find(p => p.id === id);
+
       productId.value = p.id;
       productName.value = p.name;
       productSlug.value = p.slug ?? '';
@@ -82,20 +105,26 @@ function editProduct(id) {
       productMargin.value = p.margin ?? '';
       productStock.value = p.stock ?? '';
       productActive.checked = p.isActive;
+
       productCategory.value = p.category;
       productGamme.value = p.gamme;
+
       calcPrice();
     });
 }
 
-/* ------------------ DELETE ------------------ */
+// =====================
+// DELETE
+// =====================
 function deleteProduct(id) {
   if (!confirm('Supprimer ce produit ?')) return;
   fetch(`/api/products/${id}`, { method: 'DELETE' })
     .then(loadProducts);
 }
 
-/* ------------------ SUBMIT ------------------ */
+// =====================
+// SUBMIT
+// =====================
 productForm.addEventListener('submit', e => {
   e.preventDefault();
 
@@ -121,9 +150,17 @@ productForm.addEventListener('submit', e => {
     productForm.reset();
     productId.value = '';
     loadProducts();
+
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById('productModal')
+    );
+    if (modal) modal.hide();
   });
 });
 
+// =====================
+// INIT
+// =====================
 loadSelects();
 loadProducts();
 </script>

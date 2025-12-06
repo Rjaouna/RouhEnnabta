@@ -1,0 +1,24 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Gammes
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h1>🧩 Gammes</h1>
+
+		<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#gammeModal">
+			➕ Ajouter une gamme
+		</button>
+	</div>
+
+	{# ✅ 1. LISTE ADMIN #}
+	{% include 'components/gammes/_list.html.twig' %}
+
+	{# ✅ 2. MODAL (le form doit exister AVANT JS) #}
+	{% include 'admin/gammes/_modal_form.html.twig' %}
+
+	{# ✅ 3. SCRIPT CRUD À LA FIN #}
+	{% include 'components/gammes/_script.html.twig' %}
+{% endblock %}
+

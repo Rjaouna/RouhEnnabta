@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Admin
+			{% endblock %}
+		</title>
+
+		{{ encore_entry_link_tags('app') }}
+	</head>
+	<body>
+
+		<div class="d-flex">
+
+			{% include 'admin/_sidebar.html.twig' %}
+
+			<div class="flex-grow-1">
+				{% include 'admin/_navbar.html.twig' %}
+
+				<main class="container-fluid p-4"> {% block body %}{% endblock %}
+					</main>
+				</div>
+
+			</div>
+
+			{{ encore_entry_script_tags('app') }}
+
+		</body>
+	</html>
+

@@ -1,0 +1,32 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Catégories
+{% endblock %}
+
+{% block body %}
+
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h1>📂 Catégories</h1>
+
+		<!-- Bouton ouvrir modal -->
+		<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+			➕ Ajouter une catégorie
+		</button>
+
+
+
+	</div>
+
+	{# Liste publique #}
+{% include 'components/category/_list.html.twig' %}
+
+
+
+	{# Modal #}
+	{% include 'admin/category/_modal_form.html.twig' %}
+
+	{# Script CRUD classique #}
+	{% include 'components/category/_script.html.twig' %}
+
+{% endblock %}
+

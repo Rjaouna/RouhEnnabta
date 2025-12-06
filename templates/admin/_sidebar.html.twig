@@ -1,0 +1,43 @@
+<aside class="bg-dark text-white vh-100 p-3" style="width: 250px;">
+	<h4 class="mb-4">🧱 Back-Office</h4>
+
+	<ul class="nav flex-column gap-2">
+		<li>
+			<a href="{{ path('admin_dashboard') }}" class="nav-link text-white">
+				🏠 Dashboard
+			</a>
+		</li>
+		<li>
+<a href="{{path('admin_category_index')}}" class="nav-link text-white">
+
+				📂 Catégories
+			</a>
+		</li>
+<li>
+	<a href="{{ path('admin_gammes_index') }}" class="nav-link text-white">
+		🧩 Gammes
+	</a>
+</li>
+
+		<li>
+<a href="{{path('admin_product_index')}}" class="nav-link text-white">
+
+				📦 Produits
+			</a>
+		</li>
+
+		<hr class="border-secondary">
+
+		<li>
+			<a href="/" class="nav-link text-white">
+				🌍 Voir le site
+			</a>
+		</li>
+		<li>
+			<a href="#" class="nav-link text-danger">
+				🚪 Déconnexion
+			</a>
+		</li>
+	</ul>
+</aside>
+

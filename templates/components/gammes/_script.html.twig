@@ -13,12 +13,18 @@ function loadGammes() {
             <td>${g.name}</td>
             <td>${g.isActive ? '✅' : '❌'}</td>
             <td>
-              <button class="btn btn-sm btn-warning" onclick="editGamme(${g.id})">✏️</button>
-              <button class="btn btn-sm btn-danger" onclick="deleteGamme(${g.id})">🗑</button>
+              <button class="btn btn-sm btn-warning"
+                onclick="editGamme(${g.id}); openGammeModal();">✏️</button>
+              <button class="btn btn-sm btn-danger"
+                onclick="deleteGamme(${g.id})">🗑</button>
             </td>
           </tr>`;
       });
     });
+}
+
+function openGammeModal() {
+  new bootstrap.Modal(document.getElementById('gammeModal')).show();
 }
 
 function editGamme(id) {
@@ -35,17 +41,16 @@ function editGamme(id) {
 
 function deleteGamme(id) {
   if (!confirm('Supprimer cette gamme ?')) return;
-
   fetch(`/api/gammes/${id}`, { method: 'DELETE' })
-    .then(() => loadGammes());
+    .then(loadGammes);
 }
 
 gammeForm.addEventListener('submit', e => {
   e.preventDefault();
 
   const id = document.getElementById('gamme-id').value;
-  const method = id ? 'PUT' : 'POST';
   const url = id ? `/api/gammes/${id}` : '/api/gammes';
+  const method = id ? 'PUT' : 'POST';
 
   fetch(url, {
     method,
@@ -59,6 +64,11 @@ gammeForm.addEventListener('submit', e => {
     gammeForm.reset();
     document.getElementById('gamme-id').value = '';
     loadGammes();
+
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById('gammeModal')
+    );
+    if (modal) modal.hide();
   });
 });
 

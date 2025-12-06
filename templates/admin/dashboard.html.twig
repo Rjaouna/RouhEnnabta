@@ -1,0 +1,55 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Dashboard
+{% endblock %}
+
+{% block body %}
+	<h1 class="mb-4">🎛 Dashboard</h1>
+
+	<div class="row g-4">
+
+		<div class="col-md-4">
+			<a href="#" class="text-decoration-none">
+				<div class="card h-100 shadow-sm border-primary">
+					<div class="card-body text-center">
+						<h3>📂</h3>
+						<h5>Catégories</h5>
+						<p class="text-muted">
+							Gérer les catégories
+						</p>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-4">
+			<a href="#" class="text-decoration-none">
+				<div class="card h-100 shadow-sm border-success">
+					<div class="card-body text-center">
+						<h3>🧩</h3>
+						<h5>Gammes</h5>
+						<p class="text-muted">
+							Gérer les gammes
+						</p>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-4">
+			<a href="#" class="text-decoration-none">
+				<div class="card h-100 shadow-sm border-warning">
+					<div class="card-body text-center">
+						<h3>📦</h3>
+						<h5>Produits</h5>
+						<p class="text-muted">
+							Gérer les produits
+						</p>
+					</div>
+				</div>
+			</a>
+		</div>
+
+	</div>
+{% endblock %}
+

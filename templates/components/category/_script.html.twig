@@ -14,12 +14,18 @@ function loadCategories() {
             <td>${c.slug}</td>
             <td>${c.isActive ? '✅' : '❌'}</td>
             <td>
-              <button class="btn btn-sm btn-warning" onclick="editCategory(${c.id})">✏️</button>
+              <button class="btn btn-sm btn-warning" onclick="editCategory(${c.id}); openCategoryModal();">✏️</button>
               <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})">🗑</button>
             </td>
           </tr>`;
       });
     });
+}
+
+function openCategoryModal() {
+  new bootstrap.Modal(
+    document.getElementById('categoryModal')
+  ).show();
 }
 
 function editCategory(id) {
@@ -37,11 +43,11 @@ function editCategory(id) {
 
 function deleteCategory(id) {
   if (!confirm('Supprimer cette catégorie ?')) return;
-
   fetch(`/api/categories/${id}`, { method: 'DELETE' })
-    .then(() => loadCategories());
+    .then(loadCategories);
 }
 
+/* ✅ SUBMIT */
 categoryForm.addEventListener('submit', e => {
   e.preventDefault();
 
@@ -58,10 +64,17 @@ categoryForm.addEventListener('submit', e => {
       description: document.getElementById('category-description').value,
       isActive: document.getElementById('category-active').checked,
     })
-  }).then(() => {
+  })
+  .then(() => {
     categoryForm.reset();
     document.getElementById('category-id').value = '';
     loadCategories();
+
+    // ✅ FERMETURE MODAL
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById('categoryModal')
+    );
+    if (modal) modal.hide();
   });
 });
 

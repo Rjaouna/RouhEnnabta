@@ -1,0 +1,24 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Produits
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h1>📦 Produits</h1>
+
+		<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
+			➕ Ajouter un produit
+		</button>
+	</div>
+
+	{# 1️⃣ Liste admin #}
+	{% include 'components/product/_list.html.twig' %}
+
+	{# 2️⃣ Modal (formulaire) #}
+	{% include 'admin/product/_modal_form.html.twig' %}
+
+	{# 3️⃣ Script CRUD #}
+	{% include 'components/product/_script.html.twig' %}
+{% endblock %}
+
