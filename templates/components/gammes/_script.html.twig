@@ -1,77 +1,126 @@
  <script>
+// =====================
+// ELEMENTS
+// =====================
 const gammeForm = document.getElementById('gamme-form');
 const gammeList = document.getElementById('gamme-list');
 
+const gammeId = document.getElementById('gamme-id');
+const gammeName = document.getElementById('gamme-name');
+const gammeDescription = document.getElementById('gamme-description');
+const gammeActive = document.getElementById('gamme-active');
+
+// =====================
+// LOAD LIST
+// =====================
 function loadGammes() {
   fetch('/api/gammes')
     .then(r => r.json())
     .then(data => {
       gammeList.innerHTML = '';
+
       data.forEach(g => {
         gammeList.innerHTML += `
-          <tr>
-            <td>${g.name}</td>
-            <td>${g.isActive ? '✅' : '❌'}</td>
-            <td>
-              <button class="btn btn-sm btn-warning"
-                onclick="editGamme(${g.id}); openGammeModal();">✏️</button>
-              <button class="btn btn-sm btn-danger"
-                onclick="deleteGamme(${g.id})">🗑</button>
+          <tr class="${g.isActive ? '' : 'table-secondary'}">
+            <td><strong>${g.name}</strong></td>
+
+            <td class="text-muted">
+              ${g.description ?? '<em>Aucune description</em>'}
             </td>
-          </tr>`;
+
+            <td>
+              ${g.isActive
+                ? '<span class="badge bg-success">Active</span>'
+                : '<span class="badge bg-danger">Inactive</span>'}
+            </td>
+
+            <td class="text-muted small">
+              ${g.createdAt ?? '-'}
+            </td>
+
+            <td class="text-muted small">
+              ${g.updatedAt ?? '-'}
+            </td>
+
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-warning me-1"
+                onclick="editGamme(${g.id})">
+                ✏️
+              </button>
+
+              <button class="btn btn-sm btn-outline-danger"
+                onclick="deleteGamme(${g.id})">
+                🗑
+              </button>
+            </td>
+          </tr>
+        `;
       });
     });
 }
 
-function openGammeModal() {
-  new bootstrap.Modal(document.getElementById('gammeModal')).show();
-}
-
+// =====================
+// EDIT
+// =====================
 function editGamme(id) {
-  fetch('/api/gammes')
+  fetch(`/api/gammes/${id}`)
     .then(r => r.json())
-    .then(data => {
-      const g = data.find(g => g.id === id);
-      document.getElementById('gamme-id').value = g.id;
-      document.getElementById('gamme-name').value = g.name;
-      document.getElementById('gamme-description').value = g.description ?? '';
-      document.getElementById('gamme-active').checked = g.isActive;
+    .then(g => {
+      gammeId.value = g.id;
+      gammeName.value = g.name;
+      gammeDescription.value = g.description ?? '';
+      gammeActive.checked = g.isActive;
+
+      const modal = bootstrap.Modal.getOrCreateInstance(
+        document.getElementById('gammeModal')
+      );
+      modal.show();
     });
 }
 
+// =====================
+// DELETE
+// =====================
 function deleteGamme(id) {
   if (!confirm('Supprimer cette gamme ?')) return;
+
   fetch(`/api/gammes/${id}`, { method: 'DELETE' })
-    .then(loadGammes);
+    .then(() => loadGammes());
 }
 
+// =====================
+// SUBMIT
+// =====================
 gammeForm.addEventListener('submit', e => {
   e.preventDefault();
 
-  const id = document.getElementById('gamme-id').value;
-  const url = id ? `/api/gammes/${id}` : '/api/gammes';
+  const id = gammeId.value;
   const method = id ? 'PUT' : 'POST';
+  const url = id ? `/api/gammes/${id}` : '/api/gammes';
 
   fetch(url, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      name: document.getElementById('gamme-name').value,
-      description: document.getElementById('gamme-description').value,
-      isActive: document.getElementById('gamme-active').checked,
+      name: gammeName.value,
+      description: gammeDescription.value,
+      isActive: gammeActive.checked,
     })
-  }).then(() => {
+  })
+  .then(() => {
     gammeForm.reset();
-    document.getElementById('gamme-id').value = '';
+    gammeId.value = '';
     loadGammes();
 
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById('gammeModal')
-    );
+    const modalEl = document.getElementById('gammeModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
     if (modal) modal.hide();
   });
 });
 
+// =====================
+// INIT
+// =====================
 loadGammes();
 </script>
 

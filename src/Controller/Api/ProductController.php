@@ -10,11 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/products')]
 class ProductController extends AbstractController
 {
+
 	#[Route('', methods: ['GET'])]
 	public function index(ProductRepository $repo): JsonResponse
 	{
@@ -29,8 +31,8 @@ class ProductController extends AbstractController
 			'salePrice' => $p->getSalePrice(),
 			'stock' => $p->getStock(),
 			'isActive' => $p->isActive(),
-			'category' => $p->getCategory()?->getId(),
-			'gamme' => $p->getGamme()?->getId(),
+			'category' => $p->getCategory()?->getName(),
+			'gamme' => $p->getGamme()?->getName(),
 		], $products);
 
 		return $this->json($data);
@@ -41,18 +43,23 @@ class ProductController extends AbstractController
 		Request $request,
 		EntityManagerInterface $em,
 		CategoryRepository $categoryRepo,
-		GammesRepository $gammeRepo
+		GammesRepository $gammeRepo,
+		SluggerInterface $slugger
 	): JsonResponse {
 		$data = json_decode($request->getContent(), true);
 
 		$product = new Product();
 		$product->setName($data['name']);
-		$product->setSlug($data['slug']);
+
+		// ✅ SLUG AUTO
+		$slug = $slugger->slug($data['name'])->lower();
+		$product->setSlug($slug);
+
 		$product->setDescription($data['description']);
 		$product->setPurchasePrice($data['purchasePrice']);
 		$product->setMargin($data['margin']);
 
-		// calcul prix de vente
+		// ✅ calcul prix de vente
 		$salePrice = $data['purchasePrice'] + ($data['purchasePrice'] * $data['margin'] / 100);
 		$product->setSalePrice($salePrice);
 

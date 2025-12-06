@@ -1,57 +1,94 @@
  <script>
+// =====================
+// ELEMENTS
+// =====================
 const categoryForm = document.getElementById('category-form');
 const categoryList = document.getElementById('category-list');
 
+const categoryId = document.getElementById('category-id');
+const categoryName = document.getElementById('category-name');
+const categoryDescription = document.getElementById('category-description');
+const categoryActive = document.getElementById('category-active');
+
+// =====================
+// LOAD LIST
+// =====================
 function loadCategories() {
   fetch('/api/categories')
     .then(r => r.json())
     .then(data => {
       categoryList.innerHTML = '';
+
       data.forEach(c => {
         categoryList.innerHTML += `
-          <tr>
-            <td>${c.name}</td>
-            <td>${c.slug}</td>
-            <td>${c.isActive ? '✅' : '❌'}</td>
+          <tr class="${c.isActive ? '' : 'table-secondary'}">
             <td>
-              <button class="btn btn-sm btn-warning" onclick="editCategory(${c.id}); openCategoryModal();">✏️</button>
-              <button class="btn btn-sm btn-danger" onclick="deleteCategory(${c.id})">🗑</button>
+              <strong>${c.name}</strong>
             </td>
-          </tr>`;
+
+            <td class="text-muted">
+              /${c.slug}
+            </td>
+
+            <td>
+              ${c.isActive
+                ? '<span class="badge bg-success">Active</span>'
+                : '<span class="badge bg-danger">Inactive</span>'}
+            </td>
+
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-warning me-1"
+                onclick="editCategory(${c.id})">
+                ✏️
+              </button>
+
+              <button class="btn btn-sm btn-outline-danger"
+                onclick="deleteCategory(${c.id})">
+                🗑
+              </button>
+            </td>
+          </tr>
+        `;
       });
     });
 }
 
-function openCategoryModal() {
-  new bootstrap.Modal(
-    document.getElementById('categoryModal')
-  ).show();
-}
-
+// =====================
+// EDIT
+// =====================
 function editCategory(id) {
-  fetch('/api/categories')
+  fetch(`/api/categories/${id}`)
     .then(r => r.json())
-    .then(data => {
-      const cat = data.find(c => c.id === id);
-      document.getElementById('category-id').value = cat.id;
-      document.getElementById('category-name').value = cat.name;
-      document.getElementById('category-slug').value = cat.slug;
-      document.getElementById('category-description').value = cat.description ?? '';
-      document.getElementById('category-active').checked = cat.isActive;
+    .then(c => {
+      categoryId.value = c.id;
+      categoryName.value = c.name;
+      categoryDescription.value = c.description ?? '';
+      categoryActive.checked = c.isActive;
+
+      const modal = bootstrap.Modal.getOrCreateInstance(
+        document.getElementById('categoryModal')
+      );
+      modal.show();
     });
 }
 
+// =====================
+// DELETE
+// =====================
 function deleteCategory(id) {
   if (!confirm('Supprimer cette catégorie ?')) return;
+
   fetch(`/api/categories/${id}`, { method: 'DELETE' })
-    .then(loadCategories);
+    .then(() => loadCategories());
 }
 
-/* ✅ SUBMIT */
+// =====================
+// SUBMIT
+// =====================
 categoryForm.addEventListener('submit', e => {
   e.preventDefault();
 
-  const id = document.getElementById('category-id').value;
+  const id = categoryId.value;
   const method = id ? 'PUT' : 'POST';
   const url = id ? `/api/categories/${id}` : '/api/categories';
 
@@ -59,25 +96,25 @@ categoryForm.addEventListener('submit', e => {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      name: document.getElementById('category-name').value,
-      slug: document.getElementById('category-slug').value,
-      description: document.getElementById('category-description').value,
-      isActive: document.getElementById('category-active').checked,
+      name: categoryName.value,
+      description: categoryDescription.value,
+      isActive: categoryActive.checked,
     })
   })
   .then(() => {
     categoryForm.reset();
-    document.getElementById('category-id').value = '';
+    categoryId.value = '';
     loadCategories();
 
-    // ✅ FERMETURE MODAL
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById('categoryModal')
-    );
+    const modalEl = document.getElementById('categoryModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
     if (modal) modal.hide();
   });
 });
 
+// =====================
+// INIT
+// =====================
 loadCategories();
 </script>
 

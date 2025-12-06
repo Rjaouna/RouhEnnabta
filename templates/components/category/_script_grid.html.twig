@@ -1,0 +1,32 @@
+ <script>
+fetch('/api/categories')
+    .then(r => r.json())
+    .then(data => {
+        const grid = document.getElementById('category-grid');
+        grid.innerHTML = '';
+
+        data
+            .filter(c => c.isActive)
+            .slice(0, 4)
+            .forEach(c => {
+                grid.innerHTML += `
+                    <div class="col-md-6">
+                        <div
+                            class="category-block d-flex align-items-center justify-content-center text-white rounded"
+style="background-image: url('https://cdn.aroma-zone.com/d_default_placeholder.png/c_scale,q_auto,f_auto,w_1920/v1/cf/0xsz2r7o7t3z/2Ht6z1HPGGzVHQoWDoCM72/7985f57df918d307a6de5ac7b27f86aa/Bandeau_eucalyptus_lavande.jpg');"
+
+
+                        >
+                            <div class="bg-dark bg-opacity-50 p-4 rounded text-center">
+                                <h4 class="fw-bold">${c.name}</h4>
+                                <p class="mb-0">
+                                    ${c.description ?? ''}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+    });
+</script>
+

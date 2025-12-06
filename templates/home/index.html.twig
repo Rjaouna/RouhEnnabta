@@ -1,23 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Catalogue produits
+{% endblock %}
 
 {% block body %}
-{% include 'components/category/_form.html.twig' %}
-{% include 'components/category/_list.html.twig' %}
-{% include 'components/category/_script.html.twig' %}
+	<div
+		class="min-vh-100 d-flex flex-column justify-content-center">
+
+		{# 🔍 BARRE DE RECHERCHE #}
+		<div class="container mb-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<input type="text" class="form-control form-control-lg text-center rounded-pill" placeholder="Rechercher un produit…">
+				</div>
+			</div>
+		</div>
+
+		{# 📦 CATÉGORIES #}
+{% include 'components/category/_grid.html.twig' %}
+{% include 'components/category/_script_grid.html.twig' %}
 
 
 
-<hr>
-{% include 'components/gammes/_form.html.twig' %}
-{% include 'components/gammes/_list.html.twig' %}
-{% include 'components/gammes/_script.html.twig' %}
-
-
-<hr>
-{% include 'components/product/_form.html.twig' %}
-{% include 'components/product/_list.html.twig' %}
-{% include 'components/product/_script.html.twig' %}
-
+	</div>
 {% endblock %}
+

@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 #[Route('/api/categories')]
 class CategoryController extends AbstractController
@@ -32,13 +34,18 @@ class CategoryController extends AbstractController
 	#[Route('', methods: ['POST'])]
 	public function create(
 		Request $request,
-		EntityManagerInterface $em
+		EntityManagerInterface $em,
+		SluggerInterface $slugger
 	): JsonResponse {
 		$data = json_decode($request->getContent(), true);
 
 		$category = new Category();
 		$category->setName($data['name']);
-		$category->setSlug($data['slug']);
+
+		// ✅ SLUG AUTO
+		$slug = $slugger->slug($data['name'])->lower();
+		$category->setSlug($slug);
+
 		$category->setDescription($data['description'] ?? null);
 		$category->setIsActive($data['isActive'] ?? true);
 
@@ -46,31 +53,6 @@ class CategoryController extends AbstractController
 		$em->flush();
 
 		return $this->json(['message' => 'Catégorie créée'], 201);
-	}
-
-	#[Route('/{id}', methods: ['PUT'])]
-	public function update(
-		int $id,
-		Request $request,
-		CategoryRepository $repo,
-		EntityManagerInterface $em
-	): JsonResponse {
-		$category = $repo->find($id);
-
-		if (!$category) {
-			return $this->json(['error' => 'Catégorie introuvable'], 404);
-		}
-
-		$data = json_decode($request->getContent(), true);
-
-		$category->setName($data['name']);
-		$category->setSlug($data['slug']);
-		$category->setDescription($data['description'] ?? null);
-		$category->setIsActive($data['isActive'] ?? true);
-
-		$em->flush();
-
-		return $this->json(['message' => 'Catégorie mise à jour']);
 	}
 
 	#[Route('/{id}', methods: ['DELETE'])]
@@ -89,5 +71,53 @@ class CategoryController extends AbstractController
 		$em->flush();
 
 		return $this->json(['message' => 'Catégorie supprimée']);
+	}
+	#[Route('/{id}', methods: ['GET'])]
+	public function show(
+		int $id,
+		CategoryRepository $repo
+	): JsonResponse {
+		$category = $repo->find($id);
+
+		if (!$category) {
+			return $this->json(['error' => 'Catégorie introuvable'], 404);
+		}
+
+		return $this->json([
+			'id' => $category->getId(),
+			'name' => $category->getName(),
+			'slug' => $category->getSlug(),
+			'description' => $category->getDescription(),
+			'isActive' => $category->isActive(),
+		]);
+	}
+	#[Route('/{id}', methods: ['PUT'])]
+	public function update(
+		int $id,
+		Request $request,
+		CategoryRepository $repo,
+		EntityManagerInterface $em,
+		SluggerInterface $slugger
+	): JsonResponse {
+		$category = $repo->find($id);
+
+		if (!$category) {
+			return $this->json(['error' => 'Catégorie introuvable'], 404);
+		}
+
+		$data = json_decode($request->getContent(), true);
+
+		$category->setName($data['name']);
+
+		// ✅ RE-GÉNÉRATION SLUG
+		$slug = $slugger->slug($data['name'])->lower();
+		$category->setSlug($slug);
+
+		$category->setDescription($data['description'] ?? null);
+		$category->setIsActive($data['isActive'] ?? true);
+
+		$em->flush();
+
+		return $this->json(['message' => 'Catégorie mise à jour']);
 	}
 }

@@ -12,3 +12,19 @@ body {
 .card {
   border-radius: 0.5rem;
 }
+#search-input {
+  border-radius: 50px;
+}
+
+.card {
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+.category-block {
+  height: 350px;
+  background-size: cover;
+  background-position: center;
+}

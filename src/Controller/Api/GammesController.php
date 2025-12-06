@@ -87,4 +87,22 @@ class GammesController extends AbstractController
 
 		return $this->json(['message' => 'Gamme supprimée']);
 	}
+	#[Route('/{id}', methods: ['GET'])]
+	public function show(
+		int $id,
+		GammesRepository $repo
+	): JsonResponse {
+		$gamme = $repo->find($id);
+
+		if (!$gamme) {
+			return $this->json(['error' => 'Gamme introuvable'], 404);
+		}
+
+		return $this->json([
+			'id' => $gamme->getId(),
+			'name' => $gamme->getName(),
+			'description' => $gamme->getDescription(),
+			'isActive' => $gamme->isActive(),
+		]);
+	}
 }

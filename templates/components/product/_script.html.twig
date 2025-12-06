@@ -59,22 +59,71 @@ function loadProducts() {
   fetch('/api/products')
     .then(r => r.json())
     .then(data => {
+		console.log(data);
       productList.innerHTML = '';
       data.forEach(p => {
-        productList.innerHTML += `
-          <tr>
-            <td>${p.name}</td>
-            <td>${p.salePrice ?? '-'}</td>
-            <td>${p.stock ?? 0}</td>
-            <td>${p.category ?? '-'}</td>
-            <td>${p.gamme ?? '-'}</td>
-            <td>
-              <button class="btn btn-sm btn-warning"
-                onclick="editProduct(${p.id}); openProductModal();">✏️</button>
-              <button class="btn btn-sm btn-danger"
-                onclick="deleteProduct(${p.id})">🗑</button>
-            </td>
-          </tr>`;
+       productList.innerHTML += `
+<tr class="${p.isActive ? '' : 'table-secondary'}">
+  <td>
+    <strong>${p.name}</strong>
+    <div class="text-muted small">
+      ${p.description ?? ''}
+    </div>
+  </td>
+
+  <td>
+    <span class="badge bg-light text-dark">
+      Achat : ${p.purchasePrice ?? '-'} €
+    </span><br>
+    <span class="badge bg-success mt-1">
+      Vente : ${p.salePrice ?? '-'} €
+    </span>
+  </td>
+
+  <td>
+    <span class="badge bg-info">
+      ${p.margin ?? 0} %
+    </span>
+  </td>
+
+  <td>
+    <span class="badge ${p.stock > 0 ? 'bg-primary' : 'bg-danger'}">
+      ${p.stock ?? 0}
+    </span>
+  </td>
+
+  <td>
+    <span class="badge bg-secondary">
+      ${p.category ?? '-'}
+    </span>
+  </td>
+
+  <td>
+    <span class="badge bg-warning text-dark">
+      ${p.gamme ?? '-'}
+    </span>
+  </td>
+
+  <td class="text-center">
+    ${p.isActive 
+      ? '<span class="badge bg-success">Actif</span>' 
+      : '<span class="badge bg-danger">Inactif</span>'}
+  </td>
+
+  <td class="text-end">
+    <button class="btn btn-sm btn-outline-warning me-1"
+onclick="editProduct(${p.id}); openProductModal();">
+
+      ✏️
+    </button>
+    <button class="btn btn-sm btn-outline-danger"
+      onclick="deleteProduct(${p.id})">
+      🗑
+    </button>
+  </td>
+</tr>
+`;
+
       });
     });
 }
@@ -151,11 +200,24 @@ productForm.addEventListener('submit', e => {
     productId.value = '';
     loadProducts();
 
-    const modal = bootstrap.Modal.getInstance(
-      document.getElementById('productModal')
-    );
+   // ✅ FERMETURE AUTOMATIQUE DU MODAL
+    const modalEl = document.getElementById('categoryModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
     if (modal) modal.hide();
   });
+  function generateSlug(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .normalize('NFD')                 // enlève accents
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')      // espaces → -
+    .replace(/(^-|-$)/g, '');
+}
+
+productName.addEventListener('input', () => {
+  productSlug.value = generateSlug(productName.value);
+});
 });
 
 // =====================
