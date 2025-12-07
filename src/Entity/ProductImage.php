@@ -4,15 +4,21 @@ namespace App\Entity;
 
 use App\Repository\ProductImageRepository;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductImageRepository::class)]
+#[Vich\Uploadable]
 class ProductImage
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    // ✅ fichier temporaire
+    #[Vich\UploadableField(mapping: 'product_image', fileNameProperty: 'filename')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $filename = null;
@@ -28,6 +34,8 @@ class ProductImage
 
     #[ORM\ManyToOne(inversedBy: 'productImages')]
     private ?Product $product = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -92,5 +100,20 @@ class ProductImage
         $this->product = $product;
 
         return $this;
+    }
+    // ✅ setters / getters Vich
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 }

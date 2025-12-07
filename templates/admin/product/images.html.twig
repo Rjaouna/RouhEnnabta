@@ -1,0 +1,26 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block body %}
+	<h1>Images –
+		{{ product.name }}</h1>
+
+	{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+	{{ form_row(form.imageFile) }}
+	{{ form_row(form.isMain) }}
+	<button class="btn btn-success">Ajouter l’image</button>
+	{{ form_end(form) }}
+
+	<hr>
+
+	<div class="row g-3 mt-4">
+		{% for img in product.productImages %}
+			<div class="col-2 text-center">
+				<img src="{{ asset('uploads/products/' ~ img.filename) }}" class="img-fluid rounded border">
+				{% if img.isMain %}
+					<span class="badge bg-success mt-1">Principale</span>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
+
