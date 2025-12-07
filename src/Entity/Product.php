@@ -241,4 +241,16 @@ class Product
 
         return $this;
     }
+
+    public function getMainImage(): ?ProductImage
+    {
+        foreach ($this->productImages as $image) {
+            if ($image->isMain()) {
+                return $image;
+            }
+        }
+
+        // si aucune image principale, on prend la première
+        return $this->productImages->first() ?: null;
+    }
 }

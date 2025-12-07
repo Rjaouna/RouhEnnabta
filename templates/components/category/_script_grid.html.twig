@@ -15,9 +15,12 @@ fetch('/api/categories')
                 const imageUrl = c.image
                     ? `/uploads/categories/${c.image}`
 : '/uploads/categories/placeholder.jpg';
+const link = `/categories/${c.slug}`;
 
 grid.innerHTML += `
 <div class="col-12 col-sm-6 col-lg-6">
+<a href="${link}" class="text-decoration-none text-dark">
+
 <div class="card border-0 shadow overflow-hidden h-100 category-card rounded-4">
 
 
@@ -46,6 +49,9 @@ grid.innerHTML += `
 				<p class="mb-0 small">
 <p class="text-primary">
 	${truncate(c.description, 120)}
+
+
+
 </p>
 
 
@@ -55,6 +61,7 @@ grid.innerHTML += `
 		</div>
 
 	</div>
+	</a>
 </div>
 `;
 

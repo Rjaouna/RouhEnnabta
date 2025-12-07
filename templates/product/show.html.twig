@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ product.name }}
+{% endblock %}
+
+{% block body %}
+	<section class="container py-5">
+
+		<div
+			class="row g-5 align-items-start">
+
+			{# IMAGE PRINCIPALE #}
+			<div class="col-md-6">
+
+				{% set mainImage = product.mainImage %}
+
+				{% if mainImage %}
+					<img src="{{ asset('uploads/products/' ~ mainImage.filename) }}" class="img-fluid rounded shadow-sm" alt="{{ mainImage.alt ?? product.name }}">
+				{% else %}
+					<img src="{{ asset('assets/img/placeholder-product.jpg') }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}">
+				{% endif %}
+
+			</div>
+
+			{# INFOS PRODUIT #}
+			<div class="col-md-6">
+
+				<h1 class="fw-bold mb-3" style="color:#003700;">
+					{{ product.name }}
+				</h1>
+
+				{% if product.category %}
+					<p class="text-muted mb-3">
+						Catégorie :
+						<a href="{{ path('category_show', { slug: product.category.slug }) }}" class="text-decoration-none fw-medium">
+							{{ product.category.name }}
+						</a>
+					</p>
+				{% endif %}
+
+				<p class="fs-5">
+					{{ product.description }}
+				</p>
+
+				<hr class="my-4">
+
+				<a href="{{ path('app_contact') }}" class="btn btn-success btn-lg">
+					Nous contacter
+				</a>
+
+			</div>
+
+		</div>
+
+		{# GALERIE (SI + D'UNE IMAGE) #}
+		{% if product.productImages|length > 1 %}
+			<hr class="my-5">
+
+			<div class="row g-3">
+				{% for image in product.productImages %}
+					<div class="col-4 col-md-2">
+						<img src="{{ asset('uploads/products/' ~ image.filename) }}" class="img-fluid rounded border" alt="{{ image.alt ?? product.name }}">
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+	</section>
+{% endblock %}
+

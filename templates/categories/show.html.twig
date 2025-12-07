@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ category.name }}
+{% endblock %}
+
+{% block body %}
+
+	<section class="container py-5">
+
+		<h1 class="fw-bold mb-3" style="color:#003700;">
+			{{ category.name }}
+		</h1>
+
+		{% if category.description %}
+			<p class="text-muted fs-5 mb-4">
+				{{ category.description }}
+			</p>
+		{% endif %}
+
+		{% if products|length == 0 %}
+			<div class="alert alert-info">
+				Aucun produit disponible pour cette catégorie.
+			</div>
+		{% endif %}
+
+		<div class="row g-4">
+			{% for product in products %}
+				<div class="col-md-4">
+					<div
+						class="card h-100 shadow-sm">
+
+{# IMAGE PRINCIPALE #}
+<div class="col-md-6">
+
+	{% set mainImage = product.mainImage %}
+
+	{% if mainImage %}
+		<img src="{{ asset('uploads/products/' ~ mainImage.filename) }}" class="img-fluid rounded shadow-sm" alt="{{ mainImage.alt ?? product.name }}">
+	{% else %}
+		<img src="{{ asset('assets/img/placeholder-product.jpg') }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}">
+	{% endif %}
+
+</div>
+
+
+
+						<div class="card-body">
+							<h5 class="fw-semibold">
+								{{ product.name }}
+							</h5>
+
+							<p class="small text-muted">
+								{{ product.description|slice(0, 100) }}…
+							</p>
+						</div>
+
+						<div class="card-footer bg-white border-0">
+							<a href="{{ path('product_show', {slug: product.slug}) }}" class="btn btn-outline-success w-100">
+								Voir le produit
+							</a>
+						</div>
+
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+	</section>
+
+{% endblock %}
+
