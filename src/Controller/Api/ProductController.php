@@ -22,21 +22,38 @@ class ProductController extends AbstractController
 	{
 		$products = $repo->findAll();
 
-		$data = array_map(fn(Product $p) => [
-			'id' => $p->getId(),
-			'name' => $p->getName(),
-			'description' => $p->getDescription(),
-			'purchasePrice' => $p->getPurchasePrice(),
-			'margin' => $p->getMargin(),
-			'salePrice' => $p->getSalePrice(),
-			'stock' => $p->getStock(),
-			'isActive' => $p->isActive(),
-			'category' => $p->getCategory()?->getName(),
-			'gamme' => $p->getGamme()?->getName(),
-		], $products);
+		$data = array_map(function (Product $p) {
+
+			// ✅ image principale par produit
+			$mainImage = null;
+
+			foreach ($p->getProductImages() as $img) {
+				if ($img->isMain()) {
+					$mainImage = $img->getFilename();
+					break;
+				}
+			}
+
+			return [
+				'id' => $p->getId(),
+				'name' => $p->getName(),
+				'description' => $p->getDescription(),
+				'purchasePrice' => $p->getPurchasePrice(),
+				'margin' => $p->getMargin(),
+				'salePrice' => $p->getSalePrice(),
+				'stock' => $p->getStock(),
+				'isActive' => $p->isActive(),
+				'category' => $p->getCategory()?->getName(),
+				'gamme' => $p->getGamme()?->getName(),
+
+				// ✅ CE QUE TON JS ATTEND
+				'mainImage' => $mainImage
+			];
+		}, $products);
 
 		return $this->json($data);
 	}
+
 
 	#[Route('', methods: ['POST'])]
 	public function create(
@@ -163,6 +180,7 @@ class ProductController extends AbstractController
 			'name'  => $p->getName(),
 			'slug'  => $p->getSlug(),
 			'price' => $p->getSalePrice(),
+			'categorySlug' => $p->getCategory()?->getSlug(),
 			'category' => $p->getCategory()?->getName(),
 			'gamme'    => $p->getGamme()?->getName(),
 		], $products));

@@ -1,26 +1,163 @@
 {% extends 'layouts/admin.html.twig' %}
 
 {% block body %}
-	<h1>Images –
-		{{ product.name }}</h1>
+<div
+	class="container-fluid">
 
-	{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-	{{ form_row(form.imageFile) }}
-	{{ form_row(form.isMain) }}
-	<button class="btn btn-success">Ajouter l’image</button>
-	{{ form_end(form) }}
+	{# ================= TITRE ================= #}
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h1 class="h4 mb-0">
+			📸 Images du produit
+			<span class="text-muted">—
+				{{ product.name }}</span>
+		</h1>
 
-	<hr>
-
-	<div class="row g-3 mt-4">
-		{% for img in product.productImages %}
-			<div class="col-2 text-center">
-				<img src="{{ asset('uploads/products/' ~ img.filename) }}" class="img-fluid rounded border">
-				{% if img.isMain %}
-					<span class="badge bg-success mt-1">Principale</span>
-				{% endif %}
-			</div>
-		{% endfor %}
+		<a href="{{ path('admin_product_index') }}" class="btn btn-sm btn-outline-secondary">
+			← Retour aux produits
+		</a>
 	</div>
+
+	{# ================= FORMULAIRE ================= #}
+	<div class="card shadow-sm mb-5">
+		<div class="card-header fw-semibold">
+			Ajouter une image
+		</div>
+
+		<div class="card-body">
+
+
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+<div class="row g-3 align-items-end">
+
+	<div class="col-md-8">
+
+{{ form_row(form.imageFile) }}
+
+</div>
+
+<div class="col-md-4">
+	<div class="form-check mt-4">
+		{{ form_widget(form.isMain) }}
+		{{ form_label(form.isMain, 'Image principale') }}
+	</div>
+</div></div><div class="mt-4">
+<button class="btn btn-success">
+	➕ Ajouter l’image
+</button></div>{{ form_end(form) }}
+
+
+<p class="text-muted small mt-3 mb-0">
+	💡 Une seule image peut être définie comme principale.
+</p>
+
+
+</div></div>{# ================= GALERIE ================= #}<h2 class="h5 mb-3">Galerie d’images</h2>{% if product.productImages|length == 0 %}
+<div class="alert alert-light border text-muted">
+	Aucune image ajoutée pour ce produit.
+</div>{% else %}
+<div class="row g-4">
+
+	{% for img in product.productImages %}
+
+<div class="col-2 image-wrapper">
+
+	<div class="card image-card shadow-sm position-relative" data-image-id="{{ img.id }}">
+
+		<img src="{{ asset('uploads/products/' ~ img.filename) }}" class="img-fluid rounded" style="height:120px; object-fit:cover;" alt="{{ product.name }}">
+
+		{% if img.isMain %}
+
+<span class="badge bg-success position-absolute top-0 start-0 m-2">
+	Principale
+</span>{% endif %}
+
+<div class="d-flex justify-content-center gap-2 p-2">
+
+	<button class="btn btn-sm btn-outline-warning" title="Définir comme principale" onclick="setMainImage({{ img.id }})">
+		⭐
+	</button>
+
+	<button class="btn btn-sm btn-outline-danger" title="Supprimer" onclick="deleteImage({{ img.id }}, this)">
+		🗑
+	</button>
+
+</div></div>
+
+
+</div>{% endfor %}
+
+</div>{% endif %}
+
+
+	</div>
+{# ================= STYLES ================= #}
+<style>
+	.image-card.image-main {
+		outline: 2px solid #198754;
+		box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.15);
+	}
+</style>
+
+{# ================= JS ================= #}
+ <script>
+	function deleteImage(imageId, btn) {
+		if (!confirm('Supprimer cette image ?')) return;
+	
+		fetch(`/admin/product/image/${imageId}/delete`, {
+			method: 'DELETE',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		})
+		.then(r => r.json())
+		.then(data => {
+			if (!data.success) {
+				alert('Erreur lors de la suppression.');
+				return;
+			}
+	
+			const wrapper = btn.closest('.image-wrapper');
+			if (wrapper) wrapper.remove();
+		})
+		.catch(() => alert('Erreur serveur.'));
+	}
+	
+	function setMainImage(imageId) {
+		fetch(`/admin/product/image/${imageId}/main`, {
+			method: 'POST',
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest'
+			}
+		})
+		.then(r => r.json())
+		.then(data => {
+			if (!data.success) {
+				alert('Erreur lors de la mise à jour.');
+				return;
+			}
+	
+			document.querySelectorAll('.image-card').forEach(card => {
+				card.classList.remove('image-main');
+				const badge = card.querySelector('.badge.bg-success');
+				if (badge) badge.remove();
+			});
+	
+			const current = document.querySelector(`[data-image-id="${imageId}"]`);
+			if (current) {
+				current.classList.add('image-main');
+	
+				const badge = document.createElement('span');
+				badge.className = 'badge bg-success position-absolute top-0 start-0 m-2';
+				badge.innerText = 'Principale';
+	
+				current.appendChild(badge);
+			}
+		})
+		.catch(() => alert('Erreur serveur.'));
+	}
+	</script>
+
+
 {% endblock %}
 

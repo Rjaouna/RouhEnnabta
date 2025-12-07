@@ -62,8 +62,15 @@ function loadProducts() {
 		console.log(data);
       productList.innerHTML = '';
       data.forEach(p => {
+		const imageUrl = p.mainImage
+  ? `/uploads/products/${p.mainImage}`
+  : '/assets/img/placeholder-product.jpg';
+
        productList.innerHTML += `
 <tr class="${p.isActive ? '' : 'table-secondary'}">
+<td style="width:70px">
+	<img src="${imageUrl}" class="rounded border" style="width:60px;height:60px;object-fit:cover">
+</td>
   <td>
     <strong>${p.name}</strong>
     <div class="text-muted small">

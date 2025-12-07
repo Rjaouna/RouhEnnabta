@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
 	<div class="container">
 
-		<a class="navbar-brand" href="{{ path('app_home') }}">
+		<a class="navbar-brand d-flex align-items-center gap-2" href="{{ path('app_home') }}">
 			<img src="{{ asset('assets/img/logo-rouh-ennabta.png') }}" alt="RouhEnnabta" height="55">
 		</a>
 
@@ -13,36 +13,58 @@
 
 		<div class="collapse navbar-collapse" id="mainNavbar">
 
-			<ul class="navbar-nav mx-auto fw-semibold gap-lg-4">
+			<ul class="navbar-nav mx-auto fw-semibold gap-lg-4 align-items-lg-center">
+
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_home') }}">
+						<i class="bi bi-house"></i>
+						Accueil
+					</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_apropos') }}">À propos</a>
+					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_apropos') }}">
+						<i class="bi bi-info-circle"></i>
+						À propos
+					</a>
 				</li>
+
+				{# ✅ UNIVERS – SOUS-BRILLANCE #}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_categories') }}">Catégories</a>
+					<a class="nav-link d-flex align-items-center gap-2 " href="{{ path('app_categories') }}">
+						<i class="bi bi-flower1"></i>
+						Univers RouhEnnabta
+					</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_certifications') }}">Certifications</a>
+					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_certifications') }}">
+						<i class="bi bi-patch-check"></i>
+						Certifications
+					</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link" href="#">Événements & salons</a>
+					<a class="nav-link d-flex align-items-center gap-2" href="#">
+						<i class="bi bi-calendar-event"></i>
+						Événements & salons
+					</a>
 				</li>
+
 			</ul>
 
 			<div
 				class="d-flex align-items-center gap-3">
 
-				{# 🔍 SEARCH ICON #}
+				{# 🔍 SEARCH #}
 				<button class="btn btn-light rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal">
 					<i class="bi bi-search text-secondary"></i>
 				</button>
 
-				{# 👤 USER ICON — TOUJOURS MODAL #}
+				{# 👤 USER #}
 				<button class="btn btn-outline-secondary btn-sm rounded-circle
 											d-flex align-items-center justify-content-center" style="width:38px;height:38px;" data-bs-toggle="modal" data-bs-target="{% if app.user %}#userModal{% else %}#accountModal{% endif %}" aria-label="Mon compte">
-					<i class="bi bi-person"></i>
+					<i class="bi bi-person "></i>
 				</button>
 
 			</div>
@@ -50,6 +72,8 @@
 		</div>
 	</div>
 </nav>
+
+
 
 <div class="modal fade" id="searchModal" tabindex="-1">
 	<div class="modal-dialog modal-lg modal-dialog-centered">
@@ -106,7 +130,15 @@ if (searchInput) {
 						return;
 					}
 
+
+
+
+
 					products.forEach(p => {
+const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
+			
+			const linkProduct = productShowPath.replace('SLUG', p.slug);
+
 						searchResults.innerHTML += `
 							<div class="col-12">
 								<div class="d-flex justify-content-between align-items-center border-bottom py-3">
@@ -116,7 +148,9 @@ if (searchInput) {
 											${p.category ?? ''} ${p.gamme ? '• ' + p.gamme : ''}
 										</small>
 									</div>
-									<a href="/produit/${p.slug}" class="btn btn-sm btn-outline-success">
+<a href="${linkProduct}" class="btn btn-sm btn-outline-success">
+
+
 										Voir
 									</a>
 								</div>

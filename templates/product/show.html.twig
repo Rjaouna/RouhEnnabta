@@ -7,65 +7,127 @@
 {% block body %}
 	<section class="container py-5">
 
-		<div
-			class="row g-5 align-items-start">
+		<div class="row g-5">
 
-			{# IMAGE PRINCIPALE #}
-			<div class="col-md-6">
+			{# ===================================== #}
+			{# COLONNE IMAGES                        #}
+			{# ===================================== #}
+				<div class="col-lg-6"> {% set mainImage = null %}
 
-				{% set mainImage = product.mainImage %}
+				{# On cherche l’image principale #}
+				{% for img in product.productImages %}
+					{% if img.isMain %}
+						{% set mainImage = img %}
+					{% endif %}
+				{% endfor %}
 
-				{% if mainImage %}
-					<img src="{{ asset('uploads/products/' ~ mainImage.filename) }}" class="img-fluid rounded shadow-sm" alt="{{ mainImage.alt ?? product.name }}">
-				{% else %}
-					<img src="{{ asset('assets/img/placeholder-product.jpg') }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}">
+				{# Sinon on prend la première #}
+				{% if mainImage == null and product.productImages|length > 0 %}
+					{% set mainImage = product.productImages|first %}
+				{% endif %}
+
+				<div class="bg-light rounded-4 p-3 shadow-sm mb-3 text-center">
+					{% if mainImage %}
+						<img id="mainProductImage" src="{{ asset('uploads/products/' ~ mainImage.filename) }}" class="img-fluid rounded-3" alt="{{ mainImage.alt ?: product.name }}">
+					{% else %}
+						<img id="mainProductImage" src="{{ asset('assets/img/placeholder-product.jpg') }}" class="img-fluid rounded-3" alt="{{ product.name }}">
+					{% endif %}
+				</div>
+
+				{# ✅ MINI GALERIE CLIQUABLE #}
+				{% if product.productImages|length > 1 %}
+					<div class="d-flex gap-3 flex-wrap mt-3">
+						{% for image in product.productImages %}
+							<img src="{{ asset('uploads/products/' ~ image.filename) }}" class="img-thumbnail product-thumb rounded-3 shadow-sm {% if image == mainImage %}active{% endif %}" style="width:90px;height:90px;object-fit:cover;cursor:pointer" alt="{{ image.alt ?: product.name }}" data-image="{{ asset('uploads/products/' ~ image.filename) }}">
+						{% endfor %}
+					</div>
 				{% endif %}
 
 			</div>
 
-			{# INFOS PRODUIT #}
-			<div class="col-md-6">
+			{# ===================================== #}
+			{# COLONNE INFOS PRODUIT                 #}
+			{# ===================================== #}
+				<div class="col-lg-6"> {% if product.category %}
+					<div class="mb-2">
+						<a href="{{ path('category_show', { slug: product.category.slug }) }}" class="text-decoration-none small fw-semibold" style="color:#c2a05c;">
+							{{ product.category.name }}
+						</a>
+					</div>
+				{% endif %}
 
 				<h1 class="fw-bold mb-3" style="color:#003700;">
 					{{ product.name }}
 				</h1>
 
-				{% if product.category %}
-					<p class="text-muted mb-3">
-						Catégorie :
-						<a href="{{ path('category_show', { slug: product.category.slug }) }}" class="text-decoration-none fw-medium">
-							{{ product.category.name }}
-						</a>
-					</p>
-				{% endif %}
-
-				<p class="fs-5">
+				<p class="text-muted fs-5">
 					{{ product.description }}
 				</p>
 
 				<hr class="my-4">
 
-				<a href="{{ path('app_contact') }}" class="btn btn-success btn-lg">
-					Nous contacter
-				</a>
+				<div class="row g-3 mb-4">
+
+					{% if product.gamme %}
+						<div class="col-6">
+							<div class="border rounded-3 p-3 text-center small">
+								<div class="fw-semibold">Gamme</div>
+								<div class="text-muted">{{ product.gamme.name }}</div>
+							</div>
+						</div>
+					{% endif %}
+
+					{% if product.contenance %}
+						<div class="col-6">
+							<div class="border rounded-3 p-3 text-center small">
+								<div class="fw-semibold">Contenance</div>
+								<div class="text-muted">{{ product.contenance }}</div>
+							</div>
+						</div>
+					{% endif %}
+
+				</div>
+
+				<div class="d-flex gap-3 flex-wrap">
+					<a href="{{ path('app_contact') }}" class="btn btn-success btn-lg px-4">
+						Nous contacter
+					</a>
+
+					<a href="{{ path('app_categories') }}" class="btn btn-outline-secondary btn-lg px-4">
+						Voir autres produits
+					</a>
+				</div>
 
 			</div>
 
 		</div>
-
-		{# GALERIE (SI + D'UNE IMAGE) #}
-		{% if product.productImages|length > 1 %}
-			<hr class="my-5">
-
-			<div class="row g-3">
-				{% for image in product.productImages %}
-					<div class="col-4 col-md-2">
-						<img src="{{ asset('uploads/products/' ~ image.filename) }}" class="img-fluid rounded border" alt="{{ image.alt ?? product.name }}">
-					</div>
-				{% endfor %}
-			</div>
-		{% endif %}
-
 	</section>
-{% endblock %}
+
+	{# ===================================== #}
+	{# JS GALERIE                             #}
+	{# ===================================== #}
+	 <script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const mainImage = document.getElementById('mainProductImage');
+		const thumbs = document.querySelectorAll('.product-thumb');
+	
+		thumbs.forEach(thumb => {
+			thumb.addEventListener('click', () => {
+				thumbs.forEach(t => t.classList.remove('active'));
+				thumb.classList.add('active');
+				mainImage.src = thumb.dataset.image;
+			});
+		});
+	});
+	</script>
+
+		<style>
+.product-thumb.active {
+	border: 2px solid #003700;
+}
+.product-thumb:hover {
+	transform: scale(1.07);
+	transition: 0.2s ease;
+}
+</style>{% endblock %}
 

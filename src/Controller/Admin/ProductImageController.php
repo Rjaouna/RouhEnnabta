@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ProductImageController extends AbstractController
@@ -50,6 +51,57 @@ final class ProductImageController extends AbstractController
         return $this->render('admin/product/images.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/admin/product/image/{id}/delete', name: 'admin_product_image_delete', methods: ['DELETE'])]
+    public function delete(
+        ProductImage $image,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        // Sécurité simple (ROLE_ADMIN)
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // Supprimer le fichier physique
+        $filePath = $this->getParameter('kernel.project_dir') . '/public/uploads/products/' . $image->getFilename();
+        if ($image->getFilename() && file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        // Supprimer en base
+        $em->remove($image);
+        $em->flush();
+
+        return new JsonResponse([
+            'success' => true
+        ]);
+    }
+
+    #[Route('/admin/product/image/{id}/main', name: 'admin_product_image_main', methods: ['POST'])]
+    public function setMain(
+        ProductImage $image,
+        EntityManagerInterface $em
+    ): JsonResponse {
+
+        // Sécurité
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $product = $image->getProduct();
+
+        // Retirer le statut "principal" aux autres images
+        foreach ($product->getProductImages() as $img) {
+            $img->setIsMain(false);
+        }
+
+        // Mettre celle-ci en principale
+        $image->setIsMain(true);
+
+        $em->flush();
+
+        return new JsonResponse([
+            'success' => true,
+            'imageId' => $image->getId()
         ]);
     }
 }
