@@ -1,0 +1,64 @@
+{# 🔍 BARRE DE RECHERCHE #}
+<input type="text" id="searchInput" class="form-control form-control-lg text-center rounded-pill w-100" placeholder="Rechercher un produit…"/>
+
+ <script>
+const searchInput = document.getElementById('searchInput');
+const pageHome = document.getElementById('pageHome');
+
+// sauvegarde contenu initial
+const initialContent = pageHome.innerHTML;
+
+let debounceTimer = null;
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim();
+
+  clearTimeout(debounceTimer);
+
+  debounceTimer = setTimeout(() => {
+    // 🔁 Si vide → on remet le home
+    if (query.length < 2) {
+      pageHome.innerHTML = initialContent;
+      return;
+    }
+
+    fetch(`/api/products/search?q=${encodeURIComponent(query)}`)
+      .then(r => r.json())
+      .then(products => {
+        pageHome.innerHTML = '';
+
+        if (products.length === 0) {
+          pageHome.innerHTML = `
+            <div class="col-12 text-center text-muted">
+              Aucun résultat
+            </div>
+          `;
+          return;
+        }
+
+        products.forEach(p => {
+          pageHome.innerHTML += `
+            <div class="col-md-6 col-lg-3 my-1">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                  <h5 class="card-title fw-bold">${p.name}</h5>
+
+                  <p class="text-muted small mb-2">
+                    ${p.category ?? ''} ${p.gamme ? '• ' + p.gamme : ''}
+                  </p>
+
+              
+
+                  <a href="/produit/${p.slug}" class="btn btn-outline-primary btn-sm">
+                    Voir le produit
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      });
+  }, 300); // debounce 300ms
+});
+</script>
+

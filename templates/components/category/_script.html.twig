@@ -9,6 +9,7 @@ const categoryId = document.getElementById('category-id');
 const categoryName = document.getElementById('category-name');
 const categoryDescription = document.getElementById('category-description');
 const categoryActive = document.getElementById('category-active');
+const categoryImage = document.getElementById('category-image'); // input file
 
 // =====================
 // LOAD LIST
@@ -20,35 +21,44 @@ function loadCategories() {
       categoryList.innerHTML = '';
 
       data.forEach(c => {
-        categoryList.innerHTML += `
-          <tr class="${c.isActive ? '' : 'table-secondary'}">
-            <td>
-              <strong>${c.name}</strong>
-            </td>
+categoryList.innerHTML += `
+<tr class="${c.isActive ? '' : 'table-secondary'}">
 
-            <td class="text-muted">
-              /${c.slug}
-            </td>
+	<td>
+<img src="${c.image
+		  ? '/uploads/categories/' + c.image
+: '/assets/img/placeholder.jpg'
 
-            <td>
-              ${c.isActive
-                ? '<span class="badge bg-success">Active</span>'
-                : '<span class="badge bg-danger">Inactive</span>'}
-            </td>
+		}"
 
-            <td class="text-end">
-              <button class="btn btn-sm btn-outline-warning me-1"
-                onclick="editCategory(${c.id})">
-                ✏️
-              </button>
+ alt="${c.name}" class="rounded" style="width: 50px; height: 50px; object-fit: cover;">
 
-              <button class="btn btn-sm btn-outline-danger"
-                onclick="deleteCategory(${c.id})">
-                🗑
-              </button>
-            </td>
-          </tr>
-        `;
+	</td>
+
+	<td>
+		<strong>${c.name}</strong>
+	</td>
+
+	<td class="text-muted">
+		${c.description}
+	</td>
+
+	<td>
+		${c.isActive
+		        ? '<span class="badge bg-success">Active</span>'
+			        : '<span class="badge bg-danger">Inactive</span>'}
+	</td>
+
+	<td class="text-end">
+		<button class="btn btn-sm btn-outline-warning me-1" onclick="editCategory(${c.id})">✏️</button>
+
+		<button class="btn btn-sm btn-outline-danger" onclick="deleteCategory(${c.id})">🗑</button>
+	</td>
+
+</tr>
+`;
+
+
       });
     });
 }
@@ -83,23 +93,29 @@ function deleteCategory(id) {
 }
 
 // =====================
-// SUBMIT
+// SUBMIT (VICH / FORMDATA)
 // =====================
 categoryForm.addEventListener('submit', e => {
   e.preventDefault();
 
   const id = categoryId.value;
-  const method = id ? 'PUT' : 'POST';
-  const url = id ? `/api/categories/${id}` : '/api/categories';
+  const method = id ? 'POST' : 'POST'; // PUT simulé
+  const url = id
+    ? `/api/categories/${id}`
+    : '/api/categories';
+
+  const formData = new FormData();
+  formData.append('name', categoryName.value);
+  formData.append('description', categoryDescription.value ?? '');
+  formData.append('isActive', categoryActive.checked ? 1 : 0);
+
+  if (categoryImage && categoryImage.files[0]) {
+    formData.append('image', categoryImage.files[0]);
+  }
 
   fetch(url, {
     method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: categoryName.value,
-      description: categoryDescription.value,
-      isActive: categoryActive.checked,
-    })
+    body: formData
   })
   .then(() => {
     categoryForm.reset();

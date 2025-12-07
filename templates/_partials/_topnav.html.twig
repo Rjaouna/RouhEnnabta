@@ -1,0 +1,83 @@
+<style>
+	.topbar {
+		position: relative;
+		z-index: 1055;
+	}
+
+	.support-dropdown .dropdown-menu {
+		min-width: 220px;
+		z-index: 1060;
+	}
+
+	.support-dropdown .dropdown-item:hover {
+		background-color: #f8f9fa;
+	}
+</style>
+
+
+<div class="bg-white text-dark py-2 d-none d-lg-block border-bottom topbar">
+	<div
+		class="container d-flex justify-content-between align-items-center small">
+
+		{# GAUCHE #}
+		<div class="d-flex align-items-center gap-4">
+
+			<div class="support-dropdown dropdown">
+				<a href="#" class="d-flex align-items-center text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="bi bi-headset text-secondary fs-6 me-2"></i>
+					<span class="fw-medium">Support & assistance</span>
+				</a>
+
+<ul class="dropdown-menu dropdown-menu-start shadow-sm border-0 mt-2 ">
+
+					<li>
+<a class="dropdown-item d-flex align-items-center gap-2 small text-muted" href="https://wa.me/212665922104" target="_blank">
+
+							<i class="bi bi-whatsapp text-success"></i>
+							WhatsApp
+						</a>
+					</li>
+					<li>
+<a class="dropdown-item d-flex align-items-center gap-2 small text-muted" href="{{path('app_contact')}}">
+
+
+
+							<i class="bi bi-envelope text-secondary"></i>
+							Nous contacter
+						</a>
+					</li>
+					<li>
+<a class="dropdown-item d-flex align-items-center gap-2 small text-muted" href="#">
+
+							<i class="bi bi-question-circle text-secondary"></i>
+							Foire aux questions
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<span class="d-flex align-items-center fw-medium">
+				<i class="bi bi-geo-alt text-secondary fs-6 me-2"></i>
+				Produits naturels du Maroc
+			</span>
+
+			<span class="d-flex align-items-center fw-medium text-muted">
+				<i class="bi bi-patch-check text-secondary fs-6 me-2"></i>
+				Référencé sur la plateforme officielle Terroir du Maroc
+			</span>
+
+		</div>
+
+		{# DROITE : RÉSEAUX #}
+		<div class="d-flex align-items-center gap-3">
+			<a href="#" class="text-secondary fs-5">
+				<i class="bi bi-instagram"></i>
+			</a>
+			<a href="#" class="text-secondary fs-5">
+				<i class="bi bi-facebook"></i>
+			</a>
+		</div>
+
+	</div>
+</div>
+

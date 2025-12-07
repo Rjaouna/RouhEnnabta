@@ -1,13 +1,26 @@
 // VARIABLES (optionnel)
-$primary: #0d6efd;
-
+$primary: #003700;
+$secondary: #c2a05c;
 // Bootstrap
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 @import "bootstrap/scss/bootstrap";
 
 // Backoffice custom
-body {
-  background-color: #f8f9fa;
+:root {
+  --font-body: 'Rockwell', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-title: 'Rockwell', 'Inter', sans-serif;
 }
+
+body {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-title);
+}
+
+
 
 .card {
   border-radius: 0.5rem;
@@ -27,4 +40,23 @@ body {
   height: 350px;
   background-size: cover;
   background-position: center;
+}
+.user-badge {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #c2a05c;
+	color: #fff;
+	font-weight: 600;
+	font-size: 0.95rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+	transition: transform .2s ease;
+}
+
+.user-initials:hover {
+	transform: scale(1.05);
 }

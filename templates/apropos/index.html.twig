@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Qui sommes-nous | RouhEnnabta
+{% endblock %}
+
+{% block body %}
+
+{# ================= BLOC 1 : QUI SOMMES-NOUS ================= #}
+<section class="container py-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-10">
+
+			<div class="p-4 p-md-5 border rounded-3 bg-white shadow-sm">
+				<h1 class="fw-bold mb-4" style="color:#003700;">
+					Qui sommes-nous
+				</h1>
+
+				<p class="fs-5 text-muted mb-3">
+					RouhEnnabta est une marque marocaine spécialisée dans la
+										sélection et la valorisation de produits naturels issus
+										du terroir national.
+				</p>
+
+				<p class="fs-5 text-muted mb-0">
+					Notre démarche repose sur la qualité des matières premières,
+										la conformité réglementaire et le respect des standards
+										institutionnels en vigueur.
+				</p>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+{# ================= BLOC 2 : NOTRE ENGAGEMENT ================= #}
+<section class="py-5" style="background-color:#f8f9fa;">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-10">
+
+				<div class="p-4 p-md-5 border-start border-4 shadow-sm bg-white" style="border-color:#c2a05c !important;">
+
+					<h2 class="fw-bold mb-4" style="color:#003700;">
+						Notre engagement
+					</h2>
+
+					<p class="fs-5 text-muted mb-3">
+						RouhEnnabta est une marque marocaine dédiée à la sélection,
+												la valorisation et la distribution de produits naturels issus
+												du riche terroir du Maroc.
+					</p>
+
+					<p class="fs-5 text-muted mb-0">
+						Nous travaillons avec rigueur et transparence afin de garantir
+												des produits conformes aux exigences sanitaires,
+												environnementales et qualitatives, aussi bien pour le marché
+												national qu’international.
+					</p>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+	{# ================= RECONNAISSANCE INSTITUTIONNELLE ================= #}
+	<section class="py-5" style="background-color:#f8f9fa;">
+		<div class="container">
+
+			<div class="text-center mb-5">
+				<h2 class="fw-bold" style="color:#003700;">
+					Reconnaissance institutionnelle
+				</h2>
+				<p class="fs-5 text-muted mt-3 col-lg-8 mx-auto">
+					Une présence officielle sur les plateformes nationales
+									dédiées à la promotion des produits du terroir marocain.
+				</p>
+				<hr class="mx-auto" style="width:90px;border:3px solid #c2a05c;">
+			</div>
+
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="card border-0 shadow-sm">
+						<div class="card-body p-4 p-md-5 text-center">
+
+							<i class="bi bi-patch-check display-4 mb-3" style="color:#c2a05c;"></i>
+
+							<h5 class="fw-semibold mb-3">
+								Référencé sur la plateforme officielle Terroir du Maroc
+							</h5>
+
+							<p class="text-muted fs-5">
+								RouhEnnabta est présent sur la plateforme gouvernementale
+								<a href="https://www.terroirdumaroc.gov.ma/marketplace/seller/profile/shop/RouhEnnabta" target="_blank" class="text-decoration-none fw-semibold" style="color:#003700;">
+									Terroir du Maroc
+								</a>,
+															initiative nationale visant à valoriser les coopératives,
+															producteurs et marques engagées dans la qualité et
+															l’authenticité des produits marocains.
+							</p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	{# ================= CERTIFICATIONS ================= #}
+	<section class="container py-5" id="certifications">
+
+		<div class="text-center mb-5">
+			<h2 class="fw-bold display-6">
+				Nos
+				<span style="color:#c2a05c;">certifications</span>
+				& garanties qualité
+			</h2>
+
+			<p class="fs-5 text-muted mt-3 col-lg-8 mx-auto">
+				Des contrôles officiels et des certifications reconnues
+							garantissant sécurité, traçabilité et conformité réglementaire.
+			</p>
+
+			<hr class="mx-auto" style="width:90px;border:3px solid #003700;">
+		</div>
+
+		<div
+			class="row g-4">
+
+			{# ✅ ECOCERT #}
+			<div class="col-md-4">
+				<div class="card h-100 border-0 shadow-sm text-center">
+					<div class="card-body p-4">
+						<img src="{{ asset('assets/img/ecocerte.jpg') }}" class="img-fluid mb-3" style="max-height:90px;">
+						<h5 class="fw-bold mb-3" style="color:#003700;">ECOCERT</h5>
+						<p class="text-muted small">
+							Organisme international reconnu pour ses standards exigeants
+													en matière de produits naturels et biologiques.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			{# ✅ ONSSA #}
+			<div class="col-md-4">
+				<div class="card h-100 border-0 shadow-sm text-center">
+					<div class="card-body p-4">
+						<img src="{{ asset('assets/img/certification-onssa.jpg') }}" class="img-fluid mb-3" style="max-height:90px;">
+						<h5 class="fw-bold mb-3" style="color:#003700;">ONSSA</h5>
+						<p class="text-muted small">
+							Contrôle et conformité sanitaire des produits alimentaires
+													selon la réglementation marocaine.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			{# ✅ MOROCCO FOODEX #}
+			<div class="col-md-4">
+				<div class="card h-100 border-0 shadow-sm text-center">
+					<div class="card-body p-4">
+						<img src="{{ asset('assets/img/morocco-foodex.png') }}" class="img-fluid mb-3" style="max-height:90px;">
+						<h5 class="fw-bold mb-3" style="color:#003700;">Morocco Foodex</h5>
+						<p class="text-muted small">
+							Promotion officielle et contrôle de l’origine marocaine
+													et de la qualité des produits agroalimentaires.
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="text-center mt-5">
+			<p class="fs-5 fw-semibold text-primary">
+				🌿 RouhEnnabta s’engage à proposer des produits authentiques,
+							sûrs et conformes aux exigences nationales et internationales.
+			</p>
+		</div>
+
+	</section>
+
+{% endblock %}
+

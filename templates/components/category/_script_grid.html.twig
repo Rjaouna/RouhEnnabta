@@ -1,4 +1,6 @@
  <script>
+const sourceImage ='/uploads/categories/'
+
 fetch('/api/categories')
     .then(r => r.json())
     .then(data => {
@@ -7,26 +9,83 @@ fetch('/api/categories')
 
         data
             .filter(c => c.isActive)
-            .slice(0, 4)
+            .slice(0, 10)
             .forEach(c => {
-                grid.innerHTML += `
-                    <div class="col-md-6">
-                        <div
-                            class="category-block d-flex align-items-center justify-content-center text-white rounded"
-style="background-image: url('https://cdn.aroma-zone.com/d_default_placeholder.png/c_scale,q_auto,f_auto,w_1920/v1/cf/0xsz2r7o7t3z/2Ht6z1HPGGzVHQoWDoCM72/7985f57df918d307a6de5ac7b27f86aa/Bandeau_eucalyptus_lavande.jpg');"
+
+                const imageUrl = c.image
+                    ? `/uploads/categories/${c.image}`
+: '/uploads/categories/placeholder.jpg';
+
+grid.innerHTML += `
+<div class="col-12 col-sm-6 col-lg-6">
+<div class="card border-0 shadow overflow-hidden h-100 category-card rounded-4">
 
 
-                        >
-                            <div class="bg-dark bg-opacity-50 p-4 rounded text-center">
-                                <h4 class="fw-bold">${c.name}</h4>
-                                <p class="mb-0">
-                                    ${c.description ?? ''}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+
+
+		<div
+			class="position-relative w-100" style="
+								height: 279px;
+								background-image: url('${imageUrl}');
+								background-repeat: no-repeat;
+								background-size: cover;
+								background-position: center;
+							 ">
+
+			<!-- TEXTE COLLÉ EN BAS -->
+<div class="category-overlay position-absolute mb-3 bottom-0 start-50 translate-middle-x p-4 text-center text-dark fw-bold" style="
+		            background-image: url('/assets/img/fond-categorie.png');
+		            background-repeat: no-repeat;
+		            background-size: cover;
+		            background-position: center;
+		            width: 100%;
+		         ">
+
+
+
+				<p class="mb-0 small">
+<p class="text-primary">
+	${truncate(c.description, 120)}
+</p>
+
+
+				</p>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+`;
+
+
+
+
+
+
             });
     });
-</script>
+	function truncate(text, maxLength = 120) {
+  if (!text) return '';
+  return text.length > maxLength
+    ? text.slice(0, maxLength) + '...'
+    : text;
+}
 
+
+</script>
+<style>
+.category-overlay {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.category-card:hover .category-overlay {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+</style>

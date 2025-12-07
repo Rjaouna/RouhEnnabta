@@ -135,4 +135,36 @@ class ProductController extends AbstractController
 
 		return $this->json(['message' => 'Produit supprimé']);
 	}
+
+	// ===================== Search endpoint =====================
+
+	#[Route('/search', methods: ['GET'])]
+	public function search(
+		Request $request,
+		ProductRepository $repo
+	): JsonResponse {
+		$q = trim((string) $request->query->get('q'));
+
+		if (strlen($q) < 2) {
+			return $this->json([]);
+		}
+
+		$products = $repo->createQueryBuilder('p')
+			->where('p.isActive = true')
+			->andWhere('LOWER(p.name) LIKE :q')
+			->setParameter('q', '%' . strtolower($q) . '%')
+			->setMaxResults(5)
+			->orderBy('p.name', 'ASC')
+			->getQuery()
+			->getResult();
+
+		return $this->json(array_map(fn($p) => [
+			'id'    => $p->getId(),
+			'name'  => $p->getName(),
+			'slug'  => $p->getSlug(),
+			'price' => $p->getSalePrice(),
+			'category' => $p->getCategory()?->getName(),
+			'gamme'    => $p->getGamme()?->getName(),
+		], $products));
+	}
 }

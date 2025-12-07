@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoriesController!{% endblock %}
+
+{% block body %}
+
+<style>
+.floating-nav {
+	position: fixed;
+	right: 20px;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.floating-btn {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	border: none;
+	background: #198754; /* bootstrap success */
+	color: #fff;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 8px 20px rgba(0,0,0,.15);
+	transition: all .3s ease;
+}
+
+.floating-btn:hover {
+	transform: scale(1.1);
+	background: #157347; /* success dark */
+}
+
+</style>
+
+{# ================= SECTIONS ================= #}
+
+<section id="section-categories">
+	{% include 'components/category/_grid.html.twig' %}
+	{% include 'components/category/_script_grid.html.twig' %}
+</section>
+
+<section id="section-certifications" class="d-none">
+	{% include 'certifications/certification.html.twig' %}
+</section>
+<div class="floating-nav">
+
+	<button class="floating-btn" title="Catégories" onclick="showSection('categories')">
+<i class="bi bi-box"></i>
+
+	</button>
+
+	<button class="floating-btn" title="Certifications" onclick="showSection('certifications')">
+<i class="bi bi-patch-check"></i>
+
+	</button>
+
+</div>
+
+
+ <script>
+function showSection(section) {
+    const sections = [
+        'section-categories',
+        'section-certifications'
+    ];
+
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('d-none');
+    });
+
+    const activeSection = document.getElementById('section-' + section);
+    if (activeSection) {
+        activeSection.classList.remove('d-none');
+        activeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+</script>
+
+
+{% endblock %}

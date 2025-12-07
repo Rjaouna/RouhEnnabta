@@ -15,6 +15,18 @@ class ProductImageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProductImage::class);
     }
+    public function searchByName(string $term, int $limit = 10): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.isActive = true')
+            ->andWhere('LOWER(p.name) LIKE :term')
+            ->setParameter('term', '%' . mb_strtolower($term) . '%')
+            ->setMaxResults($limit)
+            ->orderBy('p.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     //    /**
     //     * @return ProductImage[] Returns an array of ProductImage objects

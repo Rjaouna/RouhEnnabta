@@ -55,6 +55,9 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Gammes $gamme = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $contenance = null;
+
     public function __construct()
     {
         $this->productImages = new ArrayCollection();
@@ -223,6 +226,18 @@ class Product
     public function setGamme(?Gammes $gamme): static
     {
         $this->gamme = $gamme;
+
+        return $this;
+    }
+
+    public function getContenance(): ?string
+    {
+        return $this->contenance;
+    }
+
+    public function setContenance(?string $contenance): static
+    {
+        $this->contenance = $contenance;
 
         return $this;
     }

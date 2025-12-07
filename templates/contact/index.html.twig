@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact — RouhEnnabta
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container py-5">
+
+		{# TITRE + INTRO #}
+		<div class="row mb-5">
+			<div class="col-lg-8 mx-auto text-center">
+				<h1 class="fw-bold mb-3" style="color:#003700;">
+					Contactez-nous
+				</h1>
+				<p class="text-muted fs-5">
+					Une question sur nos produits, une demande professionnelle ou un projet de collaboration ?
+					                L’équipe RouhEnnabta est à votre écoute.
+				</p>
+			</div>
+		</div>
+
+		<div
+			class="row g-4">
+			{# BLOC INFOS #}
+			<div class="col-lg-4">
+				<div class="card h-100 shadow-sm border-0">
+					<div class="card-body">
+						<h5 class="fw-bold mb-3" style="color:#003700;">
+							Coordonnées & informations
+						</h5>
+
+						<p class="small text-muted mb-4">
+							Produits naturels du Maroc, certifiés et référencés sur des plateformes officielles.
+						</p>
+
+						<div class="d-flex align-items-start mb-3">
+							<i class="bi bi-geo-alt me-3 fs-5 text-secondary"></i>
+							<div class="small">
+								<strong>RouhEnnabta</strong><br>
+								Produits naturels du Maroc
+							</div>
+						</div>
+
+						<div class="d-flex align-items-start mb-3">
+							<i class="bi bi-envelope me-3 fs-5 text-secondary"></i>
+							<div class="small">
+								<a href="mailto:contact@rouhennabta.com" class="text-decoration-none text-dark">
+									contact@rouhennabta.com
+								</a>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-start mb-3">
+							<i class="bi bi-whatsapp me-3 fs-5 text-success"></i>
+							<div class="small">
+								<a href="https://wa.me/212665922104" target="_blank" class="text-decoration-none text-dark">
+									+212 6 65 92 21 04
+								</a>
+							</div>
+						</div>
+
+						<hr>
+
+						<p class="small text-muted mb-2">
+							<i class="bi bi-patch-check-fill text-secondary me-1"></i>
+							Marque référencée sur la plateforme officielle Terroir du Maroc.
+						</p>
+						<a href="https://www.terroirdumaroc.gov.ma/marketplace/seller/profile/shop/RouhEnnabta" target="_blank" class="small text-decoration-none" style="color:#c2a05c;">
+							Voir la fiche officielle Terroir du Maroc
+							<i class="bi bi-box-arrow-up-right ms-1"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			{# FORMULAIRE CONTACT #}
+			<div class="col-lg-8">
+				<div class="card shadow-sm border-0">
+					<div class="card-body p-4 p-lg-5">
+
+						<h5 class="fw-bold mb-4" style="color:#003700;">
+							Envoyer un message
+						</h5>
+
+						<div id="contact-alert" class="alert d-none" role="alert"></div>
+
+						<form id="contact-form" novalidate>
+							<input type="hidden" name="_token" value="{{ csrf_token('contact_form') }}">
+
+							<div class="row g-3">
+								<div class="col-md-6">
+									<label for="contact_name" class="form-label small fw-semibold">
+										Nom complet
+									</label>
+									<input type="text" class="form-control" id="contact_name" name="name">
+									<div class="invalid-feedback" id="error_name"></div>
+								</div>
+
+								<div class="col-md-6">
+									<label for="contact_email" class="form-label small fw-semibold">
+										Adresse e-mail
+									</label>
+									<input type="email" class="form-control" id="contact_email" name="email">
+									<div class="invalid-feedback" id="error_email"></div>
+								</div>
+
+								<div class="col-12">
+									<label for="contact_subject" class="form-label small fw-semibold">
+										Objet
+									</label>
+									<input type="text" class="form-control" id="contact_subject" name="subject">
+									<div class="invalid-feedback" id="error_subject"></div>
+								</div>
+
+								<div class="col-12">
+									<label for="contact_message" class="form-label small fw-semibold">
+										Votre message
+									</label>
+									<textarea class="form-control" id="contact_message" name="message" rows="5"></textarea>
+									<div class="invalid-feedback" id="error_message"></div>
+								</div>
+							</div>
+
+							<div class="d-flex justify-content-between align-items-center mt-4">
+								<p class="small text-muted mb-0">
+									🔒 Vos informations sont utilisées uniquement pour répondre à votre demande.
+								</p>
+
+								<button type="submit" class="btn px-4" style="background-color:#003700;color:#fff;">
+									<span id="submit-text">Envoyer</span>
+									<span id="submit-spinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+								</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# JS FETCH #}
+	 <script>
+	document.addEventListener('DOMContentLoaded', function () {
+	    const form   = document.getElementById('contact-form');
+	    const alertBox = document.getElementById('contact-alert');
+	    const submitText = document.getElementById('submit-text');
+	    const submitSpinner = document.getElementById('submit-spinner');
+	
+	    const fields = ['name', 'email', 'subject', 'message'];
+	
+	    form.addEventListener('submit', function (e) {
+	        e.preventDefault();
+	
+	        // reset erreurs
+	        alertBox.classList.add('d-none');
+	        alertBox.classList.remove('alert-success', 'alert-danger');
+	        fields.forEach(f => {
+	            const input = document.querySelector('[name="' + f + '"]');
+	            const errorDiv = document.getElementById('error_' + f);
+	            input.classList.remove('is-invalid');
+	            if (errorDiv) errorDiv.textContent = '';
+	        });
+	
+	        // loader
+	        submitText.textContent = 'Envoi en cours...';
+	        submitSpinner.classList.remove('d-none');
+	
+	        const formData = new FormData(form);
+	
+	        fetch('{{ path('app_contact_submit') }}', {
+	            method: 'POST',
+	            body: formData
+	        })
+	            .then(async response => {
+	                const data = await response.json();
+	
+	                // Fin du loader
+	                submitText.textContent = 'Envoyer';
+	                submitSpinner.classList.add('d-none');
+	
+	                if (!response.ok || !data.success) {
+	
+	                    // Erreurs de validation
+	                    if (data.errors) {
+	                        Object.keys(data.errors).forEach(function (field) {
+	                            const input = document.querySelector('[name="' + field + '"]');
+	                            const errorDiv = document.getElementById('error_' + field);
+	                            if (input) {
+	                                input.classList.add('is-invalid');
+	                            }
+	                            if (errorDiv) {
+	                                errorDiv.textContent = data.errors[field];
+	                            }
+	                        });
+	                    }
+	
+	                    alertBox.textContent = data.message || 'Une erreur est survenue. Veuillez réessayer.';
+	                    alertBox.classList.remove('d-none');
+	                    alertBox.classList.add('alert-danger');
+	                    return;
+	                }
+	
+	                // Succès
+	                alertBox.textContent = data.message || 'Votre message a bien été envoyé.';
+	                alertBox.classList.remove('d-none');
+	                alertBox.classList.add('alert-success');
+	                form.reset();
+	            })
+	            .catch(error => {
+	                console.error(error);
+	                submitText.textContent = 'Envoyer';
+	                submitSpinner.classList.add('d-none');
+	
+	                alertBox.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+	                alertBox.classList.remove('d-none');
+	                alertBox.classList.add('alert-danger');
+	            });
+	    });
+	});
+	</script>
+{% endblock %}
+

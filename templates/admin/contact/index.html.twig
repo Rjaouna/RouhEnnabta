@@ -1,0 +1,63 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Messages reçus
+{% endblock %}
+
+{% block body %}
+	<div class="container py-4">
+
+		<h1 class="mb-4 fw-bold">
+			📩 Messages de contact
+		</h1>
+
+		<div class="card shadow-sm border-0">
+			<div class="table-responsive">
+				<table class="table align-middle mb-0">
+					<thead class="table-light">
+						<tr>
+							<th>Nom</th>
+							<th>Email</th>
+							<th>Sujet</th>
+							<th>Statut</th>
+							<th class="text-end">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for contact in contacts %}
+							<tr class="{{ not contact.isRead ? 'fw-bold' }}">
+								<td>{{ contact.name }}</td>
+								<td>{{ contact.email }}</td>
+								<td>{{ contact.subject }}</td>
+
+								<td>
+									{% if contact.isRead %}
+										<span class="badge bg-success">Lu</span>
+									{% else %}
+										<span class="badge bg-warning text-dark">Nouveau</span>
+									{% endif %}
+								</td>
+
+								<td class="text-end">
+									<a href="{{ path('admin_contacts_show', {id: contact.id}) }}" class="btn btn-sm btn-outline-primary">
+										Voir
+									</a>
+
+									<a href="{{ path('admin_contacts_delete', {id: contact.id}) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Supprimer ce message ?')">
+										Supprimer
+									</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="5" class="text-center text-muted py-4">
+									Aucun message
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
