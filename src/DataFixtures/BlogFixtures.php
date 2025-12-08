@@ -178,6 +178,112 @@ et de conservation.
 Condiment, marinades et sauces.
 </p>'
 			],
+			[
+				'name' => 'Henné',
+				'image' => 'henne-maroc.jpg',
+				'content' => '
+<h3>Dénomination</h3>
+<p>
+<strong>Nom scientifique :</strong> Lawsonia inermis<br>
+<strong>Français :</strong> Le henné<br>
+<strong>Arabe :</strong> Al Hinae
+</p>
+
+<h3>Terroir de production</h3>
+<p>
+Le henné est produit principalement dans les régions de Ouarzazate,
+Zagoura et Tata (vallée du Drâa), ainsi que dans les communes d’Assa
+et de Zag, dans la région de Guelmim-Oued Noun.
+</p>
+
+<h3>Spécificités</h3>
+<p>
+Le henné est une culture ancestrale. Il est préparé à partir de feuilles
+récoltées exclusivement à la main, en trois récoltes annuelles entre
+mai et octobre. La poudre obtenue est pure, naturelle, très fine,
+sans additif, de couleur verte claire et à la fragrance intense.
+</p>
+
+<h3>Usages</h3>
+<p>
+Très présent dans les rituels traditionnels marocains (fiançailles,
+mariages, baptêmes), le henné est également utilisé comme soin capillaire
+naturel pour renforcer les cheveux et prévenir leur chute.
+</p>'
+			],
+			[
+				'name' => 'Huile de Figue de Barbarie',
+				'image' => 'figue-de-barbarie-huile.jpg',
+				'content' => '
+<h3>Dénomination</h3>
+<p>
+<strong>Nom scientifique :</strong> Opuntia ficus-indica<br>
+<strong>Appellation en Français :</strong> Cactus<br>
+<strong>Arabe classique :</strong> Assobbar<br>
+<strong>Arabe dialectal :</strong> Zaâboul
+</p>
+
+<h3>Terroir de production</h3>
+<p>
+La figue de barbarie est cultivée dans plusieurs régions du Maroc,
+notamment Aït Baâmrane, Rhamna, Ouled Heddou, Béjaâd, Khouribga,
+Al Hoceima et Zerhoun.
+</p>
+<p>
+Il faut près d’une tonne de figues pour obtenir un litre
+d’huile de figue de barbarie, extraite par pression à froid
+des graines.
+</p>
+
+<h3>Spécificités</h3>
+<p>
+Huile 100 % pure et naturelle, obtenue par première pression à froid
+sans solvant. Elle se caractérise par sa couleur jaune à vert et
+une forte teneur en acide linoléique (environ 60 %).
+</p>
+
+<h3>Usages</h3>
+<p>
+Produit destiné exclusivement à un usage cosmétique.
+</p>'
+			],
+
+			[
+				'name' => 'Amlou',
+				'image' => 'amlou-maroc.jpg',
+				'content' => '
+<h3>Dénomination</h3>
+<p>
+<strong>Appellation en Français :</strong> Amlou<br>
+<strong>Appellation en Arabe / Berbère :</strong> Amlou
+</p>
+
+<h3>Terroir de production</h3>
+<p>
+L’Amlou est une préparation culinaire marocaine ancestrale,
+originaire de la région du Souss, produite dans la même zone
+géographique que l’arganier.
+</p>
+<p>
+Il s’agit d’une pâte à tartiner artisanale composée d’huile
+d’argane, d’amandes grillées et broyées, auxquelles peuvent
+être ajoutés du miel ou du sucre selon les traditions.
+</p>
+
+<h3>Spécificités</h3>
+<p>
+Préparation fortifiante et énergétique, traditionnellement
+servie au petit-déjeuner ou au goûter, sur du pain d’orge,
+de maïs ou de blé. Elle accompagne également les pâtisseries.
+</p>
+
+<h3>Usages</h3>
+<p>
+À consommer en pâte à tartiner sur du pain ou des crêpes,
+ou accompagné d’un thé à la menthe, principalement
+au petit-déjeuner ou au goûter.
+</p>'
+			],
 
 		];
 
