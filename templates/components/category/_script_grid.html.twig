@@ -1,7 +1,12 @@
  <script>
 const sourceImage ='/uploads/categories/'
+const url ='{{path('api_categories')}}'
 
-fetch('/api/categories')
+
+
+fetch(url)
+
+
     .then(r => r.json())
     .then(data => {
         const grid = document.getElementById('category-grid');

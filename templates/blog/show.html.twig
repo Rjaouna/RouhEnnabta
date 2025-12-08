@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ blog.name }}
+{% endblock %}
+
+{% block body %}
+
+	{# ===== HERO / HEADER ===== #}
+	<section class="py-5 bg-light">
+		<div class="container text-center">
+
+			<h1 class="fw-bold display-5 mb-3">
+				{{ blog.name }}
+			</h1>
+
+			<p class="text-muted fs-6 mb-4">
+				<i class="bi bi-calendar3 me-1"></i>
+				Publié le
+				{{ blog.createdAt|date('d/m/Y') }}
+			</p>
+
+			<hr class="border-success border-3 opacity-100 mx-auto" style="width: 90px;">
+
+		</div>
+	</section>
+
+	{# ===== IMAGE + CONTENT ===== #}
+	<section class="py-5">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8">
+
+					{% if blog.image %}
+						<figure class="mb-5">
+							<img src="{{ asset('uploads/blogs/' ~ blog.image) }}" class="img-fluid rounded-4 shadow w-100" alt="{{ blog.name }}" style="max-height: 480px; object-fit: cover;">
+						</figure>
+					{% endif %}
+
+					<article class="fs-5 lh-lg text-muted">
+						{{ blog.content|raw }}
+					</article>
+
+					<hr class="my-5">
+
+					<div class="d-flex justify-content-between align-items-center">
+
+						<a href="{{ path('blog_index') }}" class="btn btn-outline-secondary">
+							<i class="bi bi-arrow-left me-1"></i>
+							Retour au blog
+						</a>
+
+						<span class="text-muted small">
+							<i class="bi bi-bookmark-heart me-1"></i>
+							Article publié
+						</span>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
+
