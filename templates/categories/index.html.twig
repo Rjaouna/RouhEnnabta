@@ -49,41 +49,9 @@
 <section id="section-certifications" class="d-none">
 	{% include 'certifications/certification.html.twig' %}
 </section>
-<div class="floating-nav">
-
-	<button class="floating-btn" title="Catégories" onclick="showSection('categories')">
-<i class="bi bi-box"></i>
-
-	</button>
-
-	<button class="floating-btn" title="Certifications" onclick="showSection('certifications')">
-<i class="bi bi-patch-check"></i>
-
-	</button>
-
-</div>
 
 
- <script>
-function showSection(section) {
-    const sections = [
-        'section-categories',
-        'section-certifications'
-    ];
 
-    sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.add('d-none');
-    });
-
-    const activeSection = document.getElementById('section-' + section);
-    if (activeSection) {
-        activeSection.classList.remove('d-none');
-        activeSection.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-</script>
 
 
 {% endblock %}

@@ -1,104 +1,137 @@
-<div class="container py-5">
-<div class="container text-center mb-5 position-relative" id="certifications">
+<section id="certifications" class="py-5 bg-soft-green">
+	<div class="container">
 
-	<h1 class="fw-bold display-5">
-		Nos
-		<span class="text-secondary">certifications</span>
-		& garanties qualité
-	</h1>
+		<div class="text-center mb-5">
+			<h2 class="fw-bold text-primary-custom">
+				Nos
+				<span class="text-secondary">certifications</span>
+			</h2>
+			<p class="fs-5 text-muted col-lg-8 mx-auto mt-3">
+				Des engagements reconnus et des contrôles rigoureux
+								pour garantir des produits sûrs, authentiques
+								et conformes aux normes les plus exigeantes.
+			</p>
+			<hr class="border-success border-3 opacity-100 mx-auto mt-4" style="width: 80px;">
+		</div>
 
-	<p class="fs-5 text-muted mt-3 col-lg-7 mx-auto">
-		Des engagements reconnus et des contrôles rigoureux
-				pour vous garantir des produits sûrs,
-				authentiques et conformes aux normes les plus exigeantes.
-	</p>
+		<div
+			class="row g-4">
 
-	<hr class="border-success border-3 opacity-100 mx-auto mt-4" style="width: 100px;">
-</div>
+			{# ECOCERT #}
+			<div class="col-md-4">
+				<div class="certification-card h-100 text-center">
 
+					<div class="certification-logo">
+						<img src="{{ asset('assets/img/ecocerte.jpg') }}" alt="Certification Ecocert">
+					</div>
 
-	<div
-		class="row g-4">
+					<h5 class="fw-bold text-primary-custom mt-3">
+						ECOCERT
+					</h5>
 
-		{# ✅ ECOCERT #}
-		<div class="col-md-4">
-			<div class="card h-100 shadow-sm border-0 text-center">
-				<div class="card-body">
-
-					<img src="{{ asset('assets/img/ecocerte.jpg') }}" alt="Certification Ecocert" class="img-fluid mb-3" style="max-height: 90px;">
-
-					<h5 class="fw-bold text-success mb-3">ECOCERT</h5>
-
-					<p class="text-muted small">
-						Ecocert est un organisme international reconnue pour son exigence
+					<p class="text-muted small mt-3">
+						Organisme international reconnu pour son exigence
 												en matière de produits naturels et biologiques.
 					</p>
 
 					<p class="small">
 						Nos matières premières respectent des critères stricts :
-												origine naturelle, procédés respectueux de l’environnement
+												origine naturelle, procédés durables
 												et traçabilité contrôlée.
 					</p>
 				</div>
 			</div>
-		</div>
 
-		{# ✅ ONSSA #}
-		<div class="col-md-4">
-			<div class="card h-100 shadow-sm border-0 text-center">
-				<div class="card-body">
+			{# ONSSA #}
+			<div class="col-md-4">
+				<div class="certification-card h-100 text-center">
 
-					<img src="{{ asset('assets/img/certification-onssa.jpg') }}" alt="Certification ONSSA" class="img-fluid mb-3" style="max-height: 90px;">
+					<div class="certification-logo">
+						<img src="{{ asset('assets/img/certification-onssa.jpg') }}" alt="Certification ONSSA">
+					</div>
 
-					<h5 class="fw-bold text-success mb-3">ONSSA</h5>
+					<h5 class="fw-bold text-primary-custom mt-3">
+						ONSSA
+					</h5>
 
-					<p class="text-muted small">
-						L’Office National de Sécurité Sanitaire des Produits Alimentaires
-												garantit la conformité sanitaire.
+					<p class="text-muted small mt-3">
+						L’Office National de Sécurité Sanitaire
+												garantit la conformité réglementaire.
 					</p>
 
 					<p class="small">
-						Nos produits sont soumis aux contrôles sanitaires en vigueur
-												au Maroc, assurant sécurité, hygiène et conformité réglementaire.
+						Nos produits sont soumis à des contrôles sanitaires
+												rigoureux assurant sécurité,
+												hygiène et conformité.
 					</p>
 				</div>
 			</div>
-		</div>
 
-		{# ✅ MOROCCO FOODEX #}
-		<div class="col-md-4">
-			<div class="card h-100 shadow-sm border-0 text-center">
-				<div class="card-body">
+			{# MOROCCO FOODEX #}
+			<div class="col-md-4">
+				<div class="certification-card h-100 text-center">
 
-					<img src="{{ asset('assets/img/morocco-foodex.png') }}" alt="Morocco Foodex" class="img-fluid mb-3" style="max-height: 90px;">
+					<div class="certification-logo">
+						<img src="{{ asset('assets/img/morocco-foodex.png') }}" alt="Morocco Foodex">
+					</div>
 
-					<h5 class="fw-bold text-success mb-3">Morocco Foodex</h5>
+					<h5 class="fw-bold text-primary-custom mt-3">
+						Morocco Foodex
+					</h5>
 
-					<p class="text-muted small">
-						Morocco Foodex est l’organisme officiel dédié à la promotion
-												et au contrôle des produits agroalimentaires marocains.
+					<p class="text-muted small mt-3">
+						Organisme officiel chargé de la promotion
+												et du contrôle des produits marocains.
 					</p>
 
 					<p class="small">
-						Il atteste de l’origine marocaine, de la qualité et du respect
-												des standards destinés aux marchés nationaux et internationaux.
+						Il atteste de l’origine,
+												de la qualité et du respect
+												des standards nationaux et internationaux.
 					</p>
 				</div>
+			</div>
+
+		</div>
+
+		{# BLOC CONFIANCE #}
+		<div class="row mt-5">
+			<div class="col text-center">
+				<p class="fw-semibold fs-5 text-primary-custom">
+					🌿 RouhEnnabta s’engage à offrir des produits
+										naturels, sûrs et certifiés,
+										pour votre bien-être et votre confiance.
+				</p>
 			</div>
 		</div>
 
 	</div>
+</section>
 
-	{# ✅ BLOC CONFIANCE FINAL #}
-	<div class="row mt-5">
-		<div class="col text-center">
-			<p class="fw-semibold fs-5">
-				🌿 RouhEnnabta s’engage à offrir des produits naturels,
-								sûrs et conformes aux normes les plus exigeantes,
-								pour votre bien-être et votre confiance.
-			</p>
-		</div>
-	</div>
+<style>
+.certification-card {
+	background: #fff;
+	border-radius: 16px;
+	padding: 28px 24px;
+	box-shadow: 0 10px 30px rgba(0,0,0,.06);
+	transition: transform .3s ease, box-shadow .3s ease;
+}
 
-</div>
+.certification-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 16px 40px rgba(0,0,0,.1);
+}
 
+.certification-logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+}
+
+.certification-logo img {
+	max-height: 80px;
+	object-fit: contain;
+}
+
+</style>

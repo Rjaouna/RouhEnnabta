@@ -1,6 +1,32 @@
-// VARIABLES (optionnel)
-$primary: #003700;
-$secondary: #c2a05c;
+// 🌾 Couleurs principales
+$primary:   #c2a05c; // Doré miel (titres, CTA principaux)
+$secondary: #e8dfca; // Beige doux (backgrounds)
+$success:   #8FB397; // Vert naturel (succès, validation)
+
+// 🔴 États & accents
+$danger:    #C45A4A; // Rouge terracotta (erreurs, alertes)
+$warning:   #E3B23C; // Jaune or chaud (attention)
+$info:      #6FA3A8; // Bleu doux (infos, badges)
+
+// ⚫ Texte & lisibilité
+$dark:      #3F3A2C; // Texte principal (parfaits paragraphes)
+$light:     #F6F4EE; // Fonds clairs, cards
+
+// 🩶 Nuances neutres
+$gray-100:  #F9F7F2;
+$gray-200:  #EEE9DC;
+$gray-300:  #D8D2C4;
+$gray-400:  #B6B0A2;
+$gray-500:  #8A8578;
+$gray-600:  #6B665A;
+$gray-700:  #504B40;
+$gray-800:  #3A352B;
+$gray-900:  #26231D;
+
+// 🔗 Liens & interactions
+$link-color:        $primary;
+$link-hover-color:  darken($primary, 10%);
+
 // Bootstrap
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -19,7 +45,9 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: var(--font-title);
 }
-
+.text-muted{
+ color: #3f3a2c !important;
+}
 
 
 .card {
@@ -60,3 +88,4 @@ h1, h2, h3, h4, h5 {
 .user-initials:hover {
 	transform: scale(1.05);
 }
+

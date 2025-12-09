@@ -52,7 +52,7 @@ grid.innerHTML += `
 
 
 				<p class="mb-0 small">
-<p class="text-primary">
+<p class="text-success">
 	${truncate(c.description, 120)}
 
 
@@ -87,17 +87,16 @@ grid.innerHTML += `
 
 </script>
 <style>
-.category-overlay {
-    opacity: 0;
-    transform: translate(-50%, 20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    pointer-events: none;
-}
+	.category-overlay {
+		opacity: 0;
+		transform: translate(-50%, 20px);
+		transition: opacity 0.4s ease, transform 0.4s ease;
+		pointer-events: none;
+	}
 
-.category-card:hover .category-overlay {
-    opacity: 1;
-    transform: translate(-50%, 0);
-    pointer-events: auto;
-}
-
+	.category-card:hover .category-overlay {
+		opacity: 1;
+		transform: translate(-50%, 0);
+		pointer-events: auto;
+	}
 </style>

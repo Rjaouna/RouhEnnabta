@@ -1,0 +1,128 @@
+<section id="recettes" class="py-5">
+	<div
+		class="container">
+
+		<!-- TITRE -->
+		<div class="text-center mb-5">
+			<h3 class="fw-semibold text-success mb-2">
+				Recettes & conseils naturels
+			</h3>
+			<p class="text-muted mb-0">
+				Des idées simples et naturelles pour intégrer huiles, hydrolats et plantes dans votre quotidien.
+			</p>
+		</div>
+
+		<!-- BLOCS -->
+		<div class="row g-4">
+
+			<div class="col-md-4">
+				<div class="recipe-card-success h-100 bg-success shadow-sm">
+					<h5 class="fw-semibold mb-2">
+<img src="{{ asset('assets/img/aroma.png') }}" class="icon-cert" alt="Respiration et bien-être">
+
+Respiration & bien-être
+
+					</h5>
+					<p class="small opacity-90 mb-3">
+						Eucalyptus et menthe poivrée en diffusion ou inhalation pour aider à libérer les voies respiratoires.
+					</p>
+					<a href="#" class="recipe-link-light">
+						Découvrir la recette
+						<i class="bi bi-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+<div class="recipe-card-success h-100 bg-success shadow-sm">
+
+					<h5 class="fw-semibold mb-2">
+<img src="{{ asset('assets/img/facial-massage.png') }}" class="icon-cert" alt="Rituel visage naturel">
+
+
+Rituel visage naturel 
+
+
+					</h5>
+					<p class="small opacity-90 mb-3">
+						Hydrolat floral et huile végétale pour une routine douceur adaptée à tous les types de peau.
+					</p>
+					<a href="#" class="recipe-link-light">
+						Voir le rituel
+						<i class="bi bi-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+<div class="recipe-card-success h-100 bg-success shadow-sm">
+
+					<h5 class="fw-semibold mb-2">
+<img src="{{ asset('assets/img/body-spa.png') }}" class="icon-cert" alt="Massage et relaxation">
+
+
+Massage & relaxation
+
+					</h5>
+					<p class="small opacity-90 mb-3">
+						Synergie d’huiles végétales et essentielles pour favoriser la détente du corps et de l’esprit.
+					</p>
+					<a href="#" class="recipe-link-light">
+						Explorer la recette
+						<i class="bi bi-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</section>
+
+<style>
+.recipe-card-success {
+
+	color: #F6F4EE;
+	border-radius: 20px;
+	padding: 1.8rem;
+	transition: all .35s ease;
+    border-color: #f6f4ee;
+    border-style: solid;
+}
+
+.recipe-card-success h5 {
+	color: #F6F4EE;
+}
+
+.recipe-card-success p {
+	line-height: 1.5;
+}
+
+.recipe-card-success:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 20px 40px rgba(0,0,0,.18);
+}
+
+.recipe-link-light {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: #F6F4EE;
+	text-decoration: none;
+	border-bottom: 1px solid rgba(246,244,238,.6);
+	padding-bottom: 2px;
+	transition: all .25s ease;
+}
+
+.recipe-link-light:hover {
+	color: #FFFFFF;
+	border-color: #FFFFFF;
+}
+.icon-cert {
+	width: 38px;      /* taille idéale pour un icône */
+	height: auto;
+	object-fit: contain;
+}
+</style>

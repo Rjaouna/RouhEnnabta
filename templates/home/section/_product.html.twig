@@ -1,0 +1,169 @@
+<div class="section-divider my-2 text-center flex-column">
+	<h3 class="fw-bold text-success">
+		Nos gammes authentiques
+	</h3>
+
+	<div class="d-flex align-items-center gap-3">
+		<span class="divider-line"></span>
+		<i class="bi bi-leaf-fill"></i>
+		<span class="divider-line"></span>
+	</div>
+</div>
+
+
+
+
+<section class="py-5 bg-light container rounded-4  shadow-sm">
+	<div class="container">
+
+		<div
+			class="row align-items-center">
+
+			<!-- COLONNE CENTRALE -->
+			<div class="col-lg-4 order-lg-2 text-center mb-4 mb-lg-0">
+<h4 class="fw-semibold text-primary  mb-2">
+	Une sélection pensée pour chaque besoin
+</h4>
+<p class="text-muted mb-3">
+	Des gammes élaborées à partir de produits du terroir, certifiés et respectueux du savoir-faire local.
+</p>
+
+				<a href="#" class="btn btn-outline-success rounded-pill px-4 d-none d-lg-inline-flex align-items-center gap-2">
+					Voir plus
+					<i class="bi bi-arrow-right"></i>
+				</a>
+			</div>
+
+			<!-- COLONNE GAUCHE (DESKTOP) -->
+			<div class="col-lg-4 order-lg-1 d-none d-lg-block">
+				<div class="row g-3">
+					{% for cat in [
+['Agrumes', 'agrumes.png'],
+
+
+['Fleurs', 'fleur.png'],
+
+
+['Plantes', 'plante.png'],
+
+
+['Herbacées', 'the.png']
+
+                    ] %}
+						<div class="col-6">
+							<a href="#" class="category-card">
+<img src="{{asset('uploads/gammes/')}}{{cat[1]}}" alt="">
+
+								<span>{{ cat[0] }}</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<!-- COLONNE DROITE (DESKTOP) -->
+			<div class="col-lg-4 order-lg-3 d-none d-lg-block">
+				<div class="row g-3">
+					{% for cat in [
+['Épices', 'epices.png'],
+
+
+
+['Aiguilles', 'romarin.png'],
+
+
+['Médicinales', 'herbes-medicinales.png'],
+
+
+['Fruits', 'des-legumes.png']
+
+
+                    ] %}
+						<div class="col-6">
+							<a href="#" class="category-card">
+<img src="{{asset('uploads/gammes/')}}{{cat[1]}}" alt="">
+
+								<span>{{ cat[0] }}</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+		</div>
+
+<!-- MOBILE GRID -->
+<div class="d-lg-none mt-4">
+	<div class="row g-3">
+		{% for label in [
+			'Miels & Amlou',
+			'Huiles alimentaires',
+			'Bien-être',
+			'Semoules & farines',
+			'Épices & condiments',
+			'Fruits secs',
+			'Hydrolats & huiles essentielles',
+			'Thés & Tisanes'
+		] %}
+			<div class="col-6">
+				<a href="#" class="category-card text-center">
+					<span>{{ label }}</span>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+
+
+	</div>
+</section>
+
+<style>
+.section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+color: #8FB397;
+
+}
+
+.divider-line {
+    width: 80px;
+    height: 1px;
+    background-color: rgba(63,58,44,.3);
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    background: #fff;
+    border-radius: 16px;
+    text-decoration: none;
+    color: #3F3A2C;
+    font-weight: 500;
+    text-align: center;
+    transition: all .35s ease;
+    min-height: 120px;
+}
+
+.category-card img {
+    width: 42px;
+    margin-bottom: .6rem;
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,.12);
+    color: #c2a05c;
+}
+
+/* Mobile */
+.category-card.mobile {
+    min-width: 160px;
+}
+</style>

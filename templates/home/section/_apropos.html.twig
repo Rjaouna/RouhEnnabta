@@ -1,0 +1,215 @@
+<section
+	id="apropos" class="py-5 position-relative">
+	<!-- Décor léger -->
+	<div class="leaf-bg"></div>
+
+	<div
+		class="container position-relative">
+
+		<!-- TITRE -->
+		<div class="text-center mb-5">
+			<h2 class="fw-bold text-primary mb-2">
+				L’essence de
+				<span class="text-success">RouhEnnabta</span>
+			</h2>
+
+			<div class="d-flex justify-content-center align-items-center gap-3">
+				<span class="divider-line"></span>
+				<i class="bi bi-leaf-fill text-success"></i>
+				<span class="divider-line"></span>
+			</div>
+
+			<p class="text-muted mt-3 col-lg-7 mx-auto">
+				Une marque engagée, où tradition marocaine et exigences modernes
+								se rencontrent pour offrir le meilleur du naturel.
+			</p>
+		</div>
+
+		<div
+			class="row g-4 align-items-stretch">
+
+			<!-- COL TEXTE -->
+			<div class="col-lg-6">
+				<div class="content-card h-100">
+
+					<h4 class="fw-semibold text-primary mb-3">
+						Une marque enracinée dans le naturel
+					</h4>
+
+					<p class="text-muted">
+						RouhEnnabta est née d’une passion pour les plantes,
+												les traditions marocaines et le bien-être naturel.
+												Chaque produit est sélectionné avec exigence,
+												dans le respect du savoir-faire local.
+					</p>
+
+					<p class="text-muted mb-4">
+						Notre engagement : vous offrir des produits
+												authentiques, sûrs et efficaces,
+												conçus pour un usage quotidien et responsable.
+					</p>
+
+<p class="mb-2">
+	Parcourez toutes nos références :
+	<a href="#" class="text-success fw-semibold text-decoration-none boutique-link">
+		huiles essentielles, hydrolats, huiles végétales et plantes
+	</a>
+	et créez votre propre routine bien-être naturelle.
+</p>
+
+
+
+
+				</div>
+			</div>
+
+			<!-- COL CERTIFICATIONS -->
+			<div class="col-lg-6">
+				<div class="content-card h-100">
+
+					<h4 class="fw-bold text-success mb-4">
+<img src="{{ asset('assets/img/certificate.png') }}" class="icon-cert" alt="Certifications qualité">
+
+
+Certifications & garanties qualité
+
+					</h4>
+
+					<div class="row g-4">
+
+						<div class="col-md-4">
+							<div class="cert-card">
+								<img src="{{ asset('assets/img/ecocerte.jpg') }}" alt="Ecocert">
+								<h6>ECOCERT</h6>
+								<p>Naturalité & traçabilité certifiées</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="cert-card">
+								<img src="{{ asset('assets/img/certification-onssa.jpg') }}" alt="ONSSA">
+								<h6>ONSSA</h6>
+								<p>Sécurité & conformité sanitaire</p>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="cert-card">
+								<img src="{{ asset('assets/img/morocco-foodex.png') }}" alt="Foodex">
+								<h6>Foodex Maroc</h6>
+								<p>Origine marocaine contrôlée</p>
+							</div>
+						</div>
+
+					</div>
+
+<div class="trust-footer mt-4">
+	<i class="bi bi-shield-check text-success fs-4"></i>
+
+	<span>
+		Des engagements vérifiés pour une confiance totale —
+		<a href="{{ path('app_certifications') }}" class="trust-link">
+			en savoir plus
+		</a>
+	</span>
+</div>
+
+
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</section>
+<style>
+.icon-cert {
+	width: 38px;      /* taille idéale pour un icône */
+	height: auto;
+	object-fit: contain;
+}
+
+.divider-line {
+	width: 70px;
+	height: 2px;
+	background: #8FB397;
+}
+
+/* Carte principale (texte + certifs) */
+.content-card {
+	background: linear-gradient(145deg, #ffffff, #F6F4EE);
+	border-radius: 20px;
+	padding: 2.5rem;
+	box-shadow: 0 12px 30px rgba(0,0,0,.07);
+}
+
+/* Liste avantages */
+.advantages li {
+	display: flex;
+	align-items: center;
+	gap: .6rem;
+	margin-bottom: .6rem;
+	color: #3F3A2C;
+}
+
+.advantages i {
+	color: #8FB397;
+}
+
+/* Certifications */
+.cert-card {
+	text-align: center;
+	background: #fff;
+	border-radius: 18px;
+	padding: 1.6rem 1rem;
+	box-shadow: 0 10px 25px rgba(0,0,0,.08);
+	transition: all .35s ease;
+	height: 100%;
+}
+
+.cert-card img {
+	max-width: 100px;
+	margin-bottom: .6rem;
+}
+
+.cert-card h6 {
+	margin: .4rem 0;
+	font-weight: 600;
+	color: #3F3A2C;
+}
+
+.cert-card p {
+	font-size: .85rem;
+	color: #6c757d;
+	margin: 0;
+}
+
+.cert-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 20px 40px rgba(0,0,0,.15);
+}
+
+/* Footer confiance */
+.trust-footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: .5rem;
+	font-size: .9rem;
+	color: #6c757d;
+	margin-top: 1.5rem;
+}
+
+/* Décor feuille subtil */
+.leaf-bg {
+	position: absolute;
+	top: -60px;
+	right: -60px;
+	width: 200px;
+	height: 200px;
+	background: rgba(143,179,151,.15);
+	border-radius: 50%;
+	filter: blur(40px);
+}
+</style>

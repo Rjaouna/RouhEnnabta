@@ -1,4 +1,6 @@
-<section class="py-4 bg-light">
+<section class="py-4">
+
+
 	<div class="container text-center mb-5 position-relative">
 
 		<h1 class="fw-bold display-5">
@@ -26,5 +28,114 @@ class="row g-4" id="category-grid">
 </div>
 
 </div></section>
+
+ <script>
+const sourceImage ='/uploads/categories/'
+const url ='{{path('api_categories')}}'
+
+
+
+fetch(url)
+
+
+    .then(r => r.json())
+    .then(data => {
+        const grid = document.getElementById('category-grid');
+        grid.innerHTML = '';
+
+        data
+            .filter(c => c.isActive)
+            .slice(0, 10)
+            .forEach(c => {
+
+                const imageUrl = c.image
+                    ? `/uploads/categories/${c.image}`
+: '/uploads/categories/placeholder.jpg';
+const link = `/categories/${c.slug}`;
+
+grid.innerHTML += `
+<div class="col-12 col-sm-6 col-lg-6">
+<a href="${link}" class="text-decoration-none text-dark">
+
+<div class="card border-0 shadow overflow-hidden h-100 category-card rounded-4">
+
+
+
+
+		<div
+			class="position-relative w-100" style="
+								height: 279px;
+								background-image: url('${imageUrl}');
+								background-repeat: no-repeat;
+								background-size: cover;
+								background-position: center;
+							 ">
+
+			<!-- TEXTE COLLÉ EN BAS -->
+<div class="category-overlay position-absolute mb-3 bottom-0 start-50 translate-middle-x p-4 text-center text-dark fw-bold" style="
+		            background-image: url('/assets/img/fond-categorie.png');
+		            background-repeat: no-repeat;
+		            background-size: cover;
+		            background-position: center;
+		            width: 100%;
+		         ">
+
+
+
+				<p class="mb-0 small">
+<p class="text-primary">
+	${truncate(c.description, 120)}
+
+
+
+</p>
+
+
+				</p>
+			</div>
+
+		</div>
+
+	</div>
+	</a>
+</div>
+`;
+
+
+
+
+
+
+            });
+    });
+	function truncate(text, maxLength = 120) {
+  if (!text) return '';
+  return text.length > maxLength
+    ? text.slice(0, maxLength) + '...'
+    : text;
+}
+
+
+</script>
+<style>
+	.category-overlay {
+		opacity: 0;
+		transform: translate(-50%, 20px);
+		transition: opacity 0.4s ease, transform 0.4s ease;
+		pointer-events: none;
+	}
+
+	.category-card:hover .category-overlay {
+		opacity: 1;
+		transform: translate(-50%, 0);
+		pointer-events: auto;
+	}
+</style>
+
+{% include 'home/section/_product.html.twig' %}
+
+
+{% include 'home/section/_recipe.html.twig' %}
+
 
 

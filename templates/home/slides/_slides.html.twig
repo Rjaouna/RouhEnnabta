@@ -1,0 +1,156 @@
+<section id="promotions" class="py-4">
+
+	<div id="promoCarousel" class="carousel slide carousel-fade container px-0" data-bs-ride="carousel" data-bs-interval="5500">
+
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="0" class="active"></button>
+			<button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="1"></button>
+			<button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="2"></button>
+		</div>
+
+		<div
+			class="carousel-inner rounded-4 shadow-sm overflow-hidden">
+
+			<!-- SLIDE 1 -->
+			<div class="carousel-item active">
+				<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/huiles-essentielles.png') }}')">
+
+					<div class="promo-overlay"></div>
+
+					<div class="promo-content-wrapper">
+						<div class="promo-content text-center">
+							<h1 class="fw-bold mb-2 text-primary">
+								Huiles essentielles
+							</h1>
+							<h5 class="mb-3 text-dark">
+								Concentré de bienfaits naturels pour le corps et l’esprit
+							</h5>
+							<a href="#" class="btn btn-primary btn-sm px-4">
+								Découvrir
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- SLIDE 2 -->
+			<div class="carousel-item">
+<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/huile-lavande.png') }}')">
+
+
+					<div class="promo-overlay"></div>
+
+					<div class="promo-content-wrapper">
+						<div class="promo-content text-center">
+							<h1 class="fw-bold mb-2 text-primary">
+								Hydrolats floraux
+							</h1>
+							<h5 class="mb-3 text-dark">
+								Douceur et fraîcheur pour le soin quotidien de la peau
+							</h5>
+							<a href="#" class="btn btn-primary btn-sm px-4">
+								Voir la gamme
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- SLIDE 3 -->
+			<div class="carousel-item">
+<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/huile-citron.png') }}')">
+
+
+					<div class="promo-overlay"></div>
+
+					<div class="promo-content-wrapper">
+						<div class="promo-content text-center">
+							<h1 class="fw-bold mb-2 text-primary">
+								Herbes aromatiques
+							</h1>
+							<h5 class="mb-3 text-dark">
+								Saveurs et vertus des plantes médicinales
+							</h5>
+							<a href="#" class="btn btn-primary btn-sm px-4">
+								Explorer
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		</button>
+
+		<button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</button>
+
+	</div>
+</section>
+<style>
+.promo-slide {
+	position: relative;
+	width: 100%;
+	height: 500px; /* desktop */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* ✅ Mobile FIX */
+@media (max-width: 768px) {
+	.promo-slide {
+		height: 70vh;              /* hauteur fluide */
+		min-height: 300px;
+		max-height: 420px;
+		background-size: cover;   /* ✅ clé du fix */
+		background-position: center;
+	}
+}
+
+/* Overlay */
+.promo-overlay {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(
+		circle at center,
+		rgba(255,255,255,0.85) 0%,
+		rgba(255,255,255,0.55) 45%,
+		rgba(255,255,255,0.25) 70%,
+		transparent 100%
+	);
+	z-index: 1;
+}
+
+.promo-content-wrapper {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.promo-content {
+	padding: 2rem 2.5rem;
+	border-radius: 20px;
+	max-width: 620px;
+}
+
+@media (max-width: 768px) {
+	.promo-content {
+		padding: 1.2rem;
+		max-width: 90%;
+	}
+}
+
+</style>

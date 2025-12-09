@@ -1,34 +1,45 @@
 {{ include('_partials/_topnav.html.twig') }}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg navbar-primary bg-secondary shadow-sm sticky-top fw-semibold">
 	<div class="container">
 
 		<a class="navbar-brand d-flex align-items-center gap-2" href="{{ path('app_home') }}">
-			<img src="{{ asset('assets/img/logo-rouh-ennabta.png') }}" alt="RouhEnnabta" height="55">
+			<img src="{{ asset('assets/img/logo-rouh-ennabta.png') }}" height="55" alt="RouhEnnabta">
 		</a>
+<div class="d-flex align-items-center gap-2 d-lg-none">
+<button class="btn btn-light rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal">
+<i class="bi bi-search fs-4"></i>
 
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+</button>
+
+	<button class="btn btn-light rounded-circle" type="button" data-bs-toggle="modal" data-bs-target="#mobileMenu">
+		<i class="bi bi-list fs-4"></i>
+	</button>
+
+
+</div>
+
+
+
+
 
 		<div class="collapse navbar-collapse" id="mainNavbar">
 
-			<ul class="navbar-nav mx-auto fw-semibold gap-lg-4 align-items-lg-center">
+			<ul class="navbar-nav mx-auto fw-light gap-lg-4 align-items-lg-center">
 
-			
-{# ✅ UNIVERS – SOUS-BRILLANCE #}
-<li class="nav-item">
-	<a class="nav-link d-flex align-items-center gap-2 " href="{{ path('app_categories') }}">
-		<i class="bi bi-flower1"></i>
-		Univers RouhEnnabta
-	</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_certifications') }}">
-		<i class="bi bi-patch-check"></i>
-		Certifications
-	</a>
-</li>
+				<li class="nav-item">
+					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_categories') }}">
+						<i class="bi bi-flower1"></i>
+						Univers RouhEnnabta
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_certifications') }}">
+						<i class="bi bi-patch-check"></i>
+						Certifications
+					</a>
+				</li>
 
 				<li class="nav-item">
 					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('app_apropos') }}">
@@ -37,83 +48,71 @@
 					</a>
 				</li>
 
-			
-
-				
-
 				<li class="nav-item">
 					<a class="nav-link d-flex align-items-center gap-2" href="#">
 						<i class="bi bi-calendar-event"></i>
 						Événements & salons
 					</a>
 				</li>
-<li class="nav-item">
-<a class="nav-link d-flex align-items-center gap-2" href="{{ path('blog_index') }}">
 
-<i class="bi bi-journal-text"></i>
-
-		Blog
-	</a>
-</li>
-
+				<li class="nav-item">
+					<a class="nav-link d-flex align-items-center gap-2" href="{{ path('blog_index') }}">
+						<i class="bi bi-journal-text"></i>
+						Blog
+					</a>
+				</li>
 
 			</ul>
 
-			<div
-				class="d-flex align-items-center gap-3">
+			<div class="d-flex align-items-center gap-3">
 
-				{# 🔍 SEARCH #}
 				<button class="btn btn-light rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal">
-					<i class="bi bi-search text-secondary"></i>
+					<i class="bi bi-search"></i>
 				</button>
 
-				{# 👤 USER #}
-				<button class="btn btn-outline-secondary btn-sm rounded-circle
-											d-flex align-items-center justify-content-center" style="width:38px;height:38px;" data-bs-toggle="modal" data-bs-target="{% if app.user %}#userModal{% else %}#accountModal{% endif %}" aria-label="Mon compte">
-					<i class="bi bi-person "></i>
+				<button class="btn btn-light rounded-circle" data-bs-toggle="modal" data-bs-target="{% if app.user %}#userModal{% else %}#accountModal{% endif %}">
+					<i class="bi bi-person"></i>
 				</button>
 
 			</div>
-
 		</div>
 	</div>
 </nav>
-
 
 
 <div class="modal fade" id="searchModal" tabindex="-1">
 	<div class="modal-dialog modal-lg modal-dialog-centered">
 		<div class="modal-content border-0 shadow">
 
-			<div class="modal-header">
-				<h5 class="modal-title fw-bold">
-					🔍 Rechercher un produit
+			<div class="modal-header bg-secondary border-0">
+				<h5 class="fw-bold">
+					<i class="bi bi-search"></i>
+					Rechercher un produit
 				</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				<button class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
-			<div class="modal-body">
-
-				<input type="text" id="searchInput" class="form-control form-control-lg mb-4" placeholder="Tapez le nom d’un produit…" autocomplete="off"/>
+			<div class="modal-body bg-secondary border-0">
+				<input type="text" id="searchInput" class="form-control form-control-lg mb-4 border-0" placeholder="Tapez le nom d’un produit…" autocomplete="off">
 
 				<div id="searchResults" class="row g-3"></div>
-
 			</div>
 
 		</div>
 	</div>
 </div>
 
+
  <script>
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
-
 let timer = null;
 
 if (searchInput) {
 	searchInput.addEventListener('input', () => {
-		const q = searchInput.value.trim();
+
 		clearTimeout(timer);
+		const q = searchInput.value.trim();
 
 		timer = setTimeout(() => {
 
@@ -123,47 +122,44 @@ if (searchInput) {
 			}
 
 			fetch(`/api/products/search?q=${encodeURIComponent(q)}`)
-				.then(r => r.json())
+				.then(r => {
+					if (!r.ok) throw new Error('Erreur API');
+					return r.json();
+				})
 				.then(products => {
+
 					searchResults.innerHTML = '';
 
 					if (!products.length) {
 						searchResults.innerHTML = `
 							<div class="col-12 text-center text-muted">
 								Aucun résultat trouvé
-							</div>
-						`;
+							</div>`;
 						return;
 					}
 
-
-
-
-
 					products.forEach(p => {
-const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
-			
-			const linkProduct = productShowPath.replace('SLUG', p.slug);
+						const url = "{{ path('product_show', {slug:'SLUG'}) }}".replace('SLUG', p.slug);
 
 						searchResults.innerHTML += `
 							<div class="col-12">
 								<div class="d-flex justify-content-between align-items-center border-bottom py-3">
 									<div>
-										<h6 class="mb-1 fw-semibold">${p.name}</h6>
-										<small class="text-muted">
-											${p.category ?? ''} ${p.gamme ? '• ' + p.gamme : ''}
-										</small>
+										<strong>${p.name}</strong><br>
+										<small class="text-muted">${p.category ?? ''}</small>
 									</div>
-<a href="${linkProduct}" class="btn btn-sm btn-outline-success">
-
-
-										Voir
-									</a>
+									<a href="${url}" class="btn btn-sm btn-outline-success">Voir</a>
 								</div>
-							</div>
-						`;
+							</div>`;
 					});
+				})
+				.catch(() => {
+					searchResults.innerHTML = `
+						<div class="text-center text-danger">
+							Erreur de recherche
+						</div>`;
 				});
+
 		}, 300);
 	});
 }
@@ -175,7 +171,7 @@ const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
 
 			<div class="modal-header">
 				<h5 class="modal-title fw-semibold">Accès à votre espace</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				<button class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
 			<div class="modal-body px-4">
@@ -187,7 +183,7 @@ const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
 					<a href="{{ path('app_login') }}" class="btn btn-success">Connexion</a>
 					<a href="#" class="btn btn-outline-secondary">Créer un compte</a>
 					<hr>
-					<a href="#" class="btn btn-outline-dark">Devenir franchisé</a>
+					<a href="#" class="btn btn-outline-dark">Devenir partenaire</a>
 				</div>
 			</div>
 
@@ -206,20 +202,14 @@ const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
 
 				<div class="modal-header">
 					<h5 class="modal-title fw-semibold">Mon compte</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					<button class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 
 				<div class="modal-body text-center px-4">
-
-					<div class="mb-4">
-						<div class="rounded-circle bg-light d-inline-flex justify-content-center align-items-center mb-2" style="width:56px;height:56px;">
-							<i class="bi bi-person fs-4 text-secondary"></i>
-						</div>
-						<p class="fw-medium mb-0">{{ app.user.email }}</p>
-					</div>
+					<p class="fw-semibold mb-3">{{ app.user.email }}</p>
 
 					<div class="d-grid gap-2">
-						<a href="#" class="btn btn-outline-secondary">Mon profil</a>
+						<a href="#" class="btn btn-outline-primary">Mon profil</a>
 
 						{% if is_granted('ROLE_ADMIN') %}
 							<a href="{{ path('admin_dashboard') }}" class="btn btn-outline-dark">Back-office</a>
@@ -228,11 +218,6 @@ const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
 						<hr>
 						<a href="{{ path('app_logout') }}" class="btn btn-danger">Déconnexion</a>
 					</div>
-
-				</div>
-
-				<div class="modal-footer small text-muted justify-content-center">
-					Session active — accès sécurisé
 				</div>
 
 			</div>
@@ -240,3 +225,122 @@ const productShowPath = "{{ path('product_show', {'slug': 'SLUG'}) }}";
 	</div>
 {% endif %}
 
+{# ================= MENU MOBILE FULLSCREEN ================= #}
+<div class="modal fade" id="mobileMenu" tabindex="-1">
+	<div class="modal-dialog modal-fullscreen">
+		<div
+			class="modal-content bg-soft-green">
+
+			{# HEADER #}
+			<div class="modal-header border-0 justify-content-between align-items-center">
+				<img src="{{ asset('assets/img/logo-rouh-ennabta.png') }}" height="48" alt="RouhEnnabta">
+				<button class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+
+			{# BODY #}
+			<div class="modal-body d-flex flex-column">
+
+				<nav class="mobile-nav">
+
+					<a href="{{ path('app_categories') }}" class="mobile-link">
+						<i class="bi bi-flower1"></i>
+						Univers RouhEnnabta
+					</a>
+
+					<a href="{{ path('app_certifications') }}" class="mobile-link">
+						<i class="bi bi-patch-check"></i>
+						Certifications
+					</a>
+
+					<a href="{{ path('app_apropos') }}" class="mobile-link">
+						<i class="bi bi-info-circle"></i>
+						À propos
+					</a>
+
+					<a href="#" class="mobile-link">
+						<i class="bi bi-calendar-event"></i>
+						Événements & salons
+					</a>
+
+					<a href="{{ path('blog_index') }}" class="mobile-link">
+						<i class="bi bi-journal-text"></i>
+						Blog
+					</a>
+
+				</nav>
+
+				<hr
+				class="my-4">
+
+				{# AUTH MOBILE #}
+				{% if app.user %}
+					<p class="text-center fw-semibold mb-3">{{ app.user.email }}</p>
+
+					<a href="#" class="btn btn-outline-primary w-100 mb-2">
+						Mon profil
+					</a>
+
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('admin_dashboard') }}" class="btn btn-outline-dark w-100 mb-2">
+							Back-office
+						</a>
+					{% endif %}
+
+					<a href="{{ path('app_logout') }}" class="btn btn-danger w-100">
+						Déconnexion
+					</a>
+				{% else %}
+					<a href="{{ path('app_login') }}" class="btn btn-success w-100 mb-2">
+						Connexion
+					</a>
+
+					<a href="#" class="btn btn-outline-primary w-100">
+						Créer un compte
+					</a>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+<style>
+	.bg-soft-green {
+		background: #F7F6F2;
+	}
+
+	.mobile-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin-top: 10px;
+	}
+
+	.mobile-link {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 14px 18px;
+		background: #fff;
+		border-radius: 14px;
+		font-weight: 600;
+		color: #3F5F4C;
+		text-decoration: none;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.mobile-link i {
+		color: #c2a05c;
+		font-size: 1.3rem;
+	}
+
+	.mobile-link:hover {
+		transform: translateX(6px);
+		box-shadow: 0 12px 28px rgba(0, 0, 0, .12);
+		color: #3F5F4C;
+	}
+</style>
+
+</style>
