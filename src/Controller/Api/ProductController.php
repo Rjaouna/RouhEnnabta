@@ -43,8 +43,10 @@ class ProductController extends AbstractController
 				'salePrice' => $p->getSalePrice(),
 				'stock' => $p->getStock(),
 				'isActive' => $p->isActive(),
-				'category' => $p->getCategory()?->getName(),
-				'gamme' => $p->getGamme()?->getName(),
+				'category' => $p->getCategory()?->getId(),
+				'gamme' => $p->getGamme()?->getId(),
+				'categoryName' => $p->getCategory()?->getName(),
+				'gammeName' => $p->getGamme()?->getName(),
 
 				// ✅ CE QUE TON JS ATTEND
 				'mainImage' => $mainImage

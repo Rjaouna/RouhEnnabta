@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
@@ -252,5 +254,17 @@ class Product
 
         // si aucune image principale, on prend la première
         return $this->productImages->first() ?: null;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function generateSlug(): void
+    {
+        if (empty($this->name)) {
+            return;
+        }
+
+        $slugger = new AsciiSlugger();
+        $this->slug = strtolower($slugger->slug($this->name)->toString());
     }
 }

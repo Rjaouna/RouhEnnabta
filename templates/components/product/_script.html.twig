@@ -58,8 +58,8 @@ productMargin.addEventListener('input', calcPrice);
 function loadProducts() {
   fetch('/api/products')
     .then(r => r.json())
-    .then(data => {
-		console.log(data);
+.then(data => {
+
       productList.innerHTML = '';
       data.forEach(p => {
 		const imageUrl = p.mainImage
@@ -101,13 +101,15 @@ function loadProducts() {
 
   <td>
     <span class="badge bg-secondary">
-      ${p.category ?? '-'}
+${p.categoryName  ?? '-'}
+
     </span>
   </td>
 
   <td>
     <span class="badge bg-warning text-dark">
-      ${p.gamme ?? '-'}
+${p.gammeName  ?? '-'}
+
     </span>
   </td>
 
@@ -172,6 +174,7 @@ function editProduct(id) {
 
       calcPrice();
     });
+    
 }
 
 // =====================

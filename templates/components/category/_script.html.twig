@@ -75,10 +75,17 @@ function editCategory(id) {
       categoryDescription.value = c.description ?? '';
       categoryActive.checked = c.isActive;
 
-      const modal = bootstrap.Modal.getOrCreateInstance(
-        document.getElementById('categoryModal')
-      );
-      modal.show();
+
+
+     const modalEl = document.getElementById('categoryModal');
+const modal = bootstrap.Modal.getInstance(modalEl);
+
+if (modal) {
+  modal.hide();
+}
+
+
+
     });
 }
 
