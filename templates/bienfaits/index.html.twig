@@ -1,0 +1,29 @@
+{% extends 'layouts/admin.html.twig' %}
+
+
+{% block body %}
+	<div class="container mt-4">
+		<h2>Gestion des Bienfaits</h2>
+
+		<button class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#createModal">
+			Ajouter un bienfait
+		</button>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Description</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="bienfaitsTable"></tbody>
+		</table>
+	</div>
+
+	{% include 'bienfaits/modal_create.html.twig' %}
+	{% include 'bienfaits/modal_edit.html.twig' %}
+
+	 <script src="/js/bienfaits.js"></script>
+{% endblock %}
+

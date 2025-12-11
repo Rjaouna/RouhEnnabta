@@ -1,0 +1,35 @@
+{# ----------------------------------------------------------- #}
+{#                      MODALE AJOUT                           #}
+{# ----------------------------------------------------------- #}
+
+	<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true"> <div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title">Ajouter un bienfait</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+
+			<div class="modal-body">
+
+				<label class="form-label fw-semibold">Description :</label>
+				<textarea id="newDescription" class="form-control mb-3" placeholder="Entrez la description..."></textarea>
+
+				<label class="form-label fw-semibold">Produits associés :</label>
+				<select id="newProducts" class="form-select" multiple>
+					{% for product in products %}
+						<option value="{{ product.id }}">{{ product.name }}</option>
+					{% endfor %}
+				</select>
+
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+				<button class="btn btn-primary" onclick="createBienfait()">Créer</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+

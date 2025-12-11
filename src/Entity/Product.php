@@ -60,9 +60,30 @@ class Product
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $contenance = null;
 
+    /**
+     * @var Collection<int, Bienfaits>
+     */
+    #[ORM\ManyToMany(targetEntity: Bienfaits::class, mappedBy: 'product')]
+    private Collection $bienfaits;
+
+    /**
+     * @var Collection<int, Recettes>
+     */
+    #[ORM\ManyToMany(targetEntity: Recettes::class, mappedBy: 'product')]
+    private Collection $recettes;
+
+    /**
+     * @var Collection<int, Precaution>
+     */
+    #[ORM\ManyToMany(targetEntity: Precaution::class, mappedBy: 'product')]
+    private Collection $precautions;
+
     public function __construct()
     {
         $this->productImages = new ArrayCollection();
+        $this->bienfaits = new ArrayCollection();
+        $this->recettes = new ArrayCollection();
+        $this->precautions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,5 +287,86 @@ class Product
 
         $slugger = new AsciiSlugger();
         $this->slug = strtolower($slugger->slug($this->name)->toString());
+    }
+
+    /**
+     * @return Collection<int, Bienfaits>
+     */
+    public function getBienfaits(): Collection
+    {
+        return $this->bienfaits;
+    }
+
+    public function addBienfait(Bienfaits $bienfait): static
+    {
+        if (!$this->bienfaits->contains($bienfait)) {
+            $this->bienfaits->add($bienfait);
+            $bienfait->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBienfait(Bienfaits $bienfait): static
+    {
+        if ($this->bienfaits->removeElement($bienfait)) {
+            $bienfait->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recettes>
+     */
+    public function getRecettes(): Collection
+    {
+        return $this->recettes;
+    }
+
+    public function addRecette(Recettes $recette): static
+    {
+        if (!$this->recettes->contains($recette)) {
+            $this->recettes->add($recette);
+            $recette->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecette(Recettes $recette): static
+    {
+        if ($this->recettes->removeElement($recette)) {
+            $recette->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Precaution>
+     */
+    public function getPrecautions(): Collection
+    {
+        return $this->precautions;
+    }
+
+    public function addPrecaution(Precaution $precaution): static
+    {
+        if (!$this->precautions->contains($precaution)) {
+            $this->precautions->add($precaution);
+            $precaution->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrecaution(Precaution $precaution): static
+    {
+        if ($this->precautions->removeElement($precaution)) {
+            $precaution->removeProduct($this);
+        }
+
+        return $this;
     }
 }

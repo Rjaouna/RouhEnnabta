@@ -1,0 +1,100 @@
+{% extends 'layouts/admin.html.twig' %}
+
+
+{% block body %}
+	<div class="container mt-4">
+
+		<h2 class="mb-4">Gestion des Précautions</h2>
+
+		<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
+			Ajouter une précaution
+		</button>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Description</th>
+					<th>Produits</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="precautionsTable"></tbody>
+		</table>
+	</div>
+
+
+	{# ----------------------- MODALE CREATE ---------------------- #}
+
+	<div class="modal fade" id="createModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h5 class="modal-title">Ajouter une précaution</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<div class="modal-body">
+
+					<label class="fw-semibold">Description :</label>
+					<textarea id="newDescription" class="form-control mb-3"></textarea>
+
+					<label class="fw-semibold">Produits associés :</label>
+					<select id="newProducts" class="form-select" multiple>
+						{% for product in products %}
+							<option value="{{ product.id }}">{{ product.name }}</option>
+						{% endfor %}
+					</select>
+
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					<button class="btn btn-primary" onclick="createPrecaution()">Créer</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	{# ----------------------- MODALE EDIT ---------------------- #}
+
+	<div class="modal fade" id="editModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h5 class="modal-title">Modifier une précaution</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<div class="modal-body">
+
+					<input type="hidden" id="editId">
+
+					<label class="fw-semibold">Description :</label>
+					<textarea id="editDescription" class="form-control mb-3"></textarea>
+
+					<label class="fw-semibold">Produits associés :</label>
+					<select id="editProducts" class="form-select" multiple>
+						{% for product in products %}
+							<option value="{{ product.id }}">{{ product.name }}</option>
+						{% endfor %}
+					</select>
+
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					<button class="btn btn-success" onclick="updatePrecaution()">Mettre à jour</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	 <script src="/js/precautions.js"></script>
+{% endblock %}
+

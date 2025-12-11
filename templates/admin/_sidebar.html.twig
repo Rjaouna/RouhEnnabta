@@ -6,26 +6,34 @@
 	}
 
 	.admin-sidebar h4 {
-		font-size: 1.1rem;
-		letter-spacing: 0.5px;
+		font-size: 1.15rem;
+		letter-spacing: 0.3px;
 	}
 
 	.admin-sidebar .nav-link {
-		color: rgba(255, 255, 255, .8);
+		color: rgba(255, 255, 255, 0.85);
 		padding: 0.55rem 0.75rem;
 		border-radius: 0.375rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.6rem;
+		transition: 0.2s;
+	}
+
+	.admin-sidebar .nav-link span {
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
 	}
 
 	.admin-sidebar .nav-link:hover {
-		background-color: rgba(255, 255, 255, .08);
+		background-color: rgba(255, 255, 255, 0.08);
 		color: #fff;
 	}
 
 	.admin-sidebar .nav-link.active {
-		background-color: rgba(255, 255, 255, .12);
+		background-color: rgba(255, 255, 255, 0.18);
 		color: #fff;
 		font-weight: 600;
 	}
@@ -35,68 +43,90 @@
 	}
 
 	.admin-sidebar hr {
-		border-color: rgba(255, 255, 255, .15);
+		border-color: rgba(255, 255, 255, 0.15);
 	}
 </style>
 
 <aside class="admin-sidebar vh-100 p-3 d-flex flex-column">
 
-	<h4 class="mb-4 fw-semibold">
-		Back-Office
-	</h4>
+	<h4 class="mb-4 fw-semibold">Back-Office</h4>
 
 	<ul class="nav flex-column gap-1 flex-grow-1">
 
 		<li>
-			<a href="{{ path('admin_dashboard') }}" class="nav-link {{ app.request.attributes.get('_route') == 'admin_dashboard' ? 'active' }}">
-				<i class="bi bi-speedometer2"></i>
-				Dashboard
+			<a href="{{ path('admin_dashboard') }}" class="nav-link {{ app.request.get('_route') == 'admin_dashboard' ? 'active' }}">
+				<span>
+					<i class="bi bi-speedometer2"></i>
+					Dashboard
+				</span>
 			</a>
 		</li>
 
 		<li>
-			<a href="{{ path('admin_category_index') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_category' ? 'active' }}">
-				<i class="bi bi-folder"></i>
-				Catégories
+			<a href="{{ path('admin_category_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_category' ? 'active' }}">
+				<span>
+					<i class="bi bi-folder"></i>
+					Catégories
+				</span>
 			</a>
 		</li>
 
 		<li>
-			<a href="{{ path('admin_gammes_index') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_gammes' ? 'active' }}">
-				<i class="bi bi-grid"></i>
-				Gammes
+			<a href="{{ path('admin_gammes_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_gammes' ? 'active' }}">
+				<span>
+					<i class="bi bi-grid"></i>
+					Gammes
+				</span>
 			</a>
 		</li>
 
 		<li>
-			<a href="{{ path('admin_product_index') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_product' ? 'active' }}">
-				<i class="bi bi-box-seam"></i>
-				Produits
+			<a href="{{ path('admin_product_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_product' ? 'active' }}">
+				<span>
+					<i class="bi bi-box-seam"></i>
+					Produits
+				</span>
 			</a>
 		</li>
 
-		{# ✅ BLOG #}
+		{# ⭐ BIENFAITS #}
 		<li>
-			<a href="{{ path('admin_blog_page') }}" class="nav-link {{ app.request.attributes.get('_route') starts with 'admin_blog' ? 'active' }}">
-				<i class="bi bi-journal-text"></i>
-				Blog
+			<a href="{{ path('admin_bienfaits_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_bienfaits' ? 'active' }}">
+				<span>
+					<i class="bi bi-heart-pulse"></i>
+					Bienfaits
+				</span>
 			</a>
 		</li>
 
-		{# ✅ MESSAGES #}
+		{# ⭐ PRÉCAUTIONS — AJOUT ICI #}
 		<li>
-			<a href="{{ path('admin_contacts') }}" class="nav-link d-flex justify-content-between align-items-center
-									   {{ app.request.attributes.get('_route') starts with 'admin_contact' ? 'active' }}">
+			<a href="{{ path('admin_precautions_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_precautions' ? 'active' }}">
+				<span>
+					<i class="bi bi-shield-exclamation"></i>
+					Précautions
+				</span>
+			</a>
+		</li>
 
-				<span class="d-flex align-items-center gap-2">
+		<li>
+			<a href="{{ path('admin_blog_page') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_blog' ? 'active' }}">
+				<span>
+					<i class="bi bi-journal-text"></i>
+					Blog
+				</span>
+			</a>
+		</li>
+
+		<li>
+			<a href="{{ path('admin_contacts') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_contact' ? 'active' }}">
+				<span>
 					<i class="bi bi-envelope"></i>
 					Messages
 				</span>
 
 				{% if unreadMessages is defined and unreadMessages > 0 %}
-					<span class="badge bg-danger rounded-pill">
-						{{ unreadMessages }}
-					</span>
+					<span class="badge bg-danger">{{ unreadMessages }}</span>
 				{% endif %}
 			</a>
 		</li>
@@ -105,8 +135,10 @@
 
 		<li>
 			<a href="{{ path('app_home') }}" class="nav-link">
-				<i class="bi bi-globe"></i>
-				Voir le site
+				<span>
+					<i class="bi bi-globe"></i>
+					Voir le site
+				</span>
 			</a>
 		</li>
 
@@ -114,8 +146,10 @@
 
 	<div class="mt-auto">
 		<a href="{{ path('app_logout') }}" class="nav-link text-danger">
-			<i class="bi bi-box-arrow-right"></i>
-			Déconnexion
+			<span>
+				<i class="bi bi-box-arrow-right"></i>
+				Déconnexion
+			</span>
 		</a>
 	</div>
 
