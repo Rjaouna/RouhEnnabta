@@ -108,6 +108,16 @@
 				</span>
 			</a>
 		</li>
+<li>
+	<a href="{{ path('admin_recettes_index') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_recettes' ? 'active' }}">
+		<span>
+			<i class="bi bi-egg-fried"></i>
+			Recettes
+		</span>
+	</a>
+</li>
+
+
 
 		<li>
 			<a href="{{ path('admin_blog_page') }}" class="nav-link {{ app.request.get('_route') starts with 'admin_blog' ? 'active' }}">

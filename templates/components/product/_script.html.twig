@@ -174,7 +174,7 @@ function editProduct(id) {
 
       calcPrice();
     });
-    
+ 
 }
 
 // =====================
@@ -215,10 +215,9 @@ productForm.addEventListener('submit', e => {
     productId.value = '';
     loadProducts();
 
-   // ✅ FERMETURE AUTOMATIQUE DU MODAL
-    const modalEl = document.getElementById('categoryModal');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    if (modal) modal.hide();
+    const modalEl = document.getElementById('productModal');
+const modal = bootstrap.Modal.getInstance(modalEl);
+if (modal) modal.hide();
   });
   function generateSlug(text) {
   return text

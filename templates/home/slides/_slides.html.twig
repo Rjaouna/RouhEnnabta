@@ -1,4 +1,4 @@
-<section id="promotions" class="py-4">
+<section id="promotions" class="py-4 px-2">
 
 	<div id="promoCarousel" class="carousel slide carousel-fade container px-0" data-bs-ride="carousel" data-bs-interval="5500">
 
@@ -13,7 +13,9 @@
 
 			<!-- SLIDE 1 -->
 			<div class="carousel-item active">
-				<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/huiles-essentielles.png') }}')">
+<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/slide-huiles-essentielles-naturelles.png') }}')">
+
+
 
 					<div class="promo-overlay"></div>
 
@@ -36,7 +38,9 @@
 
 			<!-- SLIDE 2 -->
 			<div class="carousel-item">
-<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/huile-lavande.png') }}')">
+<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/slide-hydrolat-lavande.png') }}')">
+
+
 
 
 					<div class="promo-overlay"></div>
@@ -60,7 +64,9 @@
 
 			<!-- SLIDE 3 -->
 			<div class="carousel-item">
-<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/huile-citron.png') }}')">
+<div class="promo-slide" style="background-image:url('{{ asset('uploads/slides/slide-aromatherapie-produits-naturels.png') }}')">
+
+
 
 
 					<div class="promo-overlay"></div>
@@ -106,7 +112,10 @@
 	align-items: center;
 	justify-content: center;
 }
-
+html, body {
+    overflow-x: hidden !important;
+    width: 100%;
+}
 /* ✅ Mobile FIX */
 @media (max-width: 768px) {
 	.promo-slide {

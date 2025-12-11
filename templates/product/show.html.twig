@@ -5,129 +5,499 @@
 {% endblock %}
 
 {% block body %}
-	<section class="container py-5">
 
-		<div class="row g-5">
+	<style>
+		/* STYLE GLOBAL */
+		.product-title {
+			font-weight: 800;
+			letter-spacing: -0.5px;
+		}
 
-			{# ===================================== #}
-			{# COLONNE IMAGES                        #}
-			{# ===================================== #}
-				<div class="col-lg-6"> {% set mainImage = null %}
+		.section-title {
+			color: #0f3d2e;
+			font-weight: 700;
+			font-size: 1.9rem;
+		}
 
-				{# On cherche l’image principale #}
-				{% for img in product.productImages %}
-					{% if img.isMain %}
-						{% set mainImage = img %}
+		.card-fiche {
+			background: #fff;
+			border-radius: 18px;
+			padding: 20px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+		}
+
+		.badge-info {
+			background: #e8f5e9;
+			color: #0f3d2e;
+			font-weight: 600;
+			padding: 6px 14px;
+			border-radius: 20px;
+		}
+
+		.badge-promo {
+			background: #ffebe6;
+			color: #d33;
+			font-weight: 700;
+			padding: 6px 14px;
+			border-radius: 20px;
+			font-size: 0.9rem;
+		}
+
+		.price-box {
+			background: white;
+			border-radius: 15px;
+			padding: 15px;
+			box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
+		}
+
+		.price-old {
+			text-decoration: line-through;
+			color: #888;
+			font-size: 0.95rem;
+		}
+
+		.price-new {
+			color: #d33;
+			font-size: 1.4rem;
+			font-weight: 700;
+		}
+
+		.thumb-active {
+			border: 3px solid #0f3d2e !important;
+		}
+
+		.description-box {
+			background: white;
+			border-radius: 15px;
+			padding: 20px;
+			box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
+			line-height: 1.7;
+			font-size: 1.05rem;
+		}
+
+		#toggleDescription {
+			color: #0f3d2e;
+			font-weight: 600;
+		}
+
+
+
+		.info-block {
+	background: #F6F4EE; /* ton light */
+	border-radius: 16px;
+	border: 1px solid #e5dfd2;
+	box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.block-title {
+	color: #3F3A2C; /* ton dark */
+	font-weight: 700;
+	font-size: 1.25rem;
+	border-left: 4px solid #c2a05c; /* primary doré */
+	padding-left: 10px;
+}
+
+.bullet-item {
+	position: relative;
+	padding-left: 18px;
+	color: #3F3A2C;
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+.bullet-item::before {
+	content: "";
+	width: 8px;
+	height: 8px;
+	background: #8FB397; /* vert naturel */
+	border-radius: 50%;
+	position: absolute;
+	left: 0;
+	top: 7px;
+}
+
+	</style>
+{# =============== HEADER PRODUIT =============== #}
+<section class="product-header d-flex align-items-center" style="
+background-image: url('{{ asset('assets/img/huiles-essentielles-et-aromatherapie-3.jpg') }}');
+
+				background-size: cover;
+				background-position: center;
+				min-height: 220px;
+			">
+
+	<div class="container">
+
+		<div class="text-white">
+			<nav class="mb-2 small" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_home') }}" class="text-light text-decoration-none">Accueil</a>
+					</li>
+
+					{% if product.category %}
+						<li class="breadcrumb-item">
+							<a href="{{ path('app_categories') }}" class="text-light text-decoration-none">
+								Catégories
+							</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="{{ path('category_show', {slug: product.category.slug}) }}" class="text-light text-decoration-none">
+								{{ product.category.name }}
+							</a>
+						</li>
 					{% endif %}
-				{% endfor %}
 
-				{# Sinon on prend la première #}
-				{% if mainImage == null and product.productImages|length > 0 %}
-					{% set mainImage = product.productImages|first %}
-				{% endif %}
+					<li class="breadcrumb-item active text-light" aria-current="page">
+						{{ product.name }}
+					</li>
+				</ol>
+			</nav>
 
-				<div class="bg-light rounded-4 p-3 shadow-sm mb-3 text-center">
-					{% if mainImage %}
-						<img id="mainProductImage" src="{{ asset('uploads/products/' ~ mainImage.filename) }}" class="img-fluid rounded-3" alt="{{ mainImage.alt ?: product.name }}">
-					{% else %}
-						<img id="mainProductImage" src="{{ asset('assets/img/placeholder-product.jpg') }}" class="img-fluid rounded-3" alt="{{ product.name }}">
+			<h1 class="fw-bold" style="color:white; text-shadow:0 2px 6px rgba(0,0,0,.4);">
+				{{ product.name }}
+			</h1>
+		</div>
+
+	</div>
+</section>
+
+
+
+	<section class="container pt-5">
+
+		<div
+			class="row g-5">
+
+			{# =============== IMAGES PRODUIT =============== #}
+			<div class="col-lg-6">
+
+				{% set mainImage = product.getMainImage() %}
+
+				<div
+					class="card-fiche text-center position-relative mb-3">
+
+					{# BADGE PROMO #}
+					{% if product.salePrice %}
+						<div class="badge-promo position-absolute" style="top:15px; left:15px;">
+							Promo
+						</div>
 					{% endif %}
+
+					<img id="mainProductImage" class="img-fluid rounded-3" src="{{ mainImage ? asset('uploads/products/' ~ mainImage.filename) : asset('assets/img/placeholder-product.jpg') }}">
 				</div>
 
-				{# ✅ MINI GALERIE CLIQUABLE #}
 				{% if product.productImages|length > 1 %}
 					<div class="d-flex gap-3 flex-wrap mt-3">
 						{% for image in product.productImages %}
-							<img src="{{ asset('uploads/products/' ~ image.filename) }}" class="img-thumbnail product-thumb rounded-3 shadow-sm {% if image == mainImage %}active{% endif %}" style="width:90px;height:90px;object-fit:cover;cursor:pointer" alt="{{ image.alt ?: product.name }}" data-image="{{ asset('uploads/products/' ~ image.filename) }}">
+							<img src="{{ asset('uploads/products/' ~ image.filename) }}" class="img-thumbnail rounded-4 shadow-sm product-thumb {% if image == mainImage %}thumb-active{% endif %}" style="width:95px;height:95px;object-fit:cover;cursor:pointer;transition:.2s" data-image="{{ asset('uploads/products/' ~ image.filename) }}">
 						{% endfor %}
 					</div>
 				{% endif %}
-
 			</div>
 
-			{# ===================================== #}
-			{# COLONNE INFOS PRODUIT                 #}
-			{# ===================================== #}
-				<div class="col-lg-6"> {% if product.category %}
-					<div class="mb-2">
-						<a href="{{ path('category_show', { slug: product.category.slug }) }}" class="text-decoration-none small fw-semibold" style="color:#c2a05c;">
-							{{ product.category.name }}
-						</a>
-					</div>
+
+			{# =============== INFORMATIONS PRODUIT =============== #}
+			<div class="col-lg-6">
+
+				{% if product.category %}
+					<span class="badge-info mb-2 d-inline-block">
+						<i class="bi bi-tag"></i>
+						{{ product.category.name }}
+					</span>
 				{% endif %}
 
-				<h1 class="fw-bold mb-3" style="color:#003700;">
-					{{ product.name }}
-				</h1>
+				<h1 class="product-title text-success ">{{ product.name }}</h1>
 
-				<p class="text-muted fs-5">
-					{{ product.description }}
-				</p>
 
-				<hr class="my-4">
+{# ----------- PRIX (nouveau style en ligne) ----------- #}
+{% if product.salePrice or product.price %}
+	<div class="d-flex align-items-center gap-3 p-3 rounded-4" >
 
-				<div class="row g-3 mb-4">
+		{% if product.salePrice %}
+			<span class="price-old m-0" style="font-size:1rem; color:#8a8a8a;">
+				{{ product.price }}
+				€
+			</span>
+
+			<span class="price-new m-0" style="font-size:1.6rem; color:#d03333; font-weight:800;">
+				{{ product.salePrice }}
+				€
+			</span>
+
+			{# POURCENTAGE DE RÉDUCTION (automatique) #}
+			{% set reduction = ((product.price - product.salePrice) / product.price * 100) | round(0) %}
+			<span class="badge rounded-pill" style="background:#ffebe6; color:#d03333; font-weight:700; padding:6px 14px;">
+				-{{ reduction }}%
+			</span>
+
+		{% else %}
+			<span class="m-0" style="font-size:1.6rem; color:#0f3d2e; font-weight:700;">
+				{{ product.price }}
+				€
+			</span>
+		{% endif %}
+
+	</div>
+{% endif %}
+
+
+
+
+				{# ----------- DESCRIPTION COURTE ----------- #}
+				<div class="description-box mb-3" id="descriptionContainer" style="overflow:hidden; max-height:8.2em;">
+					{{ product.description|nl2br }}
+				</div>
+
+				<button id="toggleDescription" class="btn btn-link p-0 mb-4">
+					Afficher la suite
+				</button>
+
+
+				{# ----------- INFOS IMPORTANTES ----------- #}
+				<div class="row gy-2">
 
 					{% if product.gamme %}
 						<div class="col-6">
-							<div class="border rounded-3 p-3 text-center small">
-								<div class="fw-semibold">Gamme</div>
-								<div class="text-muted">{{ product.gamme.name }}</div>
+							<div class="card-fiche text-center p-2">
+								<div class="fw-bold small">Gamme</div>
+								<div class="text-muted small">{{ product.gamme.name }}</div>
 							</div>
 						</div>
 					{% endif %}
 
 					{% if product.contenance %}
 						<div class="col-6">
-							<div class="border rounded-3 p-3 text-center small">
-								<div class="fw-semibold">Contenance</div>
-								<div class="text-muted">{{ product.contenance }}</div>
+							<div class="card-fiche text-center p-2">
+								<div class="fw-bold small">Contenance</div>
+								<div class="text-muted small">{{ product.contenance }}</div>
 							</div>
 						</div>
 					{% endif %}
 
+
 				</div>
 
-				<div class="d-flex gap-3 flex-wrap">
+
+				<div class="mt-4 d-flex gap-3">
 					<a href="{{ path('app_contact') }}" class="btn btn-success btn-lg px-4">
-						Nous contacter
+						<i class="bi bi-envelope"></i>
+						Contact
 					</a>
 
-					<a href="{{ path('app_categories') }}" class="btn btn-outline-secondary btn-lg px-4">
-						Voir autres produits
+					<a href="{{ path('app_categories') }}" class="btn btn-outline-dark btn-lg px4">
+						Voir d'autres produits
 					</a>
 				</div>
 
 			</div>
-
 		</div>
 	</section>
+<section class="container my-5">
 
-	{# ===================================== #}
-	{# JS GALERIE                             #}
-	{# ===================================== #}
+	<h2 class="section-title mb-4">Informations détaillées</h2>
+
+	<div
+		class="row g-4">
+
+		{# =============== COLONNE 1 - Bienfaits =============== #}
+		{% if product.bienfaits|length > 0 %}
+			<div class="col-lg-4">
+				<div class="info-block p-4">
+
+					<h4 class="block-title mb-3">Bienfaits</h4>
+
+					<div class="toggle-box" style="max-height:140px; overflow:hidden;">
+						<ul class="list-unstyled">
+							{% for b in product.bienfaits %}
+								<li class="mb-2 bullet-item">{{ b.description|raw }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+
+					<button class="btn btn-link p-0 toggle-btn mt-2 small text-success">
+						Lire plus
+					</button>
+
+				</div>
+			</div>
+		{% endif %}
+
+		{# =============== COLONNE 2 - Précautions =============== #}
+		{% if product.precautions|length > 0 %}
+			<div class="col-lg-4">
+				<div class="info-block p-4">
+
+					<h4 class="block-title mb-3">Précautions</h4>
+
+					<div class="toggle-box" style="max-height:140px; overflow:hidden;">
+						<ul class="list-unstyled">
+							{% for p in product.precautions %}
+								<li class="mb-2 bullet-item">{{ p.description|raw }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+
+					<button class="btn btn-link p-0 toggle-btn mt-2 small text-success">
+						Lire plus
+					</button>
+
+				</div>
+			</div>
+		{% endif %}
+
+		{# =============== COLONNE 3 - Recette du jour =============== #}
+		{% if product.recettes|length > 0 %}
+			{% set randomRecette = product.recettes|shuffle|first %}
+
+			<div class="col-lg-4">
+				<div class="info-block p-4">
+
+					<h4 class="block-title mb-3">Recette du jour</h4>
+
+					<div class="toggle-box" style="max-height:140px; overflow:hidden;">
+						<p class="mb-2">{{ randomRecette.description|raw }}</p>
+					</div>
+
+					<button class="btn btn-link p-0 toggle-btn mt-2 small text-success">
+						Lire plus
+					</button>
+
+					<a href="#" class="d-block mt-3 text-success fw-semibold small text-decoration-none">
+						Voir toutes les recettes →
+					</a>
+
+				</div>
+			</div>
+		{% endif %}
+
+	</div>
+
+</section>
+
+
+
+{% if relatedProducts is defined and relatedProducts|length > 0 %}
+	<section class="container my-5">
+
+		<h2 class="section-title mb-4">Produits de la même gamme</h2>
+
+		<div class="row g-4">
+			{% for p in relatedProducts|slice(0, 3) %}
+				<div class="col-12 col-md-4">
+
+					<div
+						class="border rounded-4 shadow-sm h-100 p-3 bg-white">
+
+						{# IMAGE #}
+						<div class="position-relative mb-3">
+							{% set img = p.getMainImage() %}
+							<img
+							src="{{ img ? asset('uploads/products/' ~ img.filename) : asset('assets/img/placeholder-product.jpg') }}" class="w-100 rounded-3" style="height:180px; object-fit:cover;">
+
+							{# BADGE PRIX OU BADGE GAMME #}
+							{% if p.salePrice %}
+								<span class="badge bg-danger position-absolute top-0 end-0 m-2">
+									Promo
+								</span>
+							{% else %}
+								<span class="badge bg-success position-absolute top-0 end-0 m-2">
+									{{ p.gamme.name }}
+								</span>
+							{% endif %}
+						</div>
+
+						{# CONTENU #}
+						<div>
+							<h3 class="h5 text-success fw-semibold">{{ p.name }}</h3>
+
+							<p class="text-muted small">
+								{{ p.description|striptags|slice(0, 100) ~ '...' }}
+							</p>
+
+							<div class="d-flex justify-content-between align-items-center mt-3">
+
+								{% if p.salePrice %}
+									<span class="fw-bold text-danger">
+										{{ p.salePrice }}
+										€
+									</span>
+								{% else %}
+									<span class="text-muted fw-semibold">
+										{{ p.price }}
+										€
+									</span>
+								{% endif %}
+
+								<a href="{{ path('product_show', {slug: p.slug}) }}" class="btn btn-outline-success btn-sm">
+									Voir le produit
+								</a>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			{% endfor %}
+		</div>
+
+	</section>
+{% endif %}
+
+
+
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".toggle-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const box = btn.previousElementSibling;
+
+            if (box.style.maxHeight === "none") {
+                box.style.maxHeight = "140px";
+                btn.textContent = "Lire plus";
+            } else {
+                box.style.maxHeight = "none";
+                btn.textContent = "Réduire";
+            }
+        });
+    });
+
+});
+</script>
+
+
+
 	 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const mainImage = document.getElementById('mainProductImage');
-		const thumbs = document.querySelectorAll('.product-thumb');
+	document.addEventListener("DOMContentLoaded", () => {
+	
+		/* --- Galerie --- */
+		const mainImage = document.getElementById("mainProductImage");
+		const thumbs = document.querySelectorAll(".product-thumb");
 	
 		thumbs.forEach(thumb => {
-			thumb.addEventListener('click', () => {
-				thumbs.forEach(t => t.classList.remove('active'));
-				thumb.classList.add('active');
+			thumb.addEventListener("click", () => {
+				thumbs.forEach(t => t.classList.remove("thumb-active"));
+				thumb.classList.add("thumb-active");
 				mainImage.src = thumb.dataset.image;
 			});
+		});
+	
+	
+		/* --- Description courte --- */
+		const box = document.getElementById("descriptionContainer");
+		const btn = document.getElementById("toggleDescription");
+	
+		let open = false;
+	
+		btn.addEventListener("click", () => {
+			open = !open;
+			box.style.maxHeight = open ? "none" : "8.2em";
+			btn.textContent = open ? "Réduire" : "Afficher la suite";
 		});
 	});
 	</script>
 
-		<style>
-.product-thumb.active {
-	border: 2px solid #003700;
-}
-.product-thumb:hover {
-	transform: scale(1.07);
-	transition: 0.2s ease;
-}
-</style>{% endblock %}
+{% endblock %}
 

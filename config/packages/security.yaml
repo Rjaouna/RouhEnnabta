@@ -48,6 +48,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
 
         # API (ADMIN ONLY POUR LE MOMENT)
+        - { path: ^/api, roles: PUBLIC_ACCESS, methods: [GET] }
         - { path: ^/api, roles: ROLE_ADMIN }
 
 # -----------------------------------
