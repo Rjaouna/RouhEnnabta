@@ -45,6 +45,7 @@ security:
     # -----------------------------------
     access_control:
         # ADMIN INTERFACE
+        - { path: ^/admin, roles: PUBLIC_ACCESS, methods: [GET] }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
         # API (ADMIN ONLY POUR LE MOMENT)
