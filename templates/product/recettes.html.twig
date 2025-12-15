@@ -1,0 +1,283 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Recettes –
+	{{ product.name }}
+{% endblock %}
+
+{% block body %}
+
+	{# ================= HERO PRODUIT ================= #}
+<section class="product-header d-flex align-items-center" style="
+		background-image: url('{{ asset('assets/img/huiles-essentielles-et-aromatherapie-3.jpg') }}');
+		
+						background-size: cover;
+						background-position: center;
+						min-height: 220px;
+					">
+
+		<div
+			class="container text-white">
+
+			{# FIL D’ARIANE #}
+			<nav aria-label="breadcrumb" class="mb-3">
+				<ol class="breadcrumb mb-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_home') }}" class="text-white text-decoration-none">Accueil</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{ path('category_show', { slug: product.category.slug }) }}" class="text-white text-decoration-none">
+							{{ product.category.name }}
+						</a>
+					</li>
+					<li class="breadcrumb-item active text-white" aria-current="page">
+						{{ product.name }}
+					</li>
+				</ol>
+			</nav>
+
+			<h1 class="fw-bold mb-2">
+				{{ product.name }}
+			</h1>
+
+			<p class="fs-5 opacity-75 mb-0">
+				Utilisations naturelles & recettes à base de
+				{{ product.name }}
+			</p>
+
+		</div>
+	</section>
+
+	{# ================= FICHE PRODUIT ================= #}
+	<section class="container py-5">
+
+		<div
+			class="row align-items-center g-5">
+
+			{# IMAGE #}
+			<div class="col-md-5 text-center">
+				{% set mainImage = product.mainImage %}
+				{% if mainImage %}
+					<img src="{{ asset('uploads/products/' ~ mainImage.filename) }}" class="img-fluid rounded-4 shadow-sm" alt="{{ product.name }}">
+				{% else %}
+					<img src="{{ asset('assets/img/placeholder-product.jpg') }}" class="img-fluid rounded-4 shadow-sm" alt="{{ product.name }}">
+				{% endif %}
+			</div>
+
+			{# INFOS PRODUIT #}
+			<div class="col-md-7">
+
+				<h2 class="fw-semibold mb-3">
+					À propos de ce produit
+				</h2>
+
+				<p class="text-muted fs-5">
+					{{ product.description }}
+				</p>
+
+				<div class="row g-3 mt-4">
+
+					<div class="col-md-4">
+						<div class="border rounded-4 p-3 text-center">
+							<i class="bi bi-leaf text-success fs-3"></i>
+							<p class="mb-0 small text-muted">100% naturel</p>
+						</div>
+					</div>
+
+					{% if product.contenance %}
+						<div class="col-md-4">
+							<div class="border rounded-4 p-3 text-center">
+								<i class="bi bi-droplet text-success fs-3"></i>
+								<p class="mb-0 small text-muted">{{ product.contenance }}</p>
+							</div>
+						</div>
+					{% endif %}
+
+					{% if product.gamme %}
+						<div class="col-md-4">
+							<div class="border rounded-4 p-3 text-center">
+								<i class="bi bi-tags text-success fs-3"></i>
+								<p class="mb-0 small text-muted">{{ product.gamme.name }}</p>
+							</div>
+						</div>
+					{% endif %}
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	{# ================= RECETTES ================= #}
+	<section class="bg-light py-5">
+		<div class="container">
+
+			<h2 class="fw-bold text-center mb-4">
+				Recettes & utilisations
+			</h2>
+
+			{% if recettes|length == 0 %}
+				<div class="alert alert-info text-center">
+					Aucune recette n’est encore disponible pour ce produit.
+				</div>
+			{% endif %}
+
+			<div class="row g-4">
+
+				{% for recette in recettes %}
+<div class="col-md-6 col-lg-4">
+
+	<div class="card h-100 border-0 shadow-sm rounded-4 recipe-card">
+
+		<div class="card-body">
+
+			<div class="recipe-raw d-none">
+				{{ recette.description }}
+			</div>
+
+			<div
+				class="recipe-formatted">{# JS va remplir ici #}
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+				{% endfor %}
+
+			</div>
+
+		</div>
+	</section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.recipe-card');
+
+  cards.forEach(card => {
+    const rawEl = card.querySelector('.recipe-raw');
+    const outEl = card.querySelector('.recipe-formatted');
+    if (!rawEl || !outEl) return;
+
+    const text = (rawEl.textContent || '').trim();
+    if (!text) return;
+
+    // Nettoyage
+    const cleaned = text
+      .replace(/\r/g, '')
+      .replace(/\s+/g, ' ')
+      .replace(/\s*:\s*/g, ' : ')
+      .trim();
+
+    // Extraction (titre / usage / mélange / effet)
+    const title = extractBetween(cleaned, '', ' Usage :') || guessTitle(cleaned);
+    const usage = extractBetween(cleaned, 'Usage :', ' Mélange :') || extractBetween(cleaned, 'Usage :', ' Effet :') || '';
+    const mixBlock = extractBetween(cleaned, 'Mélange :', ' Effet :') || '';
+    const effect = extractAfter(cleaned, 'Effet :') || '';
+
+    const ingredients = parseIngredients(mixBlock);
+
+    // HTML formaté
+outEl.innerHTML = `
+<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+	<h6 class="fw-bold text-primary mb-0">
+		<i class="bi bi-journal-text me-1"></i>
+		${escapeHtml(title || 'Recette naturelle')}
+	</h6>
+	<span class="badge bg-success text-white">
+		Naturel
+	</span>
+</div>
+
+${usage ? `
+<div class="mb-3 p-2 rounded-3 bg-primary bg-opacity-10">
+	<div class="small text-primary fw-semibold mb-1">
+		<i class="bi bi-broadcast"></i>
+		Usage
+	</div>
+	<div class="fw-semibold text-dark">
+		${escapeHtml(usage)}
+	</div>
+</div>
+` : ''}
+
+  ${ingredients.length ? `
+<div class="mb-3">
+	<div class="small text-success fw-semibold mb-2">
+		<i class="bi bi-list-check"></i>
+		Mélange
+	</div>
+	<ul class="mb-0 ps-3">
+		${ingredients.map(i => `
+		<li class="mb-1">
+			<i class="bi bi-droplet-fill text-success me-1"></i>
+			${escapeHtml(i)}
+		</li>
+		`).join('')}
+	</ul>
+</div>
+` : ''}
+
+  ${effect ? `
+<div class="pt-3 border-top">
+	<div class="small text-success fw-semibold mb-1">
+		<i class="bi bi-stars"></i>
+		Effet
+	</div>
+	<div class="text-dark">
+		${escapeHtml(effect)}
+	</div>
+</div>
+` : ''}
+`;
+
+
+  });
+
+  function extractBetween(str, start, end) {
+    const s = start ? str.indexOf(start) : 0;
+    if (s === -1) return '';
+    const from = start ? s + start.length : 0;
+    const e = str.indexOf(end, from);
+    if (e === -1) return '';
+    return str.slice(from, e).trim();
+  }
+
+  function extractAfter(str, start) {
+    const i = str.indexOf(start);
+    if (i === -1) return '';
+    return str.slice(i + start.length).trim();
+  }
+
+  function parseIngredients(mixBlock) {
+    if (!mixBlock) return [];
+    // On récupère tout ce qui ressemble à "- ..."
+    const matches = mixBlock.match(/-\s[^-]+?(?=(\s-\s|$))/g);
+    if (matches && matches.length) {
+      return matches.map(x => x.replace(/^\-\s*/, '').trim());
+    }
+    // fallback : si pas de tirets, on renvoie le texte
+    return [mixBlock.trim()].filter(Boolean);
+  }
+
+  function guessTitle(str) {
+    // si jamais le texte commence par "Recette naturelle ..." on saute
+    return str.replace(/^Recette naturelle\s*/i, '').split(' Usage :')[0].trim();
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+});
+</script>
+{% endblock %}
+
