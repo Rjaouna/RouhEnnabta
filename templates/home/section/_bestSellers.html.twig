@@ -129,7 +129,7 @@ const PRODUCT_URL_TEMPLATE = "{{ path('product_show', { slug: 'SLUG_PLACEHOLDER'
 
 			container.innerHTML = '';
 
-			products.slice(0, 3).forEach(p => {
+			products.slice(0, 4).forEach(p => {
 const recettesUrl = RECETTES_URL_TEMPLATE.replace('SLUG_PLACEHOLDER', p.slug);
 const prodauctUrl = PRODUCT_URL_TEMPLATE.replace('SLUG_PLACEHOLDER', p.slug);
 
@@ -141,11 +141,13 @@ const prodauctUrl = PRODUCT_URL_TEMPLATE.replace('SLUG_PLACEHOLDER', p.slug);
 					: '/assets/img/placeholder-product.jpg';
 
 				const description = p.description
-					? p.description.substring(0, 90) + '…'
+					? p.description.substring(0, 30) + '…'
 					: 'Produit naturel issu du terroir marocain.';
 
 				container.insertAdjacentHTML('beforeend', `
-					<div class="col-12 col-md-4">
+<div class="col-6 col-md-3">
+
+
 						<div class="product-card-new h-100">
 
 							<div class="product-image">
@@ -168,9 +170,7 @@ const prodauctUrl = PRODUCT_URL_TEMPLATE.replace('SLUG_PLACEHOLDER', p.slug);
 								` : ''}
 
 								<div class="product-footer mt-auto">
-									<span class="price">
-										${p.salePrice ?? p.price ?? ''} €
-									</span>
+								
 
 									<div class="d-flex gap-2">
 <a href="${prodauctUrl}"
