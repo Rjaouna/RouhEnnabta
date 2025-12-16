@@ -6,7 +6,19 @@
 {% endblock %}
 
 {% block body %}
+<style>
+/* Desktop : OK */
+.g-5, .gx-5 {
+	--bs-gutter-x: 3rem;
+}
 
+/* Mobile : réduction */
+@media (max-width: 768px) {
+	.g-5, .gx-5 {
+		--bs-gutter-x: 1rem;
+	}
+}
+</style>
 	{# ================= HERO PRODUIT ================= #}
 <section class="product-header d-flex align-items-center" style="
 		background-image: url('{{ asset('assets/img/huiles-essentielles-et-aromatherapie-3.jpg') }}');
