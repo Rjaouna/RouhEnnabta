@@ -58,7 +58,9 @@
 		<div class="row g-4">
 
 			{% for product in products %}
-				<div class="col-md-4">
+<div class="col-6 col-md-3">
+
+
 
 					<div
 						class="card h-100 shadow-sm border-0 rounded-4">
@@ -82,7 +84,8 @@
 							</h5>
 
 							<p class="small text-muted flex-grow-1">
-								{{ product.description|slice(0, 100) }}…
+{{ product.description|slice(0, 60) }}…
+
 							</p>
 
 							{# RECETTES ASSOCIÉES #}
