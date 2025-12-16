@@ -19,104 +19,85 @@
 		<div
 			class="row align-items-center">
 
-			<!-- COLONNE CENTRALE -->
-			<div class="col-lg-4 order-lg-2 text-center mb-4 mb-lg-0">
-<h4 class="fw-semibold text-primary  mb-2">
-	Une sélection pensée pour chaque besoin
-</h4>
-<p class="text-muted mb-3">
-	Des gammes élaborées à partir de produits du terroir, certifiés et respectueux du savoir-faire local.
-</p>
+			
+{# ================= CATEGORIES DATA ================= #}
+{% set categories = [
+	['Agrumes', 'agrumes.png'],
+	['Fleurs', 'fleur.png'],
+	['Plantes', 'plante.png'],
+	['Herbacées', 'the.png'],
+	['Épices', 'epices.png'],
+	['Aiguilles', 'romarin.png'],
+	['Médicinales', 'herbes-medicinales.png'],
+	['Fruits', 'des-legumes.png']
+] %}
 
-				<a href="#" class="btn btn-outline-success rounded-pill px-4 d-none d-lg-inline-flex align-items-center gap-2">
-					Voir plus
-					<i class="bi bi-arrow-right"></i>
-				</a>
+<div class="container my-5">
+	<div
+		class="row align-items-center">
+
+		{# ================= COLONNE GAUCHE (DESKTOP) ================= #}
+		<div class="col-lg-4 order-lg-1 d-none d-lg-block">
+			<div class="row g-3">
+				{% for cat in categories|slice(0,4) %}
+					<div class="col-6">
+						<a href="#" class="category-card">
+							<img src="{{ asset('uploads/gammes/' ~ cat[1]) }}" alt="{{ cat[0] }}">
+							<span>{{ cat[0] }}</span>
+						</a>
+					</div>
+				{% endfor %}
 			</div>
-
-			<!-- COLONNE GAUCHE (DESKTOP) -->
-			<div class="col-lg-4 order-lg-1 d-none d-lg-block">
-				<div class="row g-3">
-					{% for cat in [
-['Agrumes', 'agrumes.png'],
-
-
-['Fleurs', 'fleur.png'],
-
-
-['Plantes', 'plante.png'],
-
-
-['Herbacées', 'the.png']
-
-                    ] %}
-						<div class="col-6">
-							<a href="#" class="category-card">
-<img src="{{asset('uploads/gammes/')}}{{cat[1]}}" alt="">
-
-								<span>{{ cat[0] }}</span>
-							</a>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-
-			<!-- COLONNE DROITE (DESKTOP) -->
-			<div class="col-lg-4 order-lg-3 d-none d-lg-block">
-				<div class="row g-3">
-					{% for cat in [
-['Épices', 'epices.png'],
-
-
-
-['Aiguilles', 'romarin.png'],
-
-
-['Médicinales', 'herbes-medicinales.png'],
-
-
-['Fruits', 'des-legumes.png']
-
-
-                    ] %}
-						<div class="col-6">
-							<a href="#" class="category-card">
-<img src="{{asset('uploads/gammes/')}}{{cat[1]}}" alt="">
-
-								<span>{{ cat[0] }}</span>
-							</a>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-
 		</div>
 
-<!-- MOBILE GRID -->
-<div class="d-lg-none mt-4">
-	<div class="row g-3">
-		{% for label in [
-			'Miels & Amlou',
-			'Huiles alimentaires',
-			'Bien-être',
-			'Semoules & farines',
-			'Épices & condiments',
-			'Fruits secs',
-			'Hydrolats & huiles essentielles',
-			'Thés & Tisanes'
-		] %}
-			<div class="col-6">
-				<a href="#" class="category-card text-center">
-					<span>{{ label }}</span>
-				</a>
+<!-- COLONNE CENTRALE -->
+<div class="col-lg-4 order-lg-2 text-center mb-4 mb-lg-0">
+	<h4 class="fw-semibold text-primary  mb-2">
+		Une sélection pensée pour chaque besoin
+	</h4>
+	<p class="text-muted mb-3">
+		Des gammes élaborées à partir de produits du terroir, certifiés et respectueux du savoir-faire local.
+	</p>
+
+	<a href="#" class="btn btn-outline-success rounded-pill px-4 d-none d-lg-inline-flex align-items-center gap-2">
+		Voir plus
+		<i class="bi bi-arrow-right"></i>
+	</a>
+</div>
+
+
+		{# ================= COLONNE DROITE (DESKTOP) ================= #}
+		<div class="col-lg-4 order-lg-3 d-none d-lg-block">
+			<div class="row g-3">
+				{% for cat in categories|slice(4,4) %}
+					<div class="col-6">
+						<a href="#" class="category-card">
+							<img src="{{ asset('uploads/gammes/' ~ cat[1]) }}" alt="{{ cat[0] }}">
+							<span>{{ cat[0] }}</span>
+						</a>
+					</div>
+				{% endfor %}
 			</div>
-		{% endfor %}
+		</div>
+
+	</div>
+
+	{# ================= MOBILE GRID (MÊMES BLOCS) ================= #}
+	<div class="d-lg-none mt-4">
+		<div class="row g-3">
+			{% for cat in categories %}
+				<div class="col-6">
+					<a href="#" class="category-card">
+						<img src="{{ asset('uploads/gammes/' ~ cat[1]) }}" alt="{{ cat[0] }}">
+						<span>{{ cat[0] }}</span>
+					</a>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 </div>
 
 
-
-	</div>
 </section>
 
 <style>
