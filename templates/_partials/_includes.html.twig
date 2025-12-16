@@ -1,0 +1,43 @@
+{{ include('_partials/_menu_mobile.html.twig') }}
+ <script src="{{ asset('js/search.js') }}"></script>
+
+
+<style>
+	.bg-soft-green {
+		background: #F7F6F2;
+	}
+
+	.mobile-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin-top: 10px;
+	}
+
+	.mobile-link {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 14px 18px;
+		background: #fff;
+		border-radius: 14px;
+		font-weight: 600;
+		color: #3F5F4C;
+		text-decoration: none;
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.mobile-link i {
+		color: #c2a05c;
+		font-size: 1.3rem;
+	}
+
+	.mobile-link:hover {
+		transform: translateX(6px);
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+		color: #8FB397;
+
+
+	}
+</style>

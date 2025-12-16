@@ -1,0 +1,78 @@
+{# ================= MENU MOBILE FULLSCREEN ================= #}
+<div class="modal fade" id="mobileMenu" tabindex="-1">
+	<div class="modal-dialog modal-fullscreen">
+		<div
+			class="modal-content bg-soft-green">
+
+			{# HEADER #}
+			<div class="modal-header border-0 justify-content-between align-items-center">
+				<img src="{{ asset('assets/img/logo-rouh-ennabta.png') }}" height="48" alt="RouhEnnabta">
+				<button class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+
+			{# BODY #}
+			<div class="modal-body d-flex flex-column">
+
+				<nav class="mobile-nav">
+
+					<a href="{{ path('app_categories') }}" class="mobile-link">
+						<i class="bi bi-flower1"></i>
+						Univers RouhEnnabta
+					</a>
+
+					<a href="{{ path('app_certifications') }}" class="mobile-link">
+						<i class="bi bi-patch-check"></i>
+						Certifications
+					</a>
+
+					<a href="{{ path('app_apropos') }}" class="mobile-link">
+						<i class="bi bi-info-circle"></i>
+						À propos
+					</a>
+
+					<a href="#" class="mobile-link">
+						<i class="bi bi-calendar-event"></i>
+						Événements & salons
+					</a>
+
+					<a href="{{ path('blog_index') }}" class="mobile-link">
+						<i class="bi bi-journal-text"></i>
+						Blog
+					</a>
+
+				</nav>
+
+				<hr
+				class="my-4">
+
+				{# AUTH MOBILE #}
+				{% if app.user %}
+					<p class="text-center fw-semibold mb-3">{{ app.user.email }}</p>
+
+					<a href="#" class="btn btn-outline-primary w-100 mb-2">
+						Mon profil
+					</a>
+
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('admin_dashboard') }}" class="btn btn-outline-dark w-100 mb-2">
+							Back-office
+						</a>
+					{% endif %}
+
+					<a href="{{ path('app_logout') }}" class="btn btn-danger w-100">
+						Déconnexion
+					</a>
+				{% else %}
+					<a href="{{ path('app_login') }}" class="btn btn-success w-100 mb-2">
+						Connexion
+					</a>
+
+					<a href="#" class="btn btn-outline-primary w-100">
+						Créer un compte
+					</a>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+</div>
