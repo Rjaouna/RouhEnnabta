@@ -24,14 +24,14 @@
 			
 {# ================= CATEGORIES DATA ================= #}
 {% set categories = [
-	['Agrumes', 'agrumes.png'],
-	['Fleurs', 'fleur.png'],
-	['Plantes', 'plante.png'],
-	['Herbacées', 'the.png'],
-	['Épices', 'epices.png'],
-	['Aiguilles', 'romarin.png'],
-	['Médicinales', 'herbes-medicinales.png'],
-	['Fruits', 'des-legumes.png']
+	['Agrumes', 'agrumes.png', '320'],
+	['Fleurs', 'fleur.png', '317'],
+	['Plantes', 'plante.png', '323'],
+	['Herbacées', 'the.png', '322'],
+	['Épices', 'epices.png', '318'],
+	['Aiguilles', 'romarin.png', '321'],
+	['Médicinales', 'herbes-medicinales.png', '324'],
+	['Fruits', 'des-legumes.png', '325']
 ] %}
 
 <div class="container my-5">
@@ -43,7 +43,10 @@
 			<div class="row g-3">
 				{% for cat in categories|slice(0,4) %}
 					<div class="col-6">
-						<a href="#" class="category-card">
+<a href="{{ path('gamme_show', { id: cat[2] }) }}" class="category-card">
+
+
+
 							<img src="{{ asset('uploads/gammes/' ~ cat[1]) }}" alt="{{ cat[0] }}">
 							<span>{{ cat[0] }}</span>
 						</a>
@@ -73,7 +76,8 @@
 			<div class="row g-3">
 				{% for cat in categories|slice(4,4) %}
 					<div class="col-6">
-						<a href="#" class="category-card">
+<a href="{{ path('gamme_show', { id: cat[2] }) }}" class="category-card">
+
 							<img src="{{ asset('uploads/gammes/' ~ cat[1]) }}" alt="{{ cat[0] }}">
 							<span>{{ cat[0] }}</span>
 						</a>

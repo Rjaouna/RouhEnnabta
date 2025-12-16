@@ -1,26 +1,53 @@
 <section class="bg-white gammes-section">
-
-
-
-<div class="container pt-3 pb-2">
-
-
-
-		<nav class="gammes-nav fw-semibold">
-
-			<a href="#" class="text-success text-decoration-none">Agrumes & zestes</a>
-			<a href="#" class="text-success text-decoration-none">Fleurs aromatiques</a>
-			<a href="#" class="text-success text-decoration-none">Plantes aromatiques</a>
-			<a href="#" class="text-success text-decoration-none">Plantes herbacées</a>
-			<a href="#" class="text-success text-decoration-none">Épices & racines</a>
-			<a href="#" class="text-success text-decoration-none">Résineux & aiguilles</a>
-			<a href="#" class="text-success text-decoration-none">Plantes médicinales</a>
-			<a href="#" class="text-success text-decoration-none">Fruits & baies</a>
-
-
+	<div class="container pt-3 pb-2">
+		<nav
+			class="gammes-nav fw-semibold" id="gammesNav"><!-- Gammes injectées via JS -->
 		</nav>
 	</div>
 </section>
+
+
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+
+	const nav = document.getElementById('gammesNav');
+	if (!nav) return;
+
+	const GAMME_URL_TEMPLATE = "{{ path('gamme_show', { id: 'ID_PLACEHOLDER' }) }}";
+
+	fetch('/api/gammes')
+		.then(res => res.json())
+		.then(gammes => {
+
+			if (!gammes.length) {
+				nav.innerHTML = `
+					<span class="text-muted small">Aucune gamme disponible</span>
+				`;
+				return;
+			}
+
+			nav.innerHTML = '';
+
+			gammes.forEach(gamme => {
+				const url = GAMME_URL_TEMPLATE.replace('ID_PLACEHOLDER', gamme.id);
+
+				nav.insertAdjacentHTML('beforeend', `
+					<a href="${url}" class="text-success text-decoration-none">
+						${gamme.name}
+					</a>
+				`);
+			});
+		})
+		.catch(() => {
+			nav.innerHTML = `
+				<span class="text-danger small">
+					Erreur de chargement des gammes
+				</span>
+			`;
+		});
+});
+</script>
+
 
 <style>
 	/* NAV GAMMES */
