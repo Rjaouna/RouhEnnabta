@@ -37,19 +37,22 @@ class ProductController extends AbstractController
 			return [
 				'id' => $p->getId(),
 				'name' => $p->getName(),
+				'slug' => $p->getSlug(), // ✅ IMPORTANT
 				'description' => $p->getDescription(),
-				'purchasePrice' => $p->getPurchasePrice(),
-				'margin' => $p->getMargin(),
+
+				'price' => $p->getPrice(),
 				'salePrice' => $p->getSalePrice(),
 				'stock' => $p->getStock(),
 				'isActive' => $p->isActive(),
-				'category' => $p->getCategory()?->getId(),
-				'gamme' => $p->getGamme()?->getId(),
+
 				'categoryName' => $p->getCategory()?->getName(),
 				'gammeName' => $p->getGamme()?->getName(),
 
-				// ✅ CE QUE TON JS ATTEND
-				'mainImage' => $mainImage
+				// ✅ Image
+				'mainImage' => $mainImage,
+
+				// ✅ RECETTES (clé UX)
+				'recettesCount' => $p->getRecettes()->count(),
 			];
 		}, $products);
 

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/products')]
+#[Route('/products')]
 class ProductController extends AbstractController
 {
 	#[Route('/admin/products', name: 'admin_product_index')]

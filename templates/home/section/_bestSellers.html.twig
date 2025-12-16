@@ -107,66 +107,106 @@
 
 
  <script>
-const container = document.getElementById('bestSellersContainer');
+document.addEventListener('DOMContentLoaded', () => {
+const RECETTES_URL_TEMPLATE = "{{ path('product_recettes', { slug: 'SLUG_PLACEHOLDER' }) }}";
+const PRODUCT_URL_TEMPLATE = "{{ path('product_show', { slug: 'SLUG_PLACEHOLDER' }) }}";
 
-// Loader
-container.innerHTML = `
-	<div class="col-12 text-center text-muted">
-		Chargement des produits...
-	</div>
-`;
 
-fetch('/api/products')
-	.then(res => res.json())
-	.then(products => {
 
-		container.innerHTML = '';
 
-		products.slice(0, 3).forEach(p => {
+	const container = document.getElementById('bestSellersContainer');
+	if (!container) return;
 
-			const image = p.mainImage
-				? `/uploads/products/${p.mainImage}`
-				: '/images/produit-placeholder.jpg';
+	container.innerHTML = `
+		<div class="col-12 text-center text-muted">
+			Chargement des produits...
+		</div>
+	`;
 
-			const description = p.description && p.description.trim().length > 0
-				? p.description.substring(0, 80) + '...'
-				: 'Rouhennabta vous propose des produits naturels issus du terroir marocain, sélectionnés avec soin par nos coopératives partenaires.';
+	fetch('/api/products')
+		.then(res => res.json())
+		.then(products => {
 
-			container.insertAdjacentHTML('beforeend', `
-				<div class="col-12 col-md-4">
-					<div class="product-card-new h-100">
+			container.innerHTML = '';
 
-						<div class="product-image">
-							<img src="${image}" alt="${p.name}">
-							<span class="product-badge">
-								${p.category ?? 'Produit'}
-							</span>
-						</div>
+			products.slice(0, 3).forEach(p => {
+const recettesUrl = RECETTES_URL_TEMPLATE.replace('SLUG_PLACEHOLDER', p.slug);
+const prodauctUrl = PRODUCT_URL_TEMPLATE.replace('SLUG_PLACEHOLDER', p.slug);
 
-						<div class="product-content">
-<h3 class="text-success">${p.name}</h3>
 
-							<p>${description}</p>
 
-							<div class="product-footer">
-								<span class="price">${p.salePrice} €</span>
-								<button class="btn btn-outline-success">
-									Voir le produit
-								</button>
+
+				const image = p.mainImage
+					? `/uploads/products/${p.mainImage}`
+					: '/assets/img/placeholder-product.jpg';
+
+				const description = p.description
+					? p.description.substring(0, 90) + '…'
+					: 'Produit naturel issu du terroir marocain.';
+
+				container.insertAdjacentHTML('beforeend', `
+					<div class="col-12 col-md-4">
+						<div class="product-card-new h-100">
+
+							<div class="product-image">
+								<img src="${image}" alt="${p.name}">
+								<span class="product-badge">
+									${p.categoryName ?? 'Produit'}
+								</span>
 							</div>
-						</div>
 
+							<div class="product-content d-flex flex-column">
+
+								<h3 class="text-success">${p.name}</h3>
+								<p>${description}</p>
+
+								${p.recettesCount > 0 ? `
+									<div class="mb-3 small text-success d-flex align-items-center gap-1">
+										<i class="bi bi-journal-text"></i>
+										${p.recettesCount} recette${p.recettesCount > 1 ? 's' : ''}
+									</div>
+								` : ''}
+
+								<div class="product-footer mt-auto">
+									<span class="price">
+										${p.salePrice ?? p.price ?? ''} €
+									</span>
+
+									<div class="d-flex gap-2">
+<a href="${prodauctUrl}"
+
+
+										   class="btn btn-outline-success btn-sm rounded-pill">
+											Produit
+										</a>
+
+										${p.recettesCount > 0 ? `
+<a href="${recettesUrl}"
+
+											   class="btn btn-success btn-sm rounded-pill">
+												Recettes
+											</a>
+										` : ''}
+									</div>
+								</div>
+
+							</div>
+
+						</div>
 					</div>
+				`);
+			});
+		})
+		.catch(() => {
+			container.innerHTML = `
+				<div class="col-12 text-center text-danger">
+					Erreur lors du chargement des produits.
 				</div>
-			`);
+			`;
 		});
-	})
-	.catch(() => {
-		container.innerHTML = `
-			<div class="col-12 text-center text-danger">
-				Erreur lors du chargement des produits.
-			</div>
-		`;
-	});
+});
+
 </script>
+
+
 
