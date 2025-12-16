@@ -9,7 +9,9 @@
 	<style>
 		/* STYLE GLOBAL */
 		.product-title {
-			font-weight: 800;
+font-weight: 600;
+
+
 			letter-spacing: -0.5px;
 		}
 
@@ -114,6 +116,17 @@
 	position: absolute;
 	left: 0;
 	top: 7px;
+}
+/* Desktop : OK */
+.g-5, .gx-5 {
+	--bs-gutter-x: 3rem;
+}
+
+/* Mobile : réduction */
+@media (max-width: 768px) {
+	.g-5, .gx-5 {
+		--bs-gutter-x: 1rem;
+	}
 }
 
 	</style>
@@ -228,7 +241,7 @@ background-image: url('{{ asset('assets/img/huiles-essentielles-et-aromatherapie
 			{# POURCENTAGE DE RÉDUCTION (automatique) #}
 			{% set reduction = ((product.price - product.salePrice) / product.price * 100) | round(0) %}
 			<span class="badge rounded-pill" style="background:#ffebe6; color:#d03333; font-weight:700; padding:6px 14px;">
-				-{{ reduction }}%
+				{{ reduction }}%
 			</span>
 
 		{% else %}
@@ -279,16 +292,42 @@ background-image: url('{{ asset('assets/img/huiles-essentielles-et-aromatherapie
 				</div>
 
 
-				<div class="mt-4 d-flex gap-3">
-					<a href="{{ path('app_contact') }}" class="btn btn-success btn-lg px-4">
-						<i class="bi bi-envelope"></i>
-						Contact
-					</a>
+<div class="mt-4">
+	<div
+		class="row g-3">
 
-					<a href="{{ path('app_categories') }}" class="btn btn-outline-dark btn-lg px4">
-						Voir d'autres produits
-					</a>
-				</div>
+		{# CONTACT #}
+		<div class="col-12 col-md-4">
+			<a href="{{ path('app_contact') }}" class="btn btn-success w-100 py-2 d-flex align-items-center justify-content-center gap-2 rounded-pill shadow-sm">
+				<i class="bi bi-envelope"></i>
+				Contact
+			</a>
+
+
+</div>
+
+{# RECETTES #}
+{% if product.recettes|length > 0 %}
+	<div class="col-12 col-md-4">
+		<a href="{{ path('product_recettes', { slug: product.slug }) }}" class="btn btn-outline-success w-100 py-2 d-flex align-items-center justify-content-center gap-2 rounded-pill shadow-sm">
+			<i class="bi bi-journal-text"></i>
+			Voir les recettes
+		</a>
+	</div>
+{% endif %}
+
+
+{# AUTRES PRODUITS #}
+<div class="col-12 col-md-4">
+	<a href="{{ path('app_categories') }}" class="btn btn-outline-dark w-100 py-2 d-flex align-items-center justify-content-center gap-2 rounded-pill shadow-sm">
+		<i class="bi bi-grid"></i>
+		Autres produits
+	</a>
+</div>
+
+
+</div></div>
+
 
 			</div>
 		</div>
